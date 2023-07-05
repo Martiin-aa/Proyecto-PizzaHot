@@ -1,0 +1,24 @@
+<div class="card p-4">
+    <div class="card-body">
+        <h4 class="card-title text-center">Registration</h4>
+        <form action="{{ url_for('register') }}" method="post" class="mt-4">
+            <div class="mb-3">
+                <label for="inputName" class="form-label">Nombre</label>
+                <input type="text" name="name" class="form-control" id="inputName" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="inputEmail" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputConfirmPassword" class="form-label">Confirm password</label>
+                <input type="password" name="password_confirm" class="form-control" id="inputConfirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-success float-end px-4 mt-4">Register</button>
+        </form>
+    </div>
+</div>

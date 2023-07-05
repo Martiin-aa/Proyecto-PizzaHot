@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-5">Welcome, {{ session['user']['name'] }}</h2>
+
+    <div class="col">
+        <h4>Quotable Quotes</h4>
+
+        {% if quotes %}
+            {% for quote in quotes %}
+                <div class="card my-4">
+                    <div class="card-body">
+                        {% if session['user']['id'] == quote.user_id %}
+                            <span>
+                                <a href="{{ url_for('update_quote', quote_id=quote.id) }}" class="card-link">Editar</a>
+                                <a href="{{ url_for('delete_quote', quote_id=quote.id) }}" class="card-link">Borrar</a>
+                            </span>
+                        {% endif %}
+                        <p class="card-text mt-2">{{ quote.message }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <span>
+                                Posteado por 
+                                <a href="{{ url_for('user_detail', user_id=quote.user_id) }}"class="card-link">{{ quote.name }}</a>
+                            </span>
+                            <a href="{{ url_for('add_favorite_quote', quote_id=quote.id) }}"class="btn btn-sm btn-success">
+                                Añadir a favoritos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center my-4">No citas encontradas.</p>
+        {% endif %}
+    </div>
+
+    <div class="col">
+        <h4>Tus Favoritos</h4>
+
+        {% if favorite_quotes %}
+            {% for favorite_quote in favorite_quotes %}
+                <div class="card my-4">
+                    <div class="card-body">
+                        {% if session['user']['id'] == favorite_quote.quotes_user_id %}
+                            <span>
+                <a href="{{ url_for('update_quote', quote_id=favorite_quote.quote_id) }}" class="card-link">Editar</a>
+                <a href="{{ url_for('delete_quote', quote_id=favorite_quote.quote_id) }}" class="card-link">Borrar</a>
+            </span>
+                        {% endif %}
+                        <p class="card-text mt-2">{{ favorite_quote.message }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <span>
+                                Posteado por <a
+                                    href="{{ url_for('user_detail', user_id=favorite_quote.quotes_user_id) }}"
+                                    class="card-link">{{ favorite_quote.name }}</a>
+                            </span>
+                            <a href="{{ url_for('remove_favorite_quote', quote_id=favorite_quote.quote_id) }}"
+                                class="btn btn-sm btn-warning">Eliminar de Favoritos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center my-4">No citas encontradas.</p>
+        {% endif %}
+
+        <div class="card my-4 p-4">
+            <div class="card-body">
+                <h4 class="card-title text-center">Contribute a Quote</h4>
+                <form action="{{ url_for('create_quote') }}" method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Citado por</label>
+                        <input type="text" name="author" class="form-control" id="inputAuthor" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputMessage" class="form-label">Cita</label>
+                        <textarea type="text" name="message" class="form-control" id="inputMessage" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end px-4 mt-4">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

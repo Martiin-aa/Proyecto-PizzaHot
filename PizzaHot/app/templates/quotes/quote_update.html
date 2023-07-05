@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-6">
+<div class="card my-4 p-4">
+        <div class="card-body">
+            <h4 class="card-title text-center">Edit Quote</h4>
+            <form action="{{ url_for('update_quote', quote_id=quote.id) }}" method="post" class="mt-4">
+                <div class="mb-3">
+                    <label for="inputAuthor" class="form-label">Citado por</label>
+                    <input type="text" name="author"  value="{{ quote.author }}" class="form-control" id="inputAuthor">
+                </div>
+                <div class="mb-3">
+                    <label for="inputMessage" class="form-label">Cita</label>
+                    <textarea name="message" class="form-control" id="inputMessage" rows="5">{{ quote.message }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary float-end px-4 mt-4">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
