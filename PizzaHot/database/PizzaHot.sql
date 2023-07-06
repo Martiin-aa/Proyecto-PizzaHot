@@ -26,6 +26,8 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `price` int DEFAULT NULL,
+  `topping_chose` varchar(255) DEFAULT NULL,
   `pizza_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -170,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-05 16:54:32
+-- Dump completed on 2023-07-05 22:03:14

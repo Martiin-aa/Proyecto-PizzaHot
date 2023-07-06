@@ -11,113 +11,62 @@ from app.models.pizza import Pizza
 from app.models.order import Order
 
 
-@app.route("/pizzas/")
+@app.route("/orders/")
 def dashboard():
     """
     Página dashboard.
-
-    La función `dashboard()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario visita la ruta /pizzas/ en el navegador.
-    Ejemplo: http://localhost:5000/pizzas/
-
-    Parámetros:
-        Ninguno
-    Contexto:
-        pizzas (list): Lista de pizzas no en la orden
-        order_pizzas (list): Lista de pizzas en la orden
-    Retorna:
-        render_template: Renderiza la plantilla pizzas/dashboard.html
     """
 
     # Proteger la ruta /dashboard/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
+
+    print(session['user'])
 
     # Obtener el ID del usuario de la sesión.
-    data = {"user_id": session['user']['id']}
+    data = {"user_id": session['user']}
 
-    pizzas = Pizza.get_all(data)
+    order_past_pizzas = Order.get_past_orders(data)
     order_pizzas = Order.get_orders(data)
 
     context = {
-        "pizzas": pizzas,
+        "order_past_pizzas": order_past_pizzas,
         "order_pizzas": order_pizzas
     }
-    return render_template("pizzas/dashboard.html", **context)
+    return render_template("dashboard.html", **context)
 
-
-@app.route("/pizzas/<int:pizza_id>/order/")
-def add_order_pizza(pizza_id):
+@app.route("/pizzas/")
+def pizzas():
     """
-    Agregar una pizza a las ordenes.
-
-    La función `add_favorite_pizza()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón agregar una pizza a la orden.
-    Ejemplo: http://localhost:5000/pizzas/1/order/
-
-    Parámetros:
-        pizza_id (int): ID de la pizza
-    Retorna:
-        redirect: Redirecciona a la función `dashboard()`
+    Página dashboard.
     """
 
-    # Proteger la ruta /pizzas/<int:pizza_id>/order/
+    # Proteger la ruta /dashboard/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
-    data = {
-        "pizza_id": pizza_id,
-        "user_id": session['user']['id']
+    print(session['user'])
+
+    # Obtener el ID del usuario de la sesión.
+    data = {"user_id": session['user']}
+
+    pizzas = Pizza.get_all(data)
+
+    context = {
+        "pizzas": pizzas
     }
-    Order.add_order(data)
-    return redirect(url_for("dashboard"))
-
-
-@app.route("/pizzas/<int:pizza_id>/remove/")
-def remove_order_pizza(pizza_id):
-    """
-    Eliminar una pizza de la orden.
-
-    La función `remove_order_pizza()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón remover una pizza de la orden.
-    Ejemplo: http://localhost:5000/pizzas/1/remove/
-
-    Parámetros:
-        pizza_id (int): ID de la pizza
-    Retorna:
-        redirect: Redirecciona a la función `dashboard()`
-    """
-
-    # Proteger la ruta /pizzas/<int:pizza_id>/remove/
-    if "user" not in session:
-        return redirect(url_for("index"))
-
-    data = {
-        "pizza_id": pizza_id,
-        "user_id": session['user']['id']
-    }
-    Order.delete(data)
-    return redirect(url_for("dashboard"))
+    return render_template("pizzas/pizzas.html", **context)
 
 
 @app.route("/pizzas/<int:pizza_id>/delete/")
 def delete_pizza(pizza_id):
     """
     Eliminar una pizza.
-
-    La función `delete_pizza()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón eliminar una pizza.
-    Ejemplo: http://localhost:5000/pizzas/1/delete/
-
-    Parámetros:
-        pizza_id (int): ID de la cita
-    Retorna:
-        redirect: Redirecciona a la función `dashboard()`
     """
 
     # Proteger la ruta /pizzas/<int:pizza_id>/delete/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     data = {"pizza_id": pizza_id}
     Pizza.delete(data)
@@ -128,20 +77,11 @@ def delete_pizza(pizza_id):
 def create_pizza():
     """
     Crear una pizza.
-
-    La función `create_pizza()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón crear una cita.
-    Ejemplo: http://localhost:5000/pizzas/create/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        redirect: Redirecciona a la función `dashboard()`
     """
 
     # Proteger la ruta /pizzas/create/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     # Diccionario
     data = {
@@ -158,20 +98,11 @@ def create_pizza():
 def update_pizza(pizza_id):
     """
     Actualizar una pizza.
-
-    La función `update_pizza()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón actualizar una pizza.
-    Ejemplo: http://localhost:5000/pizzas/1/
-
-    Parámetros:
-        pizza_id (int): ID de la pizza
-    Retorna:
-        redirect: Redirecciona a la función `dashboard()`
     """
 
     # Proteger la ruta /pizzas/<int:pizza_id>/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     # Diccionario
     data = {"pizza_id": pizza_id}
@@ -182,7 +113,8 @@ def update_pizza(pizza_id):
             "pizza_id": pizza_id,
             "name": request.form['name'],
             "size": request.form['size'],
-            "crust": request.form['crust']
+            "crust": request.form['crust'],
+            "price": request.form['price'],
         }
         Pizza.update(data)
         return redirect(url_for("dashboard"))

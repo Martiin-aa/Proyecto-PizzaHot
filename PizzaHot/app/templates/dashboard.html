@@ -1,88 +1,60 @@
-{% set include_line = True %}
+{% set include_line = false %}
 {% extends "base.html" %}
 
 {% block titulo %}Dashboard{% endblock %}
 
+{% include "includes/navbar_dashboard.html" %}
 {% block content %}
-<h2 class="mb-5">Bienvenido, {{ session['user']['name'] }}</h2>
+<h2 class="mb-5">Bienvenido, {{ session['user']['first_name'] }}</h2>
 
     <div class="col">
-        <h4>Quotable Quotes</h4>
+        <h4>Ordenes pasadas</h4>
 
-        {% if pizzas %}
-            {% for pizza in pizzas %}
-                <div class="card my-4">
+        <!--% if order_past_pizzas %}-->
+            <!--% for order_past_pizza in orders_past_pizzas %}-->
+                <div class="card">
+                    <h5 class="card-header">Featu <!--{order_past_pizza.created_at}}--></h5>
                     <div class="card-body">
-                        {% if session['user']['id'] == pizza.user_id %}
-                            <span>
-                                <a href="{{ url_for('update_pizza', pizza_id=pizza.id) }}" class="card-link">Editar</a>
-                                <a href="{{ url_for('delete_pizza', pizza_id=pizza.id) }}" class="card-link">Borrar</a>
-                            </span>
-                        {% endif %}
-                        <p class="card-text mt-2">{{ pizza.crust }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-5">
-                            <span>
-                                Posteado por 
-                                <a href="{{ url_for('user_detail', user_id=pizza.user_id) }}"class="card-link">{{ pizza.name }}</a>
-                            </span>
-                            <a href="{{ url_for('add_favorite_pizza', pizza_id=pizza.id) }}"class="btn btn-sm btn-success">
-                                Añadir a la orden
-                            </a>
+                        <h5 class="card-title">sddsd<!--{order_past_pizza.pizza_id.name}}--></h5>
+                        <p class="card-text">$100 CLP<!---{order_past_pizza.pizza_id.name}}--></p>
+                        <div class="text-end">
+                            <a href="#"
+                                class="btn btn-success">Añadir a Orden <!--"{ url_for('add_order_pizza') }}"-->
+                            </a> 
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <p class="text-center my-4">No ordenes encontradas.</p>
-        {% endif %}
+            <!--% endfor %}-->
+        <!--% else %}-->
+            <p class="text-center my-4">No ordenes pasadas encontradas.</p>
+        <!--% endif %}-->
     </div>
 
     <div class="col">
         <h4>Tus ordenes</h4>
 
-        {% if order_pizzas %}
-            {% for order_pizza in orders_pizzas %}
-                <div class="card my-4">
+        <!--% if order_pizzas %}-->
+            <!--% for order_pizza in orders_pizzas %}-->
+                <div class="card">
                     <div class="card-body">
-                        {% if session['user']['id'] == order_pizza.pizzas_user_id %}
-                        <span>
-                            <a href="{{ url_for('update_pizza', pizza_id=order_pizza.pizza_id) }}" class="card-link">Editar</a>
-                            <a href="{{ url_for('delete_pizza', pizza_id=order_pizza.pizza_id) }}" class="card-link">Borrar</a>
-                        </span>
-                        {% endif %}
-                        <p class="card-text mt-2">{{ order_pizza.crust }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-5">
-                            <span>
-                                Posteado por <a
-                                    href="{{ url_for('user_detail', user_id=order_pizza.orders_user_id) }}"
-                                    class="card-link">{{ order_pizza.name }}</a>
-                            </span>
-                            <a href="{{ url_for('remove_order_pizza', pizza_id=order_pizza.pizza_id) }}"
-                                class="btn btn-sm btn-warning">Eliminar de la orden
+                        <h5 class="card-title">sddsd<!--{order_pizza.name}}--></h5>
+                        <p class="card-text">$100 CLP<!---{order_pizza.price}}--></p>
+                        <div class="text-end">
+                            <a href="#" 
+                                class="btn btn-danger">Eliminar <!--"{ url_for('remove_order_pizza') }}"-->
                             </a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
+            <!--% endfor %}-->
+        <!--% else %}-->
             <p class="text-center my-4">No orden encontradas.</p>
-        {% endif %}
-
-        <div class="card my-4 p-4">
-            <div class="card-body">
-                <h4 class="card-title text-center">Contribute a Quote</h4>
-                <form action="{{ url_for('create_pizza') }}" method="post" class="mt-4">
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Citado por</label>
-                        <input type="text" name="name" class="form-control" id="inputAuthor" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputMessage" class="form-label">Cita</label>
-                        <textarea type="text" name="crust" class="form-control" id="inputMessage" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary float-end px-4 mt-4">Enviar</button>
-                </form>
-            </div>
+        <!--% endif %}-->
+        <div class="text-end">
+            <a href="#"class="btn btn-primary"> <!--"{ url_for('') }}"-->
+                Ir al pago
+            </a>
+        </div>
         </div>
     </div>
 {% endblock %}

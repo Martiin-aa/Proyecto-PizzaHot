@@ -18,15 +18,6 @@ class User:
     def __init__(self, data):
         """
         Constructor.
-
-        El método `__init__()` es el constructor de la clase, se ejecuta cuando se crea
-        una instancia de la clase. Las propiedades de la clase se definen en este método.
-
-        Parámetros:
-            self (object): Objeto de tipo `User`
-            data (dict): Diccionario con los datos del usuario
-        Retorna:
-            None
         """
 
         self.id = data.get("id", 0)
@@ -44,20 +35,8 @@ class User:
     def get_by_email(cls, data):
         """
         Obtener usuario por email.
-
-        El método `get_by_email()` es un método de clase, lo que significa que se puede
-        ejecutar sin crear una instancia de la clase.
-        Ejemplo: User.get_by_email()
-
-        Permite obtener un usuario por su email, con el fin de verificar si existe.
-
-        Parámetros:
-            cls (object): Objeto de tipo `User`
-            data (dict): Diccionario con el email del usuario
-        Retorna:
-            user (object): Objeto de tipo `User`
         """
-            
+
         query = """
         SELECT id, first_name, last_name, email, adress, city, password
         FROM users WHERE email = %(email)s;
@@ -72,49 +51,31 @@ class User:
     def register(cls, data):
         """
         Registro de usuario.
-
-        El método `register()` es un método de clase, lo que significa que se puede
-        ejecutar sin crear una instancia de la clase.
-        Ejemplo: User.register()
-
-        Permite registrar un usuario en la base de datos. Al registrar un usuario,
-        se retorna el usuario registrado, mediante el método de clase `get_one()`.
-        En caso de que no se registre el usuario, se retorna `None`.
-
-        Parámetros:
-            cls (object): Objeto de tipo `User`
-            data (dict): Diccionario con los datos del usuario
-        Retorna:
-            user (object): Objeto de tipo `User`
         """
 
         query = """
         INSERT INTO users (first_name, last_name, email, adress, city, password, created_at, updated_at)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(adress)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        return connect_to_mysql().query_db(query, data)
+        user_id = connect_to_mysql().query_db(query, data)
+        data = {"user_id": user_id}
+        if user_id:
+            user = cls.get_one(data)
+            return user
+        return None
 
     @classmethod #query
     def get_one(cls, data):
         """
         Obtener un usuario con sus pizzas.
-
-        El método `get_one()` es un método de clase, lo que significa que se puede
-        ejecutar sin crear una instancia de la clase.
-        Ejemplo: User.get_one()
-
-        Permite obtener un usuario por su ID, con el fin de obtener sus pizzas.
-
-        Parámetros:
-            cls (object): Objeto de tipo `User`
-            data (dict): Diccionario con el ID del usuario
-        Retorna:
-            user (object): Objeto de tipo `User`
         """
 
         query = """
-        SELECT * FROM users LEFT JOIN quotes
-        ON users.id = quotes.user_id WHERE users.id = %(user_id)s;
+        SELECT users.*, pizzas.*
+        FROM users
+        JOIN orders ON users.id = orders.user_id
+        JOIN pizzas ON orders.pizza_id = pizzas.id
+        WHERE users.id = %(id)s;
         """
         results = connect_to_mysql().query_db(query, data)
         user = cls(results[0])

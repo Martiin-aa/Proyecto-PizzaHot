@@ -1,0 +1,23 @@
+{% set include_line = False %}
+{% extends "base.html" %}
+
+{% include "includes/navbar.html" %}
+{% block titulo %}Catalogo de Pizzas{% endblock %}
+
+{% block content %}
+<div class="col">
+    <!--% for pizza in pizzas %} -->
+    <div class="card" style="width: 25rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">fdfdfdfdf<!--pizza.name}}--></h5>
+            <p class="card-text" style="width: 22rem;">Tamaño: hghgh<!--pizza.size}}--> Masa: ghghghhhhhhhh<!--pizza.crust}}--></p>
+            <p class="card-text">$<!--pizza.price}}-->344453 CLP</p>
+            <a href="#" class="btn btn-success">Añadir a Orden</a> <!--"{ url_for('add_order_pizza') }}"-->
+            <a href="#" class="btn btn-warning" style="float: right;">Editar</a> <!--"{ url_for('update_pizza') }}"-->
+
+        </div>
+    </div>
+    <!--% endfor %}-->
+</div>
+{% endblock %}

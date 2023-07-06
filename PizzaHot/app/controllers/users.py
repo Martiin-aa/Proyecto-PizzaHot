@@ -19,16 +19,7 @@ bcrypt = Bcrypt(app)
 @app.route("/")
 def index_register():
     """
-    Index page.
-
-    La función `index()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario visita la ruta / en el navegador.
-    Ejemplo: http://localhost:5000/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        render_template: Renderiza la plantilla users/auth/index_register.html
+    Index register page.
     """
 
     return render_template("users/auth/index_register.html")
@@ -36,56 +27,15 @@ def index_register():
 @app.route("/login/")
 def index_login():
     """
-    Index page.
-
-    La función `index()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario visita la ruta / en el navegador.
-    Ejemplo: http://localhost:5000/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        render_template: Renderiza la plantilla users/auth/index_login.html
+    Index login page.
     """
 
     return render_template("users/auth/index_login.html")
-
-
-@app.route("/success/")
-def success():
-    """
-    Success page.
-
-    La función `success()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario inicia sesión.
-    Ejemplo: http://localhost:5000/success/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        render_template: Renderiza la plantilla dashboard.html
-    """
-
-    # Proteger la ruta /success/
-    if "user" not in session:
-        return redirect(url_for("index_register"))
-
-    return render_template("dashboard.html")
-
 
 @app.route("/login/", methods=["POST"])
 def login():
     """
     Iniciar sesión.
-
-    La función `login()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón iniciar sesión.
-    Ejemplo: http://localhost:5000/login/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        redirect: Redirecciona a la ruta /success/ si el usuario inicia sesión
     """
 
     data = {
@@ -107,7 +57,7 @@ def login():
             }
             session["user"] = user
             flash("¡Bienvenido de nuevo!", "success")
-            return redirect(url_for("success"))
+            return redirect(url_for("dashboard"))
         
     flash("¡Email o contraseña incorrectos!", "danger")
     return redirect(url_for("index_login"))
@@ -117,15 +67,6 @@ def login():
 def logout():
     """
     Cerrar sesión.
-
-    La función `logout()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario visita la ruta /logout/ en el navegador.
-    Ejemplo: http://localhost:5000/logout/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        redirect: Redirecciona a la función `index()`
     """
 
     # Proteger la ruta /logout/
@@ -141,15 +82,6 @@ def logout():
 def register(): 
     """
     Registrar usuario.
-
-    La función `register()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario da clic en el botón registrar.
-    Ejemplo: http://localhost:5000/register/
-
-    Parámetros:
-        Ninguno
-    Retorna:
-        redirect: Redirecciona a la ruta /success/ si el usuario se registra
     """
 
     # Validacion del correo electronico
@@ -175,28 +107,26 @@ def register():
         return redirect(url_for("index_register"))
     
     # Registrar usuario
-    id = User.register(data)
-    session["user"] = id
-    flash("¡Registro exitoso!", "success")
-    return redirect(url_for("success"))
+    user = User.register(data)
+    if user:
+        session["user"] = {
+            "id": user.id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "adress": user.adress,
+            "city": user.city
+        }
+        flash("¡Registro exitoso!", "success")
+        return redirect(url_for("dashboard"))
+
+    return redirect(url_for("index_register"))
 
 
 @app.route("/users/<int:user_id>/") #data
 def user_detail(user_id):
     """
     Detalle de usuario.
-
-    La función `user_detail()` es una función de vista, lo que significa que se
-    ejecuta cuando el usuario visita la ruta /users/<int:user_id>/ en el navegador.
-    Ejemplo: http://localhost:5000/users/1/
-
-    Parámetros:
-        user_id (int): El ID del usuario
-    Contexto:
-        user (object): Objeto del usuario
-        number_pizzas (int): Número de pizzas del usuario
-    Retorna:
-        render_template: Renderiza la plantilla users/user_detail.html
     """
 
     # Proteger la ruta /users/<int:user_id>/
