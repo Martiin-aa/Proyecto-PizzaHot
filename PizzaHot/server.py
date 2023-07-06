@@ -5,7 +5,7 @@ from app import app
 
 # Controllers
 from app.controllers.users import *
-from app.controllers.quotes import *
+from app.controllers.pizzas import *
 
 
 # Run

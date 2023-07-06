@@ -145,7 +145,7 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `adress` varchar(1005) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -170,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-04 20:09:53
+-- Dump completed on 2023-07-05 16:54:32

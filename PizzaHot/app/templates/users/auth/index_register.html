@@ -1,0 +1,12 @@
+{% set include_line = False %}
+{% extends "base.html" %}
+
+{% block titulo %}Registro{% endblock %}
+
+{% include "users/auth/navbar_register.html" %}
+{% block content %}
+    <div class="col" style="margin-right: 200px;margin-left: 200px">
+        {% include "users/auth/register_form.html" %}
+    </div>
+
+{% endblock %}

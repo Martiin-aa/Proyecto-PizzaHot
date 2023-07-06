@@ -1,11 +1,11 @@
-"""Quote model."""
+"""Pizza model."""
 
 # Config
 from app.config.mysql_connection import connect_to_mysql
 
 
-class Quote:
-    """Clase del modelo de cita."""
+class Pizza:
+    """Clase del modelo de pizza."""
 
     def __init__(self, data) -> None:
         """
@@ -15,30 +15,31 @@ class Quote:
         una instancia de la clase. Las propiedades de la clase se definen en este método.
 
         Parámetros:
-            self (object): Objeto de tipo `Quote`
-            data (dict): Diccionario con los datos de la cita
+            self (object): Objeto de tipo `Pizza`
+            data (dict): Diccionario con los datos de la pizza
         Retorna:
             None
         """
 
         self.id = data["id"]
-        self.author = data["author"]
-        self.message = data["message"]
-        self.user_id = data["user_id"]
+        self.name = data["name"]
+        self.size = data["size"]
+        self.crust = data["crust"]
+        self.price = data["price"]
 
-    @classmethod
+    @classmethod #query
     def get_all(cls, data):
         """
-        Obtener todas las citas sin favoritos de un usuario.
+        Obtener todas las pizzas sin estar en la orden de un usuario.
 
         El método `get_all()` es un método de clase, lo que significa que se puede
         ejecutar sin crear una instancia de la clase.
-        Ejemplo: Quote.get_all()
+        Ejemplo: Pizza.get_all()
 
         Parámetros:
             data (dict): Diccionario con el ID del usuario
         Retorna:
-            quotes (list): Lista de citas sin favoritos
+            quotes (list): Lista de pizzas sin estar en alguna orden
         """
 
         query = """
@@ -49,66 +50,66 @@ class Quote:
             SELECT quote_id FROM favorites WHERE user_id = %(user_id)s  
         );
         """
-        quotes = connect_to_mysql().query_db(query, data)
-        return quotes
+        pizzas = connect_to_mysql().query_db(query, data)
+        return pizzas
     
-    @classmethod
+    @classmethod #query
     def get_one(cls, data):
         """
-        Obtener una cita por ID.
+        Obtener una pizza por ID.
 
         El método `get_one()` es un método de clase, lo que significa que se puede
         ejecutar sin crear una instancia de la clase.
-        Ejemplo: Quote.get_one({"id": 1})
+        Ejemplo: Pizza.get_one({"id": 1})
 
         Parámetros:
-            cls (object): Objeto de tipo `Quote`
-            data (dict): Diccionario con el ID de la cita
+            cls (object): Objeto de tipo `Pizza`
+            data (dict): Diccionario con el ID de la pizza
         Retorna:
-            quote (object): Objeto de tipo `Quote`
+            quote (object): Objeto de tipo `Pizza`
         """
 
         query = """
         SELECT * FROM quotes WHERE id = %(quote_id)s;
         """
-        quote = connect_to_mysql().query_db(query, data)
-        return cls(quote[0])
+        pizza = connect_to_mysql().query_db(query, data)
+        return cls(pizza[0])
 
-    @classmethod
+    @classmethod #query
     def create(cls, data):
         """
-        Crear una cita.
+        Crear una pizza.
 
         El método `create()` es un método de clase, lo que significa que se puede
         ejecutar sin crear una instancia de la clase.
-        Ejemplo: Quote.create({"author": "John Doe", "message": "Hello World", "user_id": 1})
+        Ejemplo: Pizza.create({"name": "peperonni", "size": "large", "crust": "slim", "price: "1.220"})
 
         Parámetros:
-            cls (object): Objeto de tipo `Quote`
-            data (dict): Diccionario con los datos de la cita
+            cls (object): Objeto de tipo `Pizza`
+            data (dict): Diccionario con los datos de la pizza
         Retorna:
-            quote_id (int): El ID de la cita creada
+            quote_id (int): El ID de la pizza creada
         """
 
         query = """
         INSERT INTO quotes (author, message, user_id)
         VALUES (%(author)s, %(message)s, %(user_id)s);  
         """
-        quote_id = connect_to_mysql().query_db(query, data)
-        return quote_id
+        pizza_id = connect_to_mysql().query_db(query, data)
+        return pizza_id
 
-    @classmethod
+    @classmethod #query
     def delete(cls, data):
         """
-        Eliminar una cita.
+        Eliminar una pizza.
 
         El método `delete()` es un método de clase, lo que significa que se puede
-        llamar directamente desde la clase `Quote` sin necesidad de crear una instancia.
-        Ejemplo: Quote.delete({"id": 1})
+        llamar directamente desde la clase `Pizza` sin necesidad de crear una instancia.
+        Ejemplo: Pizza.delete({"id": 1})
 
         Parámetros:
-            cls (object): Objeto de tipo `Quote`
-            data (dict): Diccionario con el ID de la cita
+            cls (object): Objeto de tipo `Pizza`
+            data (dict): Diccionario con el ID de la pizza
         Retorna:
             None
         """
@@ -118,18 +119,18 @@ class Quote:
         """
         return connect_to_mysql().query_db(query, data)
 
-    @classmethod
+    @classmethod #query
     def update(cls, data):
         """
-        Actualizar una cita.
+        Actualizar una pizza.
 
         El método `update()` es un método de clase, lo que significa que se puede
-        llamar directamente desde la clase `Quote` sin necesidad de crear una instancia.
-        Ejemplo: Quote.update({"id": 1, "author": "John Doe", "message": "Hello World"})
+        llamar directamente desde la clase `Pizza` sin necesidad de crear una instancia.
+        Ejemplo: Pizza.update({"id": 1, "name": "peperonni", "size": "large", "crust": "slim", "price: "1.220""})
 
         Parámetros:
-            cls (object): Objeto de tipo `Quote`.
-            data (dict): Diccionario con el ID de la cita, el autor y el mensaje.
+            cls (object): Objeto de tipo `Pizza`.
+            data (dict): Diccionario con el ID de la pizza, el nombre, tamaño, masa y precio.
         Retorna:
             None
         """
@@ -139,20 +140,20 @@ class Quote:
         """
         return connect_to_mysql().query_db(query, data)
 
-    @classmethod
-    def get_number_of_quotes(cls, data):
+    @classmethod #query
+    def get_number_of_pizzas(cls, data):
         """
-        Obtener el número de citas de un usuario.
+        Obtener el número de pizzas de el usuario.
 
-        El método `get_number_of_quotes()` es un método de clase, lo que significa que se puede
-        llamar directamente desde la clase `Quote` sin necesidad de crear una instancia.
-        Ejemplo: Quote.get_number_of_quotes({"user_id": 1})
+        El método `get_number_of_pizzas()` es un método de clase, lo que significa que se puede
+        llamar directamente desde la clase `Pizza` sin necesidad de crear una instancia.
+        Ejemplo: Pizza.get_number_of_quotes({"user_id": 1})
 
         Parámetros:
-            cls (object): Objeto de tipo `Quote`.
+            cls (object): Objeto de tipo `Pizza`.
             data (dict): Diccionario con el ID del usuario.
         Retorna:
-            count (int): Número de citas de un usuario.
+            count (int): Número de pizzas de un usuario.
         """
 
         query = """

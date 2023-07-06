@@ -9,7 +9,7 @@ from app import app
 
 # Models
 from app.models.user import User
-from app.models.quote import Quote
+from app.models.pizza import Pizza
 
 
 # Bcrypt app
@@ -17,7 +17,7 @@ bcrypt = Bcrypt(app)
 
 
 @app.route("/")
-def index():
+def index_register():
     """
     Index page.
 
@@ -28,10 +28,27 @@ def index():
     Parámetros:
         Ninguno
     Retorna:
-        render_template: Renderiza la plantilla users/auth/index.html
+        render_template: Renderiza la plantilla users/auth/index_register.html
     """
 
-    return render_template("users/auth/index.html")
+    return render_template("users/auth/index_register.html")
+
+@app.route("/login/")
+def index_login():
+    """
+    Index page.
+
+    La función `index()` es una función de vista, lo que significa que se
+    ejecuta cuando el usuario visita la ruta / en el navegador.
+    Ejemplo: http://localhost:5000/
+
+    Parámetros:
+        Ninguno
+    Retorna:
+        render_template: Renderiza la plantilla users/auth/index_login.html
+    """
+
+    return render_template("users/auth/index_login.html")
 
 
 @app.route("/success/")
@@ -46,14 +63,14 @@ def success():
     Parámetros:
         Ninguno
     Retorna:
-        render_template: Renderiza la plantilla users/auth/success.html
+        render_template: Renderiza la plantilla dashboard.html
     """
 
     # Proteger la ruta /success/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
-    return render_template("users/auth/success.html")
+    return render_template("dashboard.html")
 
 
 @app.route("/login/", methods=["POST"])
@@ -82,15 +99,18 @@ def login():
         if is_correct_password:
             user = {
                 "id": user.id,
-                "name": user.name,
-                "email": user.email
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "adress": user.adress,
+                "city": user.city
             }
             session["user"] = user
             flash("¡Bienvenido de nuevo!", "success")
             return redirect(url_for("success"))
         
     flash("¡Email o contraseña incorrectos!", "danger")
-    return redirect(url_for("index"))
+    return redirect(url_for("index_login"))
 
 
 @app.route("/logout/")
@@ -110,11 +130,11 @@ def logout():
 
     # Proteger la ruta /logout/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     session.clear()
     flash("¡Hasta luego!", "success")
-    return redirect(url_for("index"))
+    return redirect(url_for("index_register"))
 
 
 @app.route("/register/", methods=["POST"])
@@ -134,38 +154,34 @@ def register():
 
     # Validacion del correo electronico
     if not User.validate_register(request.form):
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     # Encriptar contraseña
     password_hash = bcrypt.generate_password_hash(request.form["password"])
 
     # Diccionario de datos para el modelo
     data = {
-        "name": request.form["name"],
+        "first_name": request.form["first_name"],
+        "last_name": request.form["last_name"],
         "email": request.form["email"],
+        "adress": request.form["adress"],
+        "city": request.form["city"],
         "password": password_hash
     }
 
     # Validar que el correo electrónico no esté registrado
     if User.get_by_email(data):
         flash("¡El correo electrónico ya está registrado!", "danger")
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
     
     # Registrar usuario
-    user = User.register(data)
-    if user:
-        session["user"] = {
-            "id": user.id,
-            "name": user.name,
-            "email": user.email
-        }
-        flash("¡Registro exitoso!", "success")
-        return redirect(url_for("success"))
-
-    return redirect(url_for("index"))
+    id = User.register(data)
+    session["user"] = id
+    flash("¡Registro exitoso!", "success")
+    return redirect(url_for("success"))
 
 
-@app.route("/users/<int:user_id>/")
+@app.route("/users/<int:user_id>/") #data
 def user_detail(user_id):
     """
     Detalle de usuario.
@@ -178,22 +194,22 @@ def user_detail(user_id):
         user_id (int): El ID del usuario
     Contexto:
         user (object): Objeto del usuario
-        number_quotes (int): Número de citas del usuario
+        number_pizzas (int): Número de pizzas del usuario
     Retorna:
         render_template: Renderiza la plantilla users/user_detail.html
     """
 
     # Proteger la ruta /users/<int:user_id>/
     if "user" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for("index_register"))
 
     data = {"user_id": user_id}
     user = User.get_one(data)
-    number_quotes = Quote.get_number_of_quotes(data)
+    number_pizzas = Pizza.get_number_of_pizzas(data)
 
     context = {
         "user": user,
-        "number_quotes": number_quotes
+        "number_pizzas": number_pizzas
     }
     return render_template("users/user_detail.html", **context)
 

@@ -1,24 +1,39 @@
-<div class="card p-4">
+<div class="card p-4 pb-2 pt-2">
     <div class="card-body">
-        <h4 class="card-title text-center">Registration</h4>
-        <form action="{{ url_for('register') }}" method="post" class="mt-4">
-            <div class="mb-3">
-                <label for="inputName" class="form-label">Nombre</label>
-                <input type="text" name="name" class="form-control" id="inputName" required>
-            </div>
-            <div class="mb-3">
-                <label for="inputEmail" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="inputEmail" required>
-            </div>
-            <div class="mb-3">
-                <label for="inputPassword" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="inputPassword" required>
-            </div>
-            <div class="mb-3">
-                <label for="inputConfirmPassword" class="form-label">Confirm password</label>
-                <input type="password" name="password_confirm" class="form-control" id="inputConfirmPassword" required>
-            </div>
-            <button type="submit" class="btn btn-success float-end px-4 mt-4">Register</button>
-        </form>
+        <h1 class="card-title">Registrate</h1>
     </div>
+    <form action="{{ url_for('register') }}" method="post">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+            <input type="name" class="form-control" id="exampleFormControlInput1" name="first_name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Apellido</label>
+            <input type="name" class="form-control" id="exampleFormControlInput1" name="last_name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Correo Electronico</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" name="email">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Dirección</label>
+            <input type="name" class="form-control" id="exampleFormControlInput1" name="adress">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Ciudad</label>
+            <input type="name" class="form-control" id="exampleFormControlInput1" name="city">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="exampleFormControlInput1" name="password">
+            <div id="emailHelp" class="form-text">No compartas la clave con nadie.</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="exampleFormControlInput1" name="password_confirm">
+        </div>
+        <div class="col-auto pt-2">
+            <button type="submit" class="btn btn-success" value="Register">Registrarse</button>
+        </div>
+    </form>
 </div>

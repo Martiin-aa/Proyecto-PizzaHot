@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block head_title %}{% endblock %}</title>
+    <title>{% block titulo %}{% endblock %}</title>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -19,7 +19,9 @@
 <div class="container my-5">
     <div class="row">
         {% if session['user'] %}
+            {% if include_line %}
             {% include 'includes/navbar.html' %}
+            {% endif %}
         {% endif %}
         {% block content %}{% endblock %}
     </div>

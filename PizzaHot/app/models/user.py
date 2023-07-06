@@ -5,7 +5,7 @@ from app.config.mysql_connection import connect_to_mysql
 from flask import flash
 
 # Models
-from app.models.quote import Quote
+from app.models.pizza import Pizza
 
 # the regex module
 import re	
@@ -29,11 +29,16 @@ class User:
             None
         """
 
-        self.id = data["id"]
-        self.name = data["name"]
-        self.email = data["email"]
-        self.password = data["password"]
-        self.quotes = []  # Lista de citas del usuario
+        self.id = data.get("id", 0)
+        self.first_name = data.get("first_name", "")
+        self.last_name = data.get("last_name", "")
+        self.email = data.get("email", "")
+        self.adress = data.get("adress", "")
+        self.city = data.get("city", "")
+        self.password = data.get("password", "")
+        self.created_at = data.get("created_at", "")
+        self.updated_at = data.get("updated_at", "")
+        self.pizzas = []  # Lista de pizzas del usuario
 
     @classmethod
     def get_by_email(cls, data):
@@ -54,7 +59,7 @@ class User:
         """
             
         query = """
-        SELECT id, name, email, password
+        SELECT id, first_name, last_name, email, adress, city, password
         FROM users WHERE email = %(email)s;
         """
         results = connect_to_mysql().query_db(query, data)
@@ -84,27 +89,21 @@ class User:
         """
 
         query = """
-        INSERT INTO users (name, email, password)
-        VALUES (%(name)s, %(email)s, %(password)s);
+        INSERT INTO users (first_name, last_name, email, adress, city, password, created_at, updated_at)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(adress)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        user_id = connect_to_mysql().query_db(query, data)
-        data = {"user_id": user_id}
+        return connect_to_mysql().query_db(query, data)
 
-        if user_id:
-            user = cls.get_one(data)
-            return user
-        return None
-    
-    @classmethod
+    @classmethod #query
     def get_one(cls, data):
         """
-        Obtener un usuario con sus citas.
+        Obtener un usuario con sus pizzas.
 
         El método `get_one()` es un método de clase, lo que significa que se puede
         ejecutar sin crear una instancia de la clase.
         Ejemplo: User.get_one()
 
-        Permite obtener un usuario por su ID, con el fin de obtener sus citas.
+        Permite obtener un usuario por su ID, con el fin de obtener sus pizzas.
 
         Parámetros:
             cls (object): Objeto de tipo `User`
@@ -120,7 +119,7 @@ class User:
         results = connect_to_mysql().query_db(query, data)
         user = cls(results[0])
         for row in results:
-            user.quotes.append(Quote(row))
+            user.pizzas.append(Pizza(row))
         return user
 
     @staticmethod
@@ -134,7 +133,7 @@ class User:
         if not EMAIL_REGEX.match(user['email']):
             flash("Email invalido!!!","danger")
             is_valid=False
-        if len(user['name']) < 3:
+        if len(user['first_name']) < 3:
             flash("El nombre debe tener al menos 3 caracteres","danger")
             is_valid= False
         if len(user['password']) < 8:
