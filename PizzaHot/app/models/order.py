@@ -70,3 +70,17 @@ class Order:
         DELETE FROM orders WHERE pizza_id = %(pizza_id)s AND user_id = %(user_id)s;
         """
         return connect_to_mysql().query_db(query, data)
+
+    @classmethod
+    def sum_order(cls, data): 
+        """
+        Sumar todas las pizzas de la orden.
+        """
+        query = """
+        SELECT orders.id, SUM(pizzas.price) AS total_price
+        FROM orders
+        JOIN pizzas ON orders.pizza_id = pizzas.id
+        WHERE orders.id = %(order_id)s
+        GROUP BY orders.id;
+        """
+        return connect_to_mysql().query_db(query, data)

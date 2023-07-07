@@ -43,9 +43,9 @@ class User:
         """
         results = connect_to_mysql().query_db(query, data)
     
-        if results:
-            return cls(results[0])
-        return None
+        if len(results) < 1:
+            return False
+        return cls(results[0])
     
     @classmethod
     def register(cls, data):
@@ -57,25 +57,26 @@ class User:
         INSERT INTO users (first_name, last_name, email, adress, city, password, created_at, updated_at)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(adress)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        # user_id = connect_to_mysql().query_db(query, data)
+        #user_id = connect_to_mysql().query_db(query, data)
         #data = {"user_id": user_id}
+
         #if user_id:
             #user = cls.get_one(data)
             #return user
+        #return None
         return connect_to_mysql().query_db(query, data)
 
-    @classmethod #query
+    @classmethod 
     def get_one(cls, data):
         """
         Obtener un usuario con sus pizzas.
         """
 
         query = """
-        SELECT users.*, pizzas.*
-        FROM users
-        JOIN orders ON users.id = orders.user_id
-        JOIN pizzas ON orders.pizza_id = pizzas.id
-        WHERE users.id = %(id)s;
+        SELECT pizzas.*
+        FROM pizzas
+        JOIN orders ON pizzas.id = orders.pizza_id
+        WHERE orders.user_id = %(id)s;
         """
         results = connect_to_mysql().query_db(query, data)
         user = cls(results[0])

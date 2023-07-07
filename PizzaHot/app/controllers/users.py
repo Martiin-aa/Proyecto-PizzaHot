@@ -108,39 +108,21 @@ def register():
     
     # Registrar usuario
     user = User.register(data)
-    #if user:
-        #session["user"] = {
-            #"id": user.id,
-            #"first_name": user.first_name,
-            #"last_name": user.last_name,
-            #"email": user.email,
-            #"adress": user.adress,
-            #"city": user.city
-        #}
-    flash("¡Registro exitoso!", "success")
-    return redirect(url_for("dashboard"))
+    if user:
+        session["user"] = {
+            "id": user.id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "adress": user.adress,
+            "city": user.city
+        }
+        flash("¡Registro exitoso!", "success")
+        return redirect(url_for("dashboard"))
 
-    #return redirect(url_for("index_register"))
+    return redirect(url_for("index_register"))
 
 
-@app.route("/users/<int:user_id>/") #data
-def user_detail(user_id):
-    """
-    Detalle de usuario.
-    """
 
-    # Proteger la ruta /users/<int:user_id>/
-    if "user" not in session:
-        return redirect(url_for("index_register"))
-
-    data = {"user_id": user_id}
-    user = User.get_one(data)
-    number_pizzas = Pizza.get_number_of_pizzas(data)
-
-    context = {
-        "user": user,
-        "number_pizzas": number_pizzas
-    }
-    return render_template("users/user_detail.html", **context)
 
 

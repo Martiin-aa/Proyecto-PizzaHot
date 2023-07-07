@@ -58,8 +58,8 @@ class Pizza:
         """
 
         query = """
-        INSERT INTO quotes (author, message, user_id)
-        VALUES (%(author)s, %(message)s, %(user_id)s);  
+        INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
+        VALUES (%(name)s, %(size)s, %(crust)s, %(price)s, %(img)s, NOW(), NOW());
         """
         pizza_id = connect_to_mysql().query_db(query, data)
         return pizza_id
@@ -88,14 +88,3 @@ class Pizza:
         """
         return connect_to_mysql().query_db(query, data)
 
-    @classmethod #query
-    def get_number_of_pizzas(cls, data):
-        """
-        Obtener el número de pizzas de el usuario.
-        """
-
-        query = """
-        SELECT COUNT(*) AS count FROM quotes WHERE user_id = %(user_id)s;
-        """
-        count = connect_to_mysql().query_db(query, data)
-        return count[0]["count"]

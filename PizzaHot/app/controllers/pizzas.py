@@ -21,8 +21,6 @@ def dashboard():
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    print(session['user'])
-
     # Obtener el ID del usuario de la sesión.
     data = {"user_id": session['user']}
 
@@ -38,7 +36,7 @@ def dashboard():
 @app.route("/pizzas/")
 def pizzas():
     """
-    Página dashboard.
+    Página de pizzas.
     """
 
     # Proteger la ruta /dashboard/
@@ -88,13 +86,15 @@ def create_pizza():
         "name": request.form['name'],
         "size": request.form['size'],
         "crust": request.form['crust'],
+        "price": request.form['price'],
+        "img": request.form['img'],
         "user_id": session['user']['id']
     }
     Pizza.create(data)
     return redirect(url_for("dashboard"))
 
 
-@app.route("/pizzas/<int:pizza_id>/", methods=["GET", "POST"]) #data
+@app.route("/pizzas/<int:pizza_id>/", methods=["GET", "POST"]) 
 def update_pizza(pizza_id):
     """
     Actualizar una pizza.
@@ -115,6 +115,7 @@ def update_pizza(pizza_id):
             "size": request.form['size'],
             "crust": request.form['crust'],
             "price": request.form['price'],
+            "img": request.form['img']
         }
         Pizza.update(data)
         return redirect(url_for("dashboard"))

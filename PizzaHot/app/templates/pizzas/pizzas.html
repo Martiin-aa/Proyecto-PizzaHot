@@ -5,10 +5,13 @@
 {% block titulo %}Catalogo de Pizzas{% endblock %}
 
 {% block content %}
+<div class="text-center">
+    <h1 class="card-title mb-5">Opciones de Pizzas</h1>
+</div>
 <div class="col">
     <!--% for pizza in pizzas %} -->
     <div class="card" style="width: 25rem;">
-        <img src="..." class="card-img-top" alt="...">
+        <img src="..." class="card-img-top" alt="..."><!--pizza.img}}-->
         <div class="card-body">
             <h5 class="card-title">fdfdfdfdf<!--pizza.name}}--></h5>
             <p class="card-text" style="width: 22rem;">Tamaño: hghgh<!--pizza.size}}--> Masa: ghghghhhhhhhh<!--pizza.crust}}--></p>
@@ -17,6 +20,11 @@
             <a href="#" class="btn btn-warning" style="float: right;">Editar</a> <!--"{ url_for('update_pizza') }}"-->
 
         </div>
+    </div>
+    <div class="text-end">
+        <a href="#" class="btn btn-primary"> <!--"{ url_for('show_order') }}"-->
+            Ir al pago
+        </a>
     </div>
     <!--% endfor %}-->
 </div>
