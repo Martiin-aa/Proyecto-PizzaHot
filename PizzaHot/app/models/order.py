@@ -12,11 +12,12 @@ class Order:
         Constructor.
         """
 
-        self.id = data["id"]
-        self.price = data["price"]
-        self.topping_chose = data["topping_chose"]
-        self.pizza_id = data["pizza_id"]
-        self.user_id = data["user_id"]
+        self.id = data.get("id", 0)
+        self.price = data.get("price", 0)
+        self.pizza_id = data.get("pizza_id", 0)
+        self.user_id = data.get("user_id", 0)
+        self.created_at = data.get("created_at", "")
+        self.updated_at = data.get("updated_at", "")
 
     @classmethod #query
     def get_orders(cls, data):

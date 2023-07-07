@@ -27,7 +27,6 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `price` int DEFAULT NULL,
-  `topping_chose` varchar(255) DEFAULT NULL,
   `pizza_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -62,6 +61,7 @@ CREATE TABLE `pizzas` (
   `size` varchar(45) DEFAULT NULL,
   `crust` varchar(45) DEFAULT NULL,
   `price` int DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -101,6 +101,36 @@ CREATE TABLE `toppings` (
 LOCK TABLES `toppings` WRITE;
 /*!40000 ALTER TABLE `toppings` DISABLE KEYS */;
 /*!40000 ALTER TABLE `toppings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `toppings_orders`
+--
+
+DROP TABLE IF EXISTS `toppings_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `toppings_orders` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `topping_id` int unsigned NOT NULL,
+  `order_id` int unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_toppings_has_orders_orders1_idx` (`order_id`),
+  KEY `fk_toppings_has_orders_toppings1_idx` (`topping_id`),
+  CONSTRAINT `fk_toppings_has_orders_orders1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `fk_toppings_has_orders_toppings1` FOREIGN KEY (`topping_id`) REFERENCES `toppings` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `toppings_orders`
+--
+
+LOCK TABLES `toppings_orders` WRITE;
+/*!40000 ALTER TABLE `toppings_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `toppings_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -172,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-05 22:03:14
+-- Dump completed on 2023-07-06 20:47:05

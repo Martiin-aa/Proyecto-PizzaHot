@@ -57,12 +57,12 @@ class User:
         INSERT INTO users (first_name, last_name, email, adress, city, password, created_at, updated_at)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(adress)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        user_id = connect_to_mysql().query_db(query, data)
-        data = {"user_id": user_id}
-        if user_id:
-            user = cls.get_one(data)
-            return user
-        return None
+        # user_id = connect_to_mysql().query_db(query, data)
+        #data = {"user_id": user_id}
+        #if user_id:
+            #user = cls.get_one(data)
+            #return user
+        return connect_to_mysql().query_db(query, data)
 
     @classmethod #query
     def get_one(cls, data):

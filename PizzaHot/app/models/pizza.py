@@ -12,11 +12,14 @@ class Pizza:
         Constructor.
         """
 
-        self.id = data["id"]
-        self.name = data["name"]
-        self.size = data["size"]
-        self.crust = data["crust"]
-        self.price = data["price"]
+        self.id = data.get("id", 0)
+        self.name = data.get("name", "")
+        self.size = data.get("size", "")
+        self.crust = data.get("crust", "")
+        self.price = data.get("price", 0)
+        self.img = data.get("img", "")
+        self.created_at = data.get("created_at", "")
+        self.updated_at = data.get("updated_at", "")
 
     @classmethod #query
     def get_all(cls, data):
