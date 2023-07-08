@@ -24,7 +24,7 @@ class User:
         self.first_name = data.get("first_name", "")
         self.last_name = data.get("last_name", "")
         self.email = data.get("email", "")
-        self.adress = data.get("adress", "")
+        self.adress = data.get("address", "")
         self.city = data.get("city", "")
         self.password = data.get("password", "")
         self.created_at = data.get("created_at", "")
@@ -37,15 +37,11 @@ class User:
         Obtener usuario por email.
         """
 
-        query = """
-        SELECT id, first_name, last_name, email, adress, city, password
-        FROM users WHERE email = %(email)s;
-        """
+        query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connect_to_mysql().query_db(query, data)
-    
-        if len(results) < 1:
-            return False
-        return cls(results[0])
+        if results:
+            return cls(results[0])
+        return None
     
     @classmethod
     def register(cls, data):
@@ -54,16 +50,9 @@ class User:
         """
 
         query = """
-        INSERT INTO users (first_name, last_name, email, adress, city, password, created_at, updated_at)
-        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(adress)s, %(city)s, %(password)s, NOW(), NOW());
+        INSERT INTO users (first_name, last_name, email, address, city, password, created_at, updated_at)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(address)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        #user_id = connect_to_mysql().query_db(query, data)
-        #data = {"user_id": user_id}
-
-        #if user_id:
-            #user = cls.get_one(data)
-            #return user
-        #return None
         return connect_to_mysql().query_db(query, data)
 
     @classmethod 
@@ -83,6 +72,17 @@ class User:
         for row in results:
             user.pizzas.append(Pizza(row))
         return user
+    
+    @classmethod
+    def get_by_id(cls,data):
+        """
+        Obtener un usuario por su id.
+        """
+        query = "SELECT * FROM users WHERE id = %(id)s;"
+        results = connect_to_mysql().query_db(query, data)
+        if results:
+            return cls(results[0])
+        return None
 
     @staticmethod
     def validate_register(user):

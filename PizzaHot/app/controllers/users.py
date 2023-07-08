@@ -52,7 +52,7 @@ def login():
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
-                "adress": user.adress,
+                "address": user.address,
                 "city": user.city
             }
             session["user"] = user
@@ -96,7 +96,7 @@ def register():
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
         "email": request.form["email"],
-        "adress": request.form["adress"],
+        "address": request.form["address"],
         "city": request.form["city"],
         "password": password_hash
     }
@@ -107,22 +107,7 @@ def register():
         return redirect(url_for("index_register"))
     
     # Registrar usuario
-    user = User.register(data)
-    if user:
-        session["user"] = {
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "adress": user.adress,
-            "city": user.city
-        }
-        flash("¡Registro exitoso!", "success")
-        return redirect(url_for("dashboard"))
-
-    return redirect(url_for("index_register"))
-
-
-
-
-
+    id = User.register(data)
+    session["user"] = id
+    flash("¡Registro exitoso!", "success")
+    return redirect(url_for("dashboard"))

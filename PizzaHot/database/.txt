@@ -1,0 +1,48 @@
+SELECT * FROM users;
+SELECT * FROM pizzas;
+SELECT * FROM orders;
+SELECT * FROM toppings;
+
+-- insertar aderezos
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('olive', '12200', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('onion', '12200', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('mushroom', '12200', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('basil', '12200', NOW(), NOW());
+
+-- insertar un pizza.
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Large', 'Thin', '12200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Medium', 'Stuffed', '8200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Small', 'Cracker', '4200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Neapolitan', 'Large', 'Stuffed', '12800','https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Neapolitan', 'Medium', 'Thin', '8800','https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Neapolitan', 'Small', 'Cracker', '5000','https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Margherita', 'Large', 'Cracker', '14200','https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Margherita', 'Medium', 'Thin', '9200','https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Margherita', 'Small', 'Stuffed', '5800','https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',NOW(), NOW());
+
+-- insertar una orden de pizza a un usuario.
+INSERT INTO orders (price, pizza_id, user_id, created_at, updated_at)
+VALUES (10000, 1 , 1, NOW(), NOW());
+
+-- Obtener todas las pizzas de la orden de un usuario.
+SELECT pizzas.*
+FROM pizzas
+JOIN orders ON pizzas.id = orders.pizza_id
+WHERE orders.user_id = 1;
+
+-- Obtener todas las ordenes pasadas creadas por el usuario.
+SELECT orders.*
+FROM orders
+JOIN users ON orders.user_id = users.id
+WHERE users.id = 1
+AND orders.created_at < NOW();
+
+-- Obtener todas las pizzas sin estar en la orden de un usuario.
+SELECT * FROM pizzas WHERE id NOT IN (SELECT pizza_id FROM orders WHERE user_id = 1);
+
+-- Sumar todas las pizzas de la orden.
+SELECT orders.id, SUM(pizzas.price) AS total_price
+FROM orders
+JOIN pizzas ON orders.pizza_id = pizzas.id
+WHERE orders.id = 1
+GROUP BY orders.id;

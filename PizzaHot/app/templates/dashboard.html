@@ -5,13 +5,13 @@
 
 {% include "includes/navbar_dashboard.html" %}
 {% block content %}
-<h2 class="mb-5">Bienvenido, {{ session['user']['first_name']}}</h2>
+<h2 class="mb-5">Bienvenido, {{user.first_name}}</h2>
 
     <div class="col">
         <h4>Ordenes pasadas</h4>
 
         <!--% if order_past_pizzas %}-->
-            <!--% for order_past_pizza in orders_past_pizzas %}-->
+            <!--% for order_past_pizza in order_past_pizzas %}-->
                 <div class="card">
                     <h5 class="card-header">Featu <!--{order_past_pizza.created_at}}--></h5>
                     <div class="card-body">
@@ -34,7 +34,7 @@
         <h4>Tus ordenes</h4>
 
         <!--% if order_pizzas %}-->
-            <!--% for order_pizza in orders_pizzas %}-->
+            <!--% for order_pizza in order_pizzas %}-->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">sddsd<!--{order_pizza.name}}--></h5>

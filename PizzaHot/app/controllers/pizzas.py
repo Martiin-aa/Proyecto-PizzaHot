@@ -7,6 +7,7 @@ from flask import render_template, redirect, request, url_for, session
 from app import app
 
 # Models
+from app.models.user import User
 from app.models.pizza import Pizza
 from app.models.order import Order
 
@@ -22,14 +23,16 @@ def dashboard():
         return redirect(url_for("index_register"))
 
     # Obtener el ID del usuario de la sesión.
-    data = {"user_id": session['user']}
+    data = {"id": session['user']}
 
     order_past_pizzas = Order.get_past_orders(data)
     order_pizzas = Order.get_orders(data)
+    user = User.get_by_id(data)
 
     context = {
         "order_past_pizzas": order_past_pizzas,
-        "order_pizzas": order_pizzas
+        "order_pizzas": order_pizzas,
+        "user": user
     }
     return render_template("dashboard.html", **context)
 
