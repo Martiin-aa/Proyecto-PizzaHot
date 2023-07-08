@@ -24,7 +24,7 @@ class User:
         self.first_name = data.get("first_name", "")
         self.last_name = data.get("last_name", "")
         self.email = data.get("email", "")
-        self.adress = data.get("address", "")
+        self.address = data.get("address", "")
         self.city = data.get("city", "")
         self.password = data.get("password", "")
         self.created_at = data.get("created_at", "")
@@ -53,7 +53,21 @@ class User:
         INSERT INTO users (first_name, last_name, email, address, city, password, created_at, updated_at)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(address)s, %(city)s, %(password)s, NOW(), NOW());
         """
-        return connect_to_mysql().query_db(query, data)
+
+        results = connect_to_mysql().query_db(query, data)
+    
+        if results:
+            user_data = {
+                "id": results,
+                "first_name": data["first_name"],
+                "last_name": data["last_name"],
+                "email": data["email"],
+                "address": data["address"],
+                "city": data["city"]
+            }
+            return cls(user_data)
+
+        return None
 
     @classmethod 
     def get_one(cls, data):

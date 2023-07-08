@@ -13,7 +13,7 @@ class Order:
         """
 
         self.id = data.get("id", 0)
-        self.price = data.get("price", 0)
+        self.total_price = data.get("total_price", 0)
         self.pizza_id = data.get("pizza_id", 0)
         self.user_id = data.get("user_id", 0)
         self.created_at = data.get("created_at", "")
@@ -39,9 +39,10 @@ class Order:
         Obtener todas las ordenes pasadas creadas por el usuario.
         """
         query = """
-            SELECT orders.*
+            SELECT orders.* , pizzas.*
             FROM orders
-            JOIN users ON orders.user_id = users.id
+            JOIN users ON orders.user_id = users.id 
+            JOIN pizzas ON  orders.pizza_id = pizzas.id
             WHERE users.id = %(id)s
             AND orders.created_at < NOW();
             """

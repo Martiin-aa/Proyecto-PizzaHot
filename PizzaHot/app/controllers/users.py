@@ -107,7 +107,17 @@ def register():
         return redirect(url_for("index_register"))
     
     # Registrar usuario
-    id = User.register(data)
-    session["user"] = id
-    flash("¡Registro exitoso!", "success")
-    return redirect(url_for("dashboard"))
+    user = User.register(data)
+    if user:
+        session["user"] = {
+            "id": user.id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "address": user.address,
+            "city": user.city
+        }
+        flash("¡Registro exitoso!", "success")
+        return redirect(url_for("dashboard"))
+
+    return redirect(url_for("index_register"))

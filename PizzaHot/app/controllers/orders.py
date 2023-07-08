@@ -7,7 +7,7 @@ from flask import render_template, redirect, request, url_for, session
 from app import app
 
 # Models
-from app.models.order import User
+from app.models.user import User
 from app.models.pizza import Pizza
 from app.models.order import Order
 
@@ -23,7 +23,7 @@ def add_order_pizza(pizza_id):
 
     data = {
         "pizza_id": pizza_id,
-        "user_id": session['user']['id']
+        "user_id": session['user']['id'],
     }
     Order.add_order(data)
     return redirect(url_for("dashboard"))

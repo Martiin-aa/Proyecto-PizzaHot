@@ -21,8 +21,8 @@ INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `c
 INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Margherita', 'Small', 'Stuffed', '5800','https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',NOW(), NOW());
 
 -- insertar una orden de pizza a un usuario.
-INSERT INTO orders (price, pizza_id, user_id, created_at, updated_at)
-VALUES (10000, 1 , 1, NOW(), NOW());
+INSERT INTO orders (pizza_id, user_id, created_at, updated_at)
+VALUES ( 1 , 1, NOW(), NOW());
 
 -- Obtener todas las pizzas de la orden de un usuario.
 SELECT pizzas.*
@@ -31,9 +31,10 @@ JOIN orders ON pizzas.id = orders.pizza_id
 WHERE orders.user_id = 1;
 
 -- Obtener todas las ordenes pasadas creadas por el usuario.
-SELECT orders.*
+SELECT orders.* , pizzas.*
 FROM orders
-JOIN users ON orders.user_id = users.id
+JOIN users ON orders.user_id = users.id 
+JOIN pizzas ON  orders.pizza_id = pizzas.id
 WHERE users.id = 1
 AND orders.created_at < NOW();
 

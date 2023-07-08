@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `price` int DEFAULT NULL,
+  `total_price` int DEFAULT NULL,
   `pizza_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `orders` (
   KEY `fk_pizzas_has_users_pizzas_idx` (`pizza_id`),
   CONSTRAINT `fk_pizzas_has_users_pizzas` FOREIGN KEY (`pizza_id`) REFERENCES `pizzas` (`id`),
   CONSTRAINT `fk_pizzas_has_users_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,NULL,1,1,'2023-07-08 13:31:23','2023-07-08 13:31:23');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +66,7 @@ CREATE TABLE `pizzas` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +75,7 @@ CREATE TABLE `pizzas` (
 
 LOCK TABLES `pizzas` WRITE;
 /*!40000 ALTER TABLE `pizzas` DISABLE KEYS */;
-INSERT INTO `pizzas` VALUES (1,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 09:55:12','2023-07-08 09:55:12'),(2,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 09:55:12','2023-07-08 09:55:12'),(3,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 09:55:12','2023-07-08 09:55:12'),(4,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 09:55:12','2023-07-08 09:55:12'),(5,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 09:55:12','2023-07-08 09:55:12'),(6,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 09:55:12','2023-07-08 09:55:12'),(7,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 09:55:12','2023-07-08 09:55:12'),(8,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 09:55:12','2023-07-08 09:55:12'),(9,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 09:55:12','2023-07-08 09:55:12');
+INSERT INTO `pizzas` VALUES (1,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:24:01','2023-07-08 13:24:01'),(2,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:24:01','2023-07-08 13:24:01'),(3,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:24:01','2023-07-08 13:24:01'),(4,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:01','2023-07-08 13:24:01'),(5,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:01','2023-07-08 13:24:01'),(6,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:02','2023-07-08 13:24:02'),(7,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02'),(8,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02'),(9,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02'),(10,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:31:46','2023-07-08 13:31:46'),(11,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:31:46','2023-07-08 13:31:46'),(12,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:31:46','2023-07-08 13:31:46'),(13,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:31:46','2023-07-08 13:31:46'),(14,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:31:46','2023-07-08 13:31:46'),(15,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:31:46','2023-07-08 13:31:46'),(16,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:31:46','2023-07-08 13:31:46'),(17,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:31:46','2023-07-08 13:31:46'),(18,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:31:46','2023-07-08 13:31:46');
 /*!40000 ALTER TABLE `pizzas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +93,7 @@ CREATE TABLE `toppings` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +102,7 @@ CREATE TABLE `toppings` (
 
 LOCK TABLES `toppings` WRITE;
 /*!40000 ALTER TABLE `toppings` DISABLE KEYS */;
-INSERT INTO `toppings` VALUES (1,'olive',12200,'2023-07-08 09:54:50','2023-07-08 09:54:50'),(2,'onion',12200,'2023-07-08 09:54:50','2023-07-08 09:54:50'),(3,'mushroom',12200,'2023-07-08 09:54:50','2023-07-08 09:54:50'),(4,'basil',12200,'2023-07-08 09:54:50','2023-07-08 09:54:50');
+INSERT INTO `toppings` VALUES (1,'olive',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(2,'onion',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(3,'mushroom',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(4,'basil',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(5,'olive',12200,'2023-07-08 13:31:45','2023-07-08 13:31:45'),(6,'onion',12200,'2023-07-08 13:31:46','2023-07-08 13:31:46'),(7,'mushroom',12200,'2023-07-08 13:31:46','2023-07-08 13:31:46'),(8,'basil',12200,'2023-07-08 13:31:46','2023-07-08 13:31:46');
 /*!40000 ALTER TABLE `toppings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +184,7 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +193,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Martin','Araya','martin.arayaantezana@gmail.com','Pj. El Genoves','Santiago','$2b$12$uAUSGFJ3Txi9EW8PIegsAeGSeFXIoXIRD1kJexza7TY9mXyFGDOuq','2023-07-08 10:09:56','2023-07-08 10:09:56');
+INSERT INTO `users` VALUES (1,'Martin','Araya','martin.arayaantezana@gmail.com','Pj. El Genoves','Santiago','$2b$12$.AxhLm85n3gaGgJIE/akh.4gmfo0oyQnAmqW67ciVYU7Gn3993/HS','2023-07-08 13:27:54','2023-07-08 13:27:54');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -205,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-08 10:11:12
+-- Dump completed on 2023-07-08 13:47:40

@@ -5,29 +5,28 @@
 
 {% include "includes/navbar_dashboard.html" %}
 {% block content %}
-<h2 class="mb-5">Bienvenido, {{user.first_name}}</h2>
+<h2 class="mb-5">Bienvenido, {{session.user.first_name}}</h2>
 
     <div class="col">
         <h4>Ordenes pasadas</h4>
 
-        <!--% if order_past_pizzas %}-->
-            <!--% for order_past_pizza in order_past_pizzas %}-->
-                <div class="card">
-                    <h5 class="card-header">Featu <!--{order_past_pizza.created_at}}--></h5>
+        {% if order_past_pizzas %}
+            {% for order_past_pizza in order_past_pizzas %}
+                <div class="card mt-2">
+                    <h5 class="card-header">{{order_past_pizza.created_at.strftime("%Y/%m/%d")}}</h5>
                     <div class="card-body">
-                        <h5 class="card-title">sddsd<!--{order_past_pizza.pizza_id.name}}--></h5>
-                        <p class="card-text">$100 CLP<!---{order_past_pizza.pizza_id.name}}--></p>
+                        <h5 class="card-title">Pizza {{order_past_pizza.name}}</h5>
+                        <p class="card-text">${{order_past_pizza.price}} CLP</p>
                         <div class="text-end">
-                            <a href="#"
-                                class="btn btn-success">Añadir a Orden <!--"{ url_for('add_order_pizza') }}"-->
+                            <a href="{{ url_for('add_order_pizza', pizza_id=order_past_pizza.pizza_id) }}" class="btn btn-success">Añadir a Orden 
                             </a> 
                         </div>
                     </div>
                 </div>
-            <!--% endfor %}-->
-        <!--% else %}-->
+            {% endfor %}
+        {% else %}
             <p class="text-center my-4">No ordenes pasadas encontradas.</p>
-        <!--% endif %}-->
+        {% endif %}
     </div>
 
     <div class="col">
