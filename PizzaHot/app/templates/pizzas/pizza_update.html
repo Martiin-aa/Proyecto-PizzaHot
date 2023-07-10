@@ -9,7 +9,7 @@
     <div class="card my-4 p-4">
         <div class="card-body">
             <h4 class="card-title text-center">Añadir Aderezos</h4>
-            <form action="{{ url_for('update_pizza') }}" method="post" class="mt-4">
+            <form action="{{ url_for('update_pizza', pizza_id=pizza.id) }}" method="post" class="mt-4">
                 <div class="mb-3">
                     <label for="inputAuthor" class="form-label">Nombre</label>
                     <input type="text" name="name" value="{{ pizza.name }}" class="form-control" id="inputAuthor" disabled>
@@ -31,7 +31,7 @@
                 </label>
             </div>
             <!--% endfor %}-->
-            <a href="#" class="btn btn-success">Añadir a Orden</a> <!--"{ url_for('add_order_pizza') }}"-->
+            <a href="#" class="btn btn-success">Añadir a Orden</a> <!--"{ url_for('add_order_pizza', pizza_id=pizza.pizza_id) }}"-->
         </div>
     </div>
 </div>

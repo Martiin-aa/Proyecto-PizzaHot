@@ -15,12 +15,9 @@
                 <div class="card mt-2">
                     <h5 class="card-header">{{order_past_pizza.created_at.strftime("%Y/%m/%d")}}</h5>
                     <div class="card-body">
-                        <h5 class="card-title">Pizza {{order_past_pizza.name}}</h5>
+                        <h5 class="card-title">Pizza {{order_past_pizza.name}} - {{order_past_pizza.size}}</h5>
                         <p class="card-text">${{order_past_pizza.price}} CLP</p>
-                        <div class="text-end">
-                            <a href="{{ url_for('add_order_pizza', pizza_id=order_past_pizza.pizza_id) }}" class="btn btn-success">Añadir a Orden 
-                            </a> 
-                        </div>
+                        <a href="{{ url_for('add_order_pizza', pizza_id=order_past_pizza.pizza_id) }}" class="btn btn-success">Añadir a Orden </a> 
                     </div>
                 </div>
             {% endfor %}
@@ -32,24 +29,20 @@
     <div class="col">
         <h4>Tus ordenes</h4>
 
-        <!--% if order_pizzas %}-->
-            <!--% for order_pizza in order_pizzas %}-->
-                <div class="card">
+        {% if order_pizzas %}
+            {% for order_pizza in order_pizzas %}
+                <div class="card mt-2">
                     <div class="card-body">
-                        <h5 class="card-title">sddsd<!--{order_pizza.name}}--></h5>
-                        <p class="card-text">$100 <!---{order_pizza.price}}--> CLP</p>
-                        <div class="text-end">
-                            <a href="#" 
-                                class="btn btn-danger">Eliminar <!--"{ url_for('remove_order_pizza') }}"-->
-                            </a>
-                        </div>
+                        <h5 class="card-title">{{order_pizza.name}} - {{order_pizza.size}}</h5>
+                        <p class="card-text">${{order_pizza.price}} CLP</p>
+                        <a href="{{ url_for('remove_order_pizza', pizza_id=order_pizza.id) }}" class="btn btn-danger">Eliminar</a>
                     </div>
                 </div>
-            <!--% endfor %}-->
-        <!--% else %}-->
+            {% endfor %}
+        {% else %}
             <p class="text-center my-4">No orden encontradas.</p>
-        <!--% endif %}-->
-        <div class="text-end">
+        {% endif %}
+        <div class="text-end mt-2">
             <a href="#"class="btn btn-primary"> <!--"{ url_for('show_order') }}"-->
                 Ir al pago
             </a>

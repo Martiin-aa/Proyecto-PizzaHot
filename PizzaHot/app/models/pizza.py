@@ -21,7 +21,7 @@ class Pizza:
         self.created_at = data.get("created_at", "")
         self.updated_at = data.get("updated_at", "")
 
-    @classmethod #query
+    @classmethod 
     def get_all(cls, data):
         """
         Obtener todas las pizzas sin estar en la orden de un usuario.
@@ -39,7 +39,7 @@ class Pizza:
         pizzas = connect_to_mysql().query_db(query, data)
         return pizzas
     
-    @classmethod #query
+    @classmethod 
     def get_one(cls, data):
         """
         Obtener una pizza por ID.
@@ -51,7 +51,7 @@ class Pizza:
         pizza = connect_to_mysql().query_db(query, data)
         return cls(pizza[0])
 
-    @classmethod #query
+    @classmethod 
     def create(cls, data):
         """
         Crear una pizza.
@@ -64,7 +64,7 @@ class Pizza:
         pizza_id = connect_to_mysql().query_db(query, data)
         return pizza_id
 
-    @classmethod #query
+    @classmethod 
     def delete(cls, data):
         """
         Eliminar una pizza.
@@ -75,7 +75,7 @@ class Pizza:
         """
         return connect_to_mysql().query_db(query, data)
 
-    @classmethod #query
+    @classmethod 
     def update(cls, data):
         """
         Actualizar una pizza.

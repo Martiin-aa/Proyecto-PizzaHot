@@ -23,7 +23,7 @@ def add_order_pizza(pizza_id):
 
     data = {
         "pizza_id": pizza_id,
-        "user_id": session['user']['id'],
+        "user_id": session['user']['id']
     }
     Order.add_order(data)
     return redirect(url_for("dashboard"))
@@ -43,7 +43,7 @@ def remove_order_pizza(pizza_id):
         "pizza_id": pizza_id,
         "user_id": session['user']['id']
     }
-    Order.delete(data)
+    Order.delete_order(data)
     return redirect(url_for("dashboard"))
 
 @app.route("/orders/<int:user_id>/") 
@@ -56,7 +56,7 @@ def show_order(user_id):
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    data = {"user_id": user_id}
+    data = {"user_id": session['user']['id']}
     user = User.get_one(data)
     total_price = Order.sum_order(data)
 

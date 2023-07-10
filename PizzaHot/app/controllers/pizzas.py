@@ -10,6 +10,7 @@ from app import app
 from app.models.user import User
 from app.models.pizza import Pizza
 from app.models.order import Order
+from app.models.topping import Topping
 
 
 @app.route("/orders/")
@@ -30,7 +31,7 @@ def dashboard():
 
     context = {
         "order_past_pizzas": order_past_pizzas,
-        "order_pizzas": order_pizzas,
+        "order_pizzas": order_pizzas
     }
     return render_template("dashboard.html", **context)
 
@@ -44,10 +45,8 @@ def pizzas():
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    print(session['user'])
-
     # Obtener el ID del usuario de la sesión.
-    data = {"user_id": session['user']}
+    data = {"id": session["user"]["id"]}
 
     pizzas = Pizza.get_all(data)
 
@@ -108,6 +107,7 @@ def update_pizza(pizza_id):
     # Diccionario
     data = {"pizza_id": pizza_id}
     pizza = Pizza.get_one(data)
+    toppings = Topping.get_all(data)
 
     if request.method == "POST":
         data = {
@@ -119,5 +119,12 @@ def update_pizza(pizza_id):
             "img": request.form['img']
         }
         Pizza.update(data)
-        return redirect(url_for("dashboard"))
-    return render_template("pizzas/pizza_update.html", pizza=pizza)
+        Topping.topping_order_update(data)
+        return redirect(url_for("pizzas"))
+    
+    context = {
+        "pizza": pizza,
+        "toppings": toppings
+    }
+
+    return render_template("pizzas/pizza_update.html", **context)

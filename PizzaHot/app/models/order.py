@@ -36,16 +36,16 @@ class Order:
     @classmethod
     def get_past_orders(cls, data):
         """
-        Obtener todas las ordenes pasadas creadas por el usuario.
+        Obtener todas las ordenes pasadas creadas por el usuario. luego de 30 min o mas. 
         """
         query = """
-            SELECT orders.* , pizzas.*
-            FROM orders
-            JOIN users ON orders.user_id = users.id 
-            JOIN pizzas ON  orders.pizza_id = pizzas.id
-            WHERE users.id = %(id)s
-            AND orders.created_at < NOW();
-            """
+        SELECT orders.*, pizzas.*
+        FROM orders
+        JOIN users ON orders.user_id = users.id 
+        JOIN pizzas ON orders.pizza_id = pizzas.id
+        WHERE users.id = %(id)s
+        AND orders.created_at <= TIMESTAMPADD(MINUTE, -30, NOW());
+        """
         order_past_pizzas = connect_to_mysql().query_db(query, data)
         return order_past_pizzas
 
@@ -56,14 +56,14 @@ class Order:
         """
 
         query = """
-        INSERT INTO orders (pizza_id, user_id)
-        VALUES (%(pizza_id)s, %(user_id)s);
+        INSERT INTO orders (pizza_id, user_id, created_at, updated_at)
+        VALUES (%(pizza_id)s, %(user_id)s, NOW(), NOW());
         """
         order_id = connect_to_mysql().query_db(query, data)
         return order_id
 
     @classmethod
-    def delete(cls, data):
+    def delete_order(cls, data):
         """
         Eliminar una pizza de la orden.
         """
@@ -78,10 +78,12 @@ class Order:
         Sumar todas las pizzas de la orden.
         """
         query = """
-        SELECT orders.id, SUM(pizzas.price) AS total_price
-        FROM orders
-        JOIN pizzas ON orders.pizza_id = pizzas.id
-        WHERE orders.id = %(order_id)s
-        GROUP BY orders.id;
+        SELECT users.id, users.first_name, users.last_name, SUM(pizzas.price) AS total_price
+        FROM users
+        LEFT JOIN orders ON users.id = orders.user_id
+        LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
+        GROUP BY users.id, users.first_name, users.last_name
+        HAVING users.id = %(user_id)s;
         """
-        return connect_to_mysql().query_db(query, data)
+        total_price = connect_to_mysql().query_db(query, data)
+        return total_price

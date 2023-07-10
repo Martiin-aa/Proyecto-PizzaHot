@@ -72,14 +72,18 @@ class User:
     @classmethod 
     def get_one(cls, data):
         """
-        Obtener un usuario con sus pizzas.
+        Obtener un usuario con sus pizzas. incluyendo sus toppings.
         """
 
         query = """
-        SELECT pizzas.*
-        FROM pizzas
-        JOIN orders ON pizzas.id = orders.pizza_id
-        WHERE orders.user_id = %(id)s;
+        SELECT users.id, users.first_name, users.last_name, pizzas.id AS pizza_id, pizzas.name AS pizza_name, pizzas.size, pizzas.crust, GROUP_CONCAT(toppings.name) AS toppings
+        FROM users
+        LEFT JOIN orders ON users.id = orders.user_id
+        LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
+        LEFT JOIN toppings_pizzas ON pizzas.id = toppings_pizzas.pizza_id
+        LEFT JOIN toppings ON toppings_pizzas.topping_id = toppings.id
+        WHERE users.id = %(user_id)s
+        GROUP BY users.id, pizzas.id;
         """
         results = connect_to_mysql().query_db(query, data)
         user = cls(results[0])
