@@ -31,17 +31,26 @@ class Topping:
         return toppings
     
     @classmethod 
-    def topping_order_update(cls, data):
+    def topping_pizza_create(cls, data):
         """
-        Se actualiza el precio de cada pizza, por cada topping seleccionado.
+        Crea una nueva pizza que aumente el precio de la pizza original, 
+        por cada topping agregado.
         """
         query = """
-        UPDATE pizzas
-        SET price = price + (
-        SELECT SUM(toppings.price)
-        FROM toppings
-        JOIN toppings_pizzas ON toppings.id = toppings_pizzas.topping_id
-        WHERE toppings_pizzas.pizza_id = pizzas.id
-        );
+        INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
+        SELECT CONCAT(pizzas.name, ' with ', GROUP_CONCAT(toppings.name SEPARATOR ', ')) AS name,
+        pizzas.size,
+        pizzas.crust,
+        pizzas.price + SUM(toppings.price) AS price,
+        pizzas.img,
+        NOW() AS created_at,
+        NOW() AS updated_at
+        FROM pizzas
+        JOIN pizzas_toppings ON pizzas.id = pizzas_toppings.pizza_id
+        JOIN toppings ON toppings.id = pizzas_toppings.topping_id
+        WHERE pizzas.id = %(pizza_id)s
+        AND toppings.id IN %(topping_ids)s
+        GROUP BY pizzas.id;
         """
         return connect_to_mysql().query_db(query, data)
+    

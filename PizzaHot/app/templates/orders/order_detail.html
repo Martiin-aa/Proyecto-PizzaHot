@@ -5,33 +5,40 @@
 {% block titulo %}Pagar Orden{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1 class="card-title mb-5">Pagar Orden</h1>
-</div>
-{% for pizza in user.pizzas %}
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">{{ pizza.name }}</h5>
-        <p class="card-text">
-            Tamaño: {{ pizza.size }}
-            Corteza: {{ pizza.crust }}
-            Aderezos: 
-        </p>
-        <div class="text-end">
-            <a href="#" 
-                class="btn btn-danger">Eliminar <!--"{ url_for('remove_order_pizza') }}"-->
-            </a>
+<div class="col" style="margin-right: 250px;margin-left: 250px">
+    <div class="text-center">
+        <h1 class="card-title mb-5">Pagar Orden</h1>
+    </div>
+    {% if order_details %}
+        {% for order_detail in order_details %}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Pizza de {{ order_detail.name }}</h5>
+                <p class="card-text" style="margin-bottom: -1px;">Tamaño: {{ order_detail.size }}</p>
+                <p class="card-text" style="margin-bottom: -1px;">Corteza: {{ order_detail.crust}}</p>
+                <p class="card-text">Aderezos:</p>
+                <a href="{{ url_for('remove_order_pizza', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger">Eliminar</a>
+            </div>
+            <div class="card-footer">
+                Precio: ${{ order_detail.price }} CLP
+            </div>
         </div>
-    </div>
-    <div class="card-footer">
-        Precio: ${{ pizza.price }} CLP
-    </div>
-</div>
-{% endfor %}
-<h3>Total: ${{ orders.total_price }} CLP</h3>
-<div>
-    <a href="#"class="btn btn-primary"> 
-        Pagar
-    </a>
+        {% endfor %}
+    {% else %}
+    <p class="text-center my-4">No hay pizzas en tu orden.</p>
+    {% endif %}
+    <form action="#" method="post"> <!--{ url_for('pagar') }}-->
+        <div class="row d-flex justify-content-end mt-3">
+            <div class="col-auto">
+                <label for="total_price" class="col-form-label fs-5">Precio Total</label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control fs-5" id="total_price" name="total_price" value="${{ total_price[0]['total_price']|string }} CLP" readonly>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary ms-auto fs-5">Pagar</button>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}

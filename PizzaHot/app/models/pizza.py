@@ -48,9 +48,8 @@ class Pizza:
         query = """
         SELECT * FROM pizzas WHERE id = %(id)s;
         """
-        pizza = connect_to_mysql().query_db(query, data)
-        return cls(pizza[0])
-
+        return connect_to_mysql().query_db(query, data)
+    
     @classmethod 
     def create(cls, data):
         """

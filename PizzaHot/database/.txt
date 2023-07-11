@@ -4,13 +4,13 @@ SELECT * FROM orders;
 SELECT * FROM toppings;
 
 -- insertar aderezos
-INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('olive', '12200', NOW(), NOW());
-INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('onion', '12200', NOW(), NOW());
-INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('mushroom', '12200', NOW(), NOW());
-INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('basil', '12200', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('olive', '200', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('onion', '150', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('mushroom', '300', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`toppings` (`name`, `price`, `created_at`, `updated_at`) VALUES ('basil', '350', NOW(), NOW());
 
 -- insertar un pizza.
-INSERT INTO `pizzas_schema`.`pizzas` (`id`,`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('1','Peperonni', 'Large', 'Thin', '12200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
+INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Large', 'Thin', '12200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
 INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Medium', 'Stuffed', '8200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
 INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Peperonni', 'Small', 'Cracker', '4200','https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d', NOW(), NOW());
 INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`, `created_at`, `updated_at`) VALUES ('Neapolitan', 'Large', 'Stuffed', '12800','https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6', NOW(), NOW());
@@ -25,12 +25,12 @@ INSERT INTO orders (pizza_id, user_id, created_at, updated_at)
 VALUES ( 1 , 1, NOW(), NOW());
 
 -- Obtener todas las pizzas de la orden de un usuario.
-SELECT pizzas.*
-FROM pizzas
-JOIN orders ON pizzas.id = orders.pizza_id
+SELECT orders.*, pizzas.*
+FROM orders
+JOIN pizzas ON orders.pizza_id = pizzas.id
 WHERE orders.user_id = 1;
 
--- Obtener todas las ordenes pasadas creadas por el usuario. luego de 30 min o mas. 
+-- Obtener todas las pizzas pasadas creadas por el usuario. luego de 30 min o mas. 
 SELECT orders.*, pizzas.*
 FROM orders
 JOIN users ON orders.user_id = users.id 
@@ -49,21 +49,18 @@ LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
 GROUP BY users.id, users.first_name, users.last_name
 HAVING users.id = 1;
 
--- Obtener un usuario con sus pizzas. incluyendo sus toppings.
-SELECT users.id, users.first_name, users.last_name, pizzas.id AS pizza_id, pizzas.name AS pizza_name, pizzas.size, pizzas.crust, GROUP_CONCAT(toppings.name) AS toppings
-FROM users
-LEFT JOIN orders ON users.id = orders.user_id
-LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
-LEFT JOIN toppings_pizzas ON pizzas.id = toppings_pizzas.pizza_id
-LEFT JOIN toppings ON toppings_pizzas.topping_id = toppings.id
-WHERE users.id = 1
-GROUP BY users.id, pizzas.id;
-
--- Se actualiza el precio de cada pizza, por cada topping seleccionado.
-UPDATE pizzas
-SET price = price + (
-SELECT SUM(toppings.price)
-FROM toppings
-JOIN toppings_pizzas ON toppings.id = toppings_pizzas.topping_id
-WHERE toppings_pizzas.pizza_id = pizzas.id
-);
+-- Crea una nueva pizza que aumente el precio de la pizza original, por cada topping agregado.
+INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
+SELECT CONCAT(pizzas.name, ' with ', GROUP_CONCAT(toppings.name SEPARATOR ', ')) AS name,
+       pizzas.size,
+       pizzas.crust,
+       pizzas.price + SUM(toppings.price) AS price,
+       pizzas.img,
+       NOW() AS created_at,
+       NOW() AS updated_at
+FROM pizzas
+JOIN pizzas_toppings ON pizzas.id = pizzas_toppings.pizza_id
+JOIN toppings ON toppings.id = pizzas_toppings.topping_id
+WHERE pizzas.id = 1 -- Reemplaza el ID de la pizza seleccionada por el usuario
+  AND toppings.id IN (1, 3, 4) -- Reemplaza los IDs de topping según la selección del usuario
+GROUP BY pizzas.id;

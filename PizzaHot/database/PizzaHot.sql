@@ -26,7 +26,6 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `total_price` int DEFAULT NULL,
   `pizza_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -36,7 +35,7 @@ CREATE TABLE `orders` (
   KEY `fk_pizzas_has_users_pizzas_idx` (`pizza_id`),
   CONSTRAINT `fk_pizzas_has_users_pizzas` FOREIGN KEY (`pizza_id`) REFERENCES `pizzas` (`id`),
   CONSTRAINT `fk_pizzas_has_users_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +44,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (36,NULL,5,1,'2023-07-10 17:36:45','2023-07-10 17:36:45'),(37,NULL,3,1,'2023-07-10 17:38:00','2023-07-10 17:38:00');
+INSERT INTO `orders` VALUES (6,2,1,'2023-07-11 14:05:33','2023-07-11 14:05:33');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +65,7 @@ CREATE TABLE `pizzas` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,8 +74,38 @@ CREATE TABLE `pizzas` (
 
 LOCK TABLES `pizzas` WRITE;
 /*!40000 ALTER TABLE `pizzas` DISABLE KEYS */;
-INSERT INTO `pizzas` VALUES (1,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-10 12:42:22','2023-07-10 12:42:22'),(2,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:24:01','2023-07-08 13:24:01'),(3,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-08 13:24:01','2023-07-08 13:24:01'),(4,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:01','2023-07-08 13:24:01'),(5,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:01','2023-07-08 13:24:01'),(6,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-08 13:24:02','2023-07-08 13:24:02'),(7,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02'),(8,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02'),(9,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-08 13:24:02','2023-07-08 13:24:02');
+INSERT INTO `pizzas` VALUES (1,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-11 13:09:31','2023-07-11 13:09:31'),(2,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-11 13:09:31','2023-07-11 13:09:31'),(3,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d','2023-07-11 13:09:31','2023-07-11 13:09:31'),(4,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-11 13:09:31','2023-07-11 13:09:31'),(5,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-11 13:09:31','2023-07-11 13:09:31'),(6,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6','2023-07-11 13:09:31','2023-07-11 13:09:31'),(7,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-11 13:09:31','2023-07-11 13:09:31'),(8,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-11 13:09:31','2023-07-11 13:09:31'),(9,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351','2023-07-11 13:09:31','2023-07-11 13:09:31');
 /*!40000 ALTER TABLE `pizzas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pizzas_toppings`
+--
+
+DROP TABLE IF EXISTS `pizzas_toppings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pizzas_toppings` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `pizza_id` int unsigned NOT NULL,
+  `topping_id` int unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_pizzas_has_toppings_toppings1_idx` (`topping_id`),
+  KEY `fk_pizzas_has_toppings_pizzas1_idx` (`pizza_id`),
+  CONSTRAINT `fk_pizzas_has_toppings_pizzas1` FOREIGN KEY (`pizza_id`) REFERENCES `pizzas` (`id`),
+  CONSTRAINT `fk_pizzas_has_toppings_toppings1` FOREIGN KEY (`topping_id`) REFERENCES `toppings` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pizzas_toppings`
+--
+
+LOCK TABLES `pizzas_toppings` WRITE;
+/*!40000 ALTER TABLE `pizzas_toppings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pizzas_toppings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -93,7 +122,7 @@ CREATE TABLE `toppings` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,68 +131,8 @@ CREATE TABLE `toppings` (
 
 LOCK TABLES `toppings` WRITE;
 /*!40000 ALTER TABLE `toppings` DISABLE KEYS */;
-INSERT INTO `toppings` VALUES (1,'olive',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(2,'onion',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(3,'mushroom',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53'),(4,'basil',12200,'2023-07-08 13:23:53','2023-07-08 13:23:53');
+INSERT INTO `toppings` VALUES (1,'olive',200,'2023-07-11 13:09:23','2023-07-11 13:09:23'),(2,'onion',150,'2023-07-11 13:09:23','2023-07-11 13:09:23'),(3,'mushroom',300,'2023-07-11 13:09:23','2023-07-11 13:09:23'),(4,'basil',350,'2023-07-11 13:09:23','2023-07-11 13:09:23');
 /*!40000 ALTER TABLE `toppings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `toppings_orders`
---
-
-DROP TABLE IF EXISTS `toppings_orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `toppings_orders` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `topping_id` int unsigned NOT NULL,
-  `order_id` int unsigned NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_toppings_has_orders_orders1_idx` (`order_id`),
-  KEY `fk_toppings_has_orders_toppings1_idx` (`topping_id`),
-  CONSTRAINT `fk_toppings_has_orders_orders1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `fk_toppings_has_orders_toppings1` FOREIGN KEY (`topping_id`) REFERENCES `toppings` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `toppings_orders`
---
-
-LOCK TABLES `toppings_orders` WRITE;
-/*!40000 ALTER TABLE `toppings_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `toppings_orders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `toppings_pizzas`
---
-
-DROP TABLE IF EXISTS `toppings_pizzas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `toppings_pizzas` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `topping_id` int unsigned NOT NULL,
-  `pizza_id` int unsigned NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_toppings_has_pizzas_pizzas1_idx` (`pizza_id`),
-  KEY `fk_toppings_has_pizzas_toppings1_idx` (`topping_id`),
-  CONSTRAINT `fk_toppings_has_pizzas_pizzas1` FOREIGN KEY (`pizza_id`) REFERENCES `pizzas` (`id`),
-  CONSTRAINT `fk_toppings_has_pizzas_toppings1` FOREIGN KEY (`topping_id`) REFERENCES `toppings` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `toppings_pizzas`
---
-
-LOCK TABLES `toppings_pizzas` WRITE;
-/*!40000 ALTER TABLE `toppings_pizzas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `toppings_pizzas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -184,7 +153,7 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +162,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Martin','Araya','martin.arayaantezana@gmail.com','Pj. El Genoves','Santiago','$2b$12$.AxhLm85n3gaGgJIE/akh.4gmfo0oyQnAmqW67ciVYU7Gn3993/HS','2023-07-08 13:27:54','2023-07-08 13:27:54');
+INSERT INTO `users` VALUES (1,'Martin','Araya','martin.arayaantezana@gmail.com','Pj. El Genoves','Santiago','$2b$12$20HpF4/kxGlViXHHia91Tu6jzGGar/.k2Ovm4hegLkOnCU2jMA3Ja','2023-07-11 13:10:21','2023-07-11 13:10:21');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -206,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-10 17:47:03
+-- Dump completed on 2023-07-11 18:42:23

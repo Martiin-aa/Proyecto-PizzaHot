@@ -16,6 +16,7 @@ def add_order_pizza(pizza_id):
     """
     Agregar una pizza a las ordenes.
     """
+    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/order/
     if "user" not in session:
@@ -34,6 +35,7 @@ def remove_order_pizza(pizza_id):
     """
     Eliminar una pizza de la orden.
     """
+    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/remove/
     if "user" not in session:
@@ -46,22 +48,24 @@ def remove_order_pizza(pizza_id):
     Order.delete_order(data)
     return redirect(url_for("dashboard"))
 
-@app.route("/orders/<int:user_id>/") 
-def show_order(user_id):
+@app.route("/orders/detail")
+def show_order():
     """
     Muestra la orden del usuario.
     """
+    print(request.form)
 
-    # Proteger la ruta /orders/<int:user_id>/
+    # Proteger la ruta /orders/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    data = {"user_id": session['user']['id']}
-    user = User.get_one(data)
+    data = {"id": session['user']['id']}
+
+    order_details = Order.get_orders_details(data)
     total_price = Order.sum_order(data)
 
     context = {
-        "user": user,
+        "order_details": order_details,
         "total_price": total_price
     }
     return render_template("orders/order_detail.html", **context)

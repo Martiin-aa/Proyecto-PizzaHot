@@ -18,7 +18,6 @@ def dashboard():
     """
     Página dashboard.
     """
-
     # Proteger la ruta /dashboard/
     if "user" not in session:
         return redirect(url_for("index_register"))
@@ -76,6 +75,7 @@ def create_pizza():
     """
     Crear una pizza.
     """
+    print(request.form)
 
     # Proteger la ruta /pizzas/create/
     if "user" not in session:
@@ -99,13 +99,17 @@ def update_pizza(pizza_id):
     """
     Actualizar una pizza.
     """
+    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
     # Diccionario
-    data = {"pizza_id": pizza_id}
+    data = {
+        "pizza_id": pizza_id,
+        "user_id": session['user']['id']
+        }
     pizza = Pizza.get_one(data)
     toppings = Topping.get_all(data)
 
@@ -119,7 +123,6 @@ def update_pizza(pizza_id):
             "img": request.form['img']
         }
         Pizza.update(data)
-        Topping.topping_order_update(data)
         return redirect(url_for("pizzas"))
     
     context = {
