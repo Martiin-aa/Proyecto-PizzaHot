@@ -22,16 +22,16 @@
                     <label for="inputAuthor" class="form-label">Masa</label>
                     <input type="text" name="crust" value="{{ pizza.crust }}" class="form-control" id="inputAuthor" disabled>
                 </div>
+                {% for topping in toppings %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{topping.price}}" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{topping.name}}
+                    </label>
+                </div>
+                {% endfor %}
+                <input type="submit" value="Añadir a Orden" class="btn btn-success"> <!--"{ url_for('add_order_pizza', pizza_id=pizza.pizza_id) }}"-->
             </form>
-            <!--% for topping in toppings %}-->
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{topping.price}}" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    {{topping.name}}
-                </label>
-            </div>
-            <!--% endfor %}-->
-            <a href="#" class="btn btn-success">Añadir a Orden</a> <!--"{ url_for('add_order_pizza', pizza_id=pizza.pizza_id) }}"-->
         </div>
     </div>
 </div>

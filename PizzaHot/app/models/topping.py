@@ -19,7 +19,7 @@ class Topping:
         self.updated_at = data.get("updated_at", "")
 
     @classmethod 
-    def get_all(cls, data):
+    def get_all(cls):
         """
         Obtener todas los aderezos disponibles.
         """
@@ -27,7 +27,7 @@ class Topping:
         query = """
         SELECT * FROM toppings;
         """
-        toppings = connect_to_mysql().query_db(query, data)
+        toppings = connect_to_mysql().query_db(query)
         return toppings
     
     @classmethod 

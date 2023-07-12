@@ -111,18 +111,18 @@ def update_pizza(pizza_id):
         "user_id": session['user']['id']
         }
     pizza = Pizza.get_one(data)
-    toppings = Topping.get_all(data)
-
+    toppings = Topping.get_all()
+    
     if request.method == "POST":
         data = {
-            "pizza_id": pizza_id,
-            "name": request.form['name'],
-            "size": request.form['size'],
-            "crust": request.form['crust'],
-            "price": request.form['price'],
-            "img": request.form['img']
+            #"pizza_id": pizza_id,
+            "name": pizza.name,
+            "size": pizza.size,
+            "crust": pizza.crust,
+            "price": pizza.price,
+            "img": pizza.img
         }
-        Pizza.update(data)
+        Pizza.create(data)
         return redirect(url_for("pizzas"))
     
     context = {

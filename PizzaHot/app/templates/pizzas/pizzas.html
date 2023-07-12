@@ -18,7 +18,7 @@
                 <p class="card-text">Tamaño: {{pizza.size}} - Masa: {{pizza.crust}}</p>
                 <p class="card-text">${{pizza.price}} CLP</p>
                 <a href="{{ url_for('add_order_pizza', pizza_id=pizza.id) }}" class="btn btn-success">Añadir a Orden</a>
-                <a href="" class="btn btn-warning" style="float: right;">Editar</a> <!--{ url_for('update_pizza', pizza_id=pizza.pizza_id) }}-->
+                <a href="{{ url_for('update_pizza', pizza_id=pizza.id) }}" class="btn btn-warning" style="float: right;">Editar</a>
             </div>
         </div>
     </div>
