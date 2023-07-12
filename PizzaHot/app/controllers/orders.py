@@ -26,9 +26,9 @@ def add_order_pizza(pizza_id):
         "pizza_id": pizza_id,
         "user_id": session['user']['id']
     }
-    Order.add_order(data)
+    Order.add_order_1(data)
+    Order.add_order_0(data)
     return redirect(url_for("dashboard"))
-
 
 @app.route("/pizzas/<int:pizza_id>/remove/")
 def remove_order_pizza(pizza_id):

@@ -24,13 +24,14 @@ class Pizza:
     @classmethod 
     def get_all(cls, data):
         """
-        Obtener todas las pizzas sin estar en la orden de un usuario.
+        Obtener todas las pizzas sin estar en la orden de un usuario, y tengan un id igual o menor a 9.
         """
 
         query = """
         SELECT *
         FROM pizzas
-        WHERE id NOT IN (
+        WHERE id <= 9
+        AND id NOT IN (
         SELECT pizza_id
         FROM orders
         WHERE user_id = %(id)s

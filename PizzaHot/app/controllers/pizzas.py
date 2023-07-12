@@ -114,16 +114,23 @@ def update_pizza(pizza_id):
     toppings = Topping.get_all()
     
     if request.method == "POST":
-        data = {
-            #"pizza_id": pizza_id,
+        pizza_data = {
             "name": pizza.name,
             "size": pizza.size,
             "crust": pizza.crust,
             "price": pizza.price,
             "img": pizza.img
         }
-        Pizza.create(data)
-        return redirect(url_for("pizzas"))
+        pizza_id = Pizza.create(pizza_data)
+
+        # Añadir la pizza a la orden
+        order_data = {
+            "pizza_id": pizza_id,
+            "user_id": session['user']['id']
+        }
+        Order.add_order_1(order_data)
+        Order.add_order_0(order_data)
+        return redirect(url_for("dashboard", pizza_id=pizza_id))
     
     context = {
         "pizza": pizza,

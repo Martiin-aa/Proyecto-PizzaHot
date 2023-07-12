@@ -5,8 +5,8 @@
 {% block titulo %}Agregar Aderezos{% endblock %}
 
 {% block content %}
-<div class="col" style="margin-right: 200px; margin-left: 200px">
-    <div class="card my-4 p-4">
+<div class="col" style="margin-right: 250px; margin-left: 250px">
+    <div class="card p-4 pb-0">
         <div class="card-body">
             <h4 class="card-title text-center">Añadir Aderezos</h4>
             <form action="{{ url_for('update_pizza', pizza_id=pizza.id) }}" method="post" class="mt-4">
@@ -24,13 +24,13 @@
                 </div>
                 {% for topping in toppings %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{topping.price}}" id="flexCheckDefault">
+                    <input class="form-check-input" type="checkbox" name="toppings[]" value="{{topping.price}}" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         {{topping.name}}
                     </label>
                 </div>
                 {% endfor %}
-                <input type="submit" value="Añadir a Orden" class="btn btn-success"> <!--"{ url_for('add_order_pizza', pizza_id=pizza.pizza_id) }}"-->
+                <input type="submit" value="Crear y Añadir a Orden" class="btn btn-warning mt-3">
             </form>
         </div>
     </div>
