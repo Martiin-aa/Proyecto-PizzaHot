@@ -14,10 +14,9 @@
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">Pizza de {{ order_detail.name }}</h5>
-                <p class="card-text" style="margin-bottom: -1px;">Tamaño: {{ order_detail.size }}</p>
-                <p class="card-text" style="margin-bottom: -1px;">Corteza: {{ order_detail.crust}}</p>
-                <p class="card-text">Aderezos:</p>
-                <a href="{{ url_for('remove_order_pizza_1', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger">Eliminar</a>
+                <p class="card-text" style="margin-bottom: 2px;">Tamaño: {{ order_detail.size }}</p>
+                <p class="card-text" style="margin-bottom: 4px;">Corteza: {{ order_detail.crust}}</p>
+                <a href="{{ url_for('remove_order_pizza_1', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger mt-2">Eliminar</a>
             </div>
             <div class="card-footer">
                 Precio: ${{ order_detail.price }} CLP

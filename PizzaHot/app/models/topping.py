@@ -30,27 +30,18 @@ class Topping:
         toppings = connect_to_mysql().query_db(query)
         return toppings
     
-    @classmethod 
-    def topping_pizza_create(cls, data):
+    @classmethod
+    def get_toppings_by_pizza(cls, data):
         """
-        Crea una nueva pizza que aumente el precio de la pizza original, 
-        por cada topping agregado.
+        Obtener los aderezos asociados a una pizza específica.
         """
         query = """
-        INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
-        SELECT CONCAT(pizzas.name, ' with ', GROUP_CONCAT(toppings.name SEPARATOR ', ')) AS name,
-        pizzas.size,
-        pizzas.crust,
-        pizzas.price + SUM(toppings.price) AS price,
-        pizzas.img,
-        NOW() AS created_at,
-        NOW() AS updated_at
-        FROM pizzas
-        JOIN pizzas_toppings ON pizzas.id = pizzas_toppings.pizza_id
-        JOIN toppings ON toppings.id = pizzas_toppings.topping_id
-        WHERE pizzas.id = %(pizza_id)s
-        AND toppings.id IN %(topping_ids)s
-        GROUP BY pizzas.id;
+        SELECT toppings.*
+        FROM toppings
+        JOIN toppings_pizzas ON toppings.id = toppings_pizzas.topping_id
+        WHERE toppings_pizzas.pizza_id = %(pizza_id)s;
         """
-        return connect_to_mysql().query_db(query, data)
+    
+        toppings = connect_to_mysql().query_db(query, data)
+        return toppings
     

@@ -8,7 +8,7 @@ from app import app
 
 # Models
 from app.models.user import User
-from app.models.pizza import Pizza
+from app.models.topping import Topping
 from app.models.order import Order
 
 @app.route("/pizzas/<int:pizza_id>/order/")

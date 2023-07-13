@@ -93,7 +93,7 @@ def create_pizza():
     return redirect(url_for("dashboard"))
 
 
-@app.route("/pizzas/<int:pizza_id>/", methods=["GET", "POST"]) 
+@app.route("/pizzas/<int:pizza_id>/", methods=["GET", "POST"])
 def update_pizza(pizza_id):
     """
     Actualizar una pizza.
@@ -103,23 +103,32 @@ def update_pizza(pizza_id):
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    # Diccionario
+    # Obtener la pizza y los toppings
     data = {
         "pizza_id": pizza_id,
         "user_id": session['user']['id']
-        }
+    }
     pizza = Pizza.get_one(data)
     toppings = Topping.get_all()
-    
+
     if request.method == "POST":
+        selected_topping_ids = request.form.getlist("topping_ids")
+        selected_toppings_price = 0
+        for topping in toppings:
+            if str(topping['id']) in selected_topping_ids:
+                selected_toppings_price += topping['price']
+
+        # Crear el diccionario con los datos de la pizza
         pizza_data = {
             "name": pizza.name,
             "size": pizza.size,
             "crust": pizza.crust,
-            "price": pizza.price,
+            "price": pizza.price + selected_toppings_price,
             "img": pizza.img,
-            "toppings": pizza.topping_id
+            "topping_ids": selected_topping_ids
         }
+
+        # Crear la pizza
         pizza_id = Pizza.create(pizza_data)
         print(pizza_id)
 
@@ -131,7 +140,7 @@ def update_pizza(pizza_id):
         Order.add_order_1(order_data)
         Order.add_order_0(order_data)
         return redirect(url_for("dashboard", pizza_id=pizza_id))
-    
+
     context = {
         "pizza": pizza,
         "toppings": toppings
