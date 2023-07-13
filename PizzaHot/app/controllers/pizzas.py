@@ -37,10 +37,10 @@ def dashboard():
 @app.route("/pizzas/")
 def pizzas():
     """
-    Página de pizzas.
+    Página de pizzas. deletable_1
     """
 
-    # Proteger la ruta /dashboard/
+    # Proteger la ruta /pizzas/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -70,12 +70,11 @@ def delete_pizza(pizza_id):
     return redirect(url_for("dashboard"))
 
 
-@app.route("/pizzas/create/", methods=["POST"]) #data
+@app.route("/pizzas/create/", methods=["POST"])
 def create_pizza():
     """
     Crear una pizza.
     """
-    print(request.form)
 
     # Proteger la ruta /pizzas/create/
     if "user" not in session:
@@ -99,7 +98,6 @@ def update_pizza(pizza_id):
     """
     Actualizar una pizza.
     """
-    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/
     if "user" not in session:
@@ -119,9 +117,11 @@ def update_pizza(pizza_id):
             "size": pizza.size,
             "crust": pizza.crust,
             "price": pizza.price,
-            "img": pizza.img
+            "img": pizza.img,
+            "toppings": pizza.topping_id
         }
         pizza_id = Pizza.create(pizza_data)
+        print(pizza_id)
 
         # Añadir la pizza a la orden
         order_data = {

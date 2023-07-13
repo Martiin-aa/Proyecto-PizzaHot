@@ -18,13 +18,15 @@ class Pizza:
         self.crust = data.get("crust", "")
         self.price = data.get("price", 0)
         self.img = data.get("img", "")
+        self.deletable = data.get("deletable", 1)
+        self.topping_id = data.get("topping_id", 0)
         self.created_at = data.get("created_at", "")
         self.updated_at = data.get("updated_at", "")
 
     @classmethod 
     def get_all(cls, data):
         """
-        Obtener todas las pizzas sin estar en la orden de un usuario, y tengan un id igual o menor a 9.
+        Obtener todas las pizzas sin estar en la orden de un usuario, y tengan un id igual o menor a 9. deletable_1
         """
 
         query = """
@@ -35,6 +37,7 @@ class Pizza:
         SELECT pizza_id
         FROM orders
         WHERE user_id = %(id)s
+        AND orders.deletable = 1
         );
         """
         pizzas = connect_to_mysql().query_db(query, data)
@@ -55,12 +58,16 @@ class Pizza:
     @classmethod 
     def create(cls, data):
         """
-        Crear una pizza.
+        Crear una pizza. con la suma de los toppings seleccionados en el precio de la pizza.
         """
 
         query = """
         INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
-        VALUES (%(name)s, %(size)s, %(crust)s, %(price)s, %(img)s, NOW(), NOW());
+        VALUES (%(name)s, %(size)s, %(crust)s, %(price)s + (
+        SELECT SUM(toppings.price)
+        FROM toppings
+        WHERE toppings.id IN %(topping_ids)s
+        ), %(img)s, NOW(), NOW());
         """
         pizza_id = connect_to_mysql().query_db(query, data)
         return pizza_id

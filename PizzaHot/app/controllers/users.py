@@ -37,7 +37,6 @@ def login():
     """
     Iniciar sesión.
     """
-    print(request.form)
 
     data = {
         "email": request.form["email"],
@@ -84,7 +83,6 @@ def register():
     """
     Registrar usuario.
     """
-    print(request.form)
 
     # Validacion del correo electronico
     if not User.validate_register(request.form):

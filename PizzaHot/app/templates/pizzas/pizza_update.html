@@ -24,8 +24,8 @@
                 </div>
                 {% for topping in toppings %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="toppings[]" value="{{topping.price}}" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
+                    <input class="form-check-input" type="checkbox" name="toppings" value="{{topping.price}}" id="flexCheckDefault{{topping.id}}">
+                    <label class="form-check-label" for="flexCheckDefault{{topping.id}}">
                         {{topping.name}}
                     </label>
                 </div>

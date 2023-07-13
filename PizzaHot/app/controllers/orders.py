@@ -16,7 +16,6 @@ def add_order_pizza(pizza_id):
     """
     Agregar una pizza a las ordenes.
     """
-    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/order/
     if "user" not in session:
@@ -30,12 +29,11 @@ def add_order_pizza(pizza_id):
     Order.add_order_0(data)
     return redirect(url_for("dashboard"))
 
-@app.route("/pizzas/<int:pizza_id>/remove/")
-def remove_order_pizza(pizza_id):
+@app.route("/pizzas/<int:pizza_id>/remove_1/")
+def remove_order_pizza_1(pizza_id):
     """
-    Eliminar una pizza de la orden.
+    Eliminar una pizza de la orden. deletable_1
     """
-    print(request.form)
 
     # Proteger la ruta /pizzas/<int:pizza_id>/remove/
     if "user" not in session:
@@ -45,15 +43,31 @@ def remove_order_pizza(pizza_id):
         "pizza_id": pizza_id,
         "user_id": session['user']['id']
     }
-    Order.delete_order(data)
+    Order.delete_order_1(data)
+    return redirect(url_for("dashboard"))
+
+@app.route("/pizzas/<int:pizza_id>/remove_0/")
+def remove_order_pizza_0(pizza_id):
+    """
+    Eliminar una pizza de la orden. deletable_0
+    """
+
+    # Proteger la ruta /pizzas/<int:pizza_id>/remove/
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    data = {
+        "pizza_id": pizza_id,
+        "user_id": session['user']['id']
+    }
+    Order.delete_order_0(data)
     return redirect(url_for("dashboard"))
 
 @app.route("/orders/detail")
 def show_order():
     """
-    Muestra la orden del usuario.
+    Muestra la orden del usuario. deletable_1
     """
-    print(request.form)
 
     # Proteger la ruta /orders/
     if "user" not in session:

@@ -37,14 +37,14 @@ class Order:
     @classmethod
     def get_past_orders(cls, data):
         """
-        Obtener las últimas 4 órdenes pasadas creadas por el usuario, después de 15 minutos o más. deletable_0
+        Obtener las últimas 4 órdenes pasadas creadas por el usuario, después de 5 minutos o más. deletable_0
         """
         query = """
         SELECT orders.*, pizzas.*
         FROM orders
         JOIN pizzas ON orders.pizza_id = pizzas.id
         WHERE orders.user_id = %(id)s
-        AND orders.created_at <= TIMESTAMPADD(MINUTE, -15, NOW())
+        AND orders.created_at <= (NOW() - INTERVAL 5 MINUTE)
         AND orders.deletable = 0
         ORDER BY orders.created_at DESC
         LIMIT 4;
@@ -79,12 +79,22 @@ class Order:
         return order_id
 
     @classmethod
-    def delete_order(cls, data):
+    def delete_order_1(cls, data):
         """
         Eliminar una pizza de la orden. deletable_1
         """
         query = """
         DELETE FROM orders WHERE pizza_id = %(pizza_id)s AND user_id = %(user_id)s AND deletable = 1;
+        """
+        return connect_to_mysql().query_db(query, data)
+    
+    @classmethod
+    def delete_order_0(cls, data):
+        """
+        Eliminar una pizza de la orden. deletable_0
+        """
+        query = """
+        DELETE FROM orders WHERE pizza_id = %(pizza_id)s AND user_id = %(user_id)s AND deletable = 0;
         """
         return connect_to_mysql().query_db(query, data)
     

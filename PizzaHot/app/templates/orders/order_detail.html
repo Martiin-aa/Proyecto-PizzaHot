@@ -17,7 +17,7 @@
                 <p class="card-text" style="margin-bottom: -1px;">Tamaño: {{ order_detail.size }}</p>
                 <p class="card-text" style="margin-bottom: -1px;">Corteza: {{ order_detail.crust}}</p>
                 <p class="card-text">Aderezos:</p>
-                <a href="{{ url_for('remove_order_pizza', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger">Eliminar</a>
+                <a href="{{ url_for('remove_order_pizza_1', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger">Eliminar</a>
             </div>
             <div class="card-footer">
                 Precio: ${{ order_detail.price }} CLP
