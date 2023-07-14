@@ -5,10 +5,24 @@
 {% block titulo %}Agregar Aderezos{% endblock %}
 
 {% block content %}
-<div class="col" style="margin-right: 250px; margin-left: 250px">
-    <div class="card p-4 pb-0">
-        <div class="card-body">
-            <h4 class="card-title text-center">Añadir Aderezos</h4>
+<!-- Editar pizza -->
+<div class="row border rounded-5 p-3 bg-white shadow box-area">
+
+    <!--------------------------- Left Box ----------------------------->
+    <div class="col rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+        <div class="featured-image mb-3">
+            <img src="{{pizza.img}}" alt="Bootstrap"  class="col rounded-4" style="width: 520px;">
+        </div>
+    </div>
+
+    <!--------------------------- Right Box ---------------------------->
+    <div class="col-md-6 right-box">
+        <div class="row align-items-center">
+            <div class="text-center">
+                <div class="titulo">
+                    <h3>Añadir <span>Aderezos</span></h3>
+                </div>
+            </div>
             <form action="{{ url_for('update_pizza', pizza_id=pizza.id) }}" method="post" class="mt-4">
                 <div class="mb-3">
                     <label for="inputAuthor" class="form-label">Nombre</label>

@@ -1,19 +1,42 @@
-<div class="card p-4 pb-2 pt-2">
-    <div class="card-body">
-        <h1 class="card-title">Inicia Sesion</h1>
+<!-- Login Formulario -->
+<div class="row border rounded-5 p-3 bg-white shadow box-area">
+
+    <!--------------------------- Left Box ----------------------------->
+    <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
+        style="background-color: coral;">
+        <div class="featured-image mb-3">
+            <img src="https://seeklogo.com/images/P/pizza-logo-9092058631-seeklogo.com.png" alt="Bootstrap"  class="img-fluid" style="width: 250px;">
+        </div>
+        <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Certificate
+        </p>
+        <small class="text-white text-wrap text-center"
+            style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Ingresa y conoce nuestro catalogo de pizzas.</small>
     </div>
-    <form action="{{ url_for('login') }}" method="post">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Correo Electronico</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" name="email">
+
+    <!-------------------- ------ Right Box ---------------------------->
+    <div class="col-md-6 right-box">
+        <div class="row align-items-center">
+            <div class="header-text mb-4">
+                <h2>Hola, de nuevo</h2>
+                <p>Estamos feliz de tenerte de vuelta.</p>
+            </div>
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Correo Electronico</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" name="email">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" name="password">
+                    <div id="emailHelp" class="form-text">No compartas la clave con nadie.</div>
+                </div>
+                <div class="input-group mb-3">
+                    <button  type="submit" class="btn btn-lg btn-warning w-100 fs-6" value="Login">Iniciar Sesion</button>
+                </div>
+            </form>
+            <div class="row">
+                <small>No tienes cuenta? <a href="{{ url_for('index_register') }}">Registrate</a></small>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="exampleFormControlInput1" name="password">
-            <div id="emailHelp" class="form-text">No compartas la clave con nadie.</div>
-        </div>
-        <div class="col-auto pt-2">
-            <button type="submit" class="btn btn-primary" value="Login">Iniciar Sesion</button>
-        </div>
-    </form>
+    </div>
 </div>

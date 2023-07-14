@@ -5,9 +5,14 @@
 {% block titulo %}Catalogo de Pizzas{% endblock %}
 
 {% block content %}
+<!-- Titulo -->
 <div class="text-center">
-    <h1 class="card-title mb-5">Opciones de Pizzas</h1>
+    <div class="titulo" style="margin-bottom: 25;">
+        <h3>Catalogo <span>Pizzas</span></h3>
+    </div>
 </div>
+
+<!-- Pizzas -->
 <div class="row">
     {% for pizza in pizzas %}
     <div class="col-md-4">
@@ -23,10 +28,5 @@
         </div>
     </div>
     {% endfor %}
-</div>
-<div class="text-end mb-5">
-    <a href="{{ url_for('show_order') }}" class="btn btn-primary">
-        Ir al pago
-    </a>
 </div>
 {% endblock %}

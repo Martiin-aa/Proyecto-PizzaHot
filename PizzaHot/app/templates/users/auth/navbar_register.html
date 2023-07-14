@@ -1,20 +1,27 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+<!-- Inicio del menu Register -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" style="padding-top: 12; padding-bottom: 12;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="font-size: 25px;">PizzaHot</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+
+        <!-- icono o nombre -->
+        <a class="navbar-brand" href="#">
+            <img src="https://seeklogo.com/images/P/pizza-logo-9092058631-seeklogo.com.png" alt="Bootstrap" width="35" height="35" style="padding-bottom: 5px;">
+            <span class="text-warning">PizzaHot</span>
+        </a>
+
+        <!-- boton del menu -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- elementos del menu colapsable -->
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('index_login') }}">Inicia Sesion</a>
+                    <a class="nav-link" aria-current="page" href="{{ url_for('index_login') }}">Iniciar Sesion</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search" style="margin: 2px;">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Busqueda</button>
-            </form>
+            <hr class="d-md-none text-white-50">
         </div>
     </div>
 </nav>

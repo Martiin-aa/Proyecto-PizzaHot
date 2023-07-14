@@ -5,10 +5,15 @@
 {% block titulo %}Pagar Orden{% endblock %}
 
 {% block content %}
+<!-- Titulo -->
 <div class="col" style="margin-right: 250px;margin-left: 250px">
     <div class="text-center">
-        <h1 class="card-title mb-5">Pagar Orden</h1>
+        <div class="titulo" style="margin-bottom: 25;">
+            <h3>Pagar <span>Orden</span></h3>
+        </div>
     </div>
+
+    <!-- Lista de pizzas -->
     {% if order_details %}
         {% for order_detail in order_details %}
         <div class="card mt-4">
@@ -26,6 +31,8 @@
     {% else %}
     <p class="text-center my-4">No hay pizzas en tu orden.</p>
     {% endif %}
+
+    <!-- Pago -->
     <form action="#" method="post"> <!--{ url_for('pagar') }}-->
         <div class="row d-flex justify-content-end mt-3">
             <div class="col-auto">

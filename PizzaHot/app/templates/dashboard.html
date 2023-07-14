@@ -5,11 +5,28 @@
 
 {% include "includes/navbar_dashboard.html" %}
 {% block content %}
-<h2 class="mb-5">Bienvenido, {{session.user.first_name}}</h2>
+<!-- Banner -->
+    <div class="card text-center mb-4">
+        <div class="card-header">
+            Bienvenido, {{session.user.first_name}} al inicio
+        </div>
+        <div class="card-body ">
+            <div class="titulo">
+                <h3><span>Se</span> te <span>Antoja</span> una <span>Pizza</span> </h3>
+            </div>
+            <blockquote class="blockquote mb-0">
+                <p>“Nadie puede ser sensato con el estómago vacío.”</p>
+                <footer class="blockquote-footer">George Elliot</footer>
+            </blockquote>
+            <a href="{{ url_for('pizzas') }}" class="btn btn-warning mt-3">Nuestras pizzas</a>
+        </div>
+    </div>
 
+    <!-- Lista de pizzas pasadas -->
     <div class="col">
-        <h4>Pizzas de tu orden pasada</h4>
-
+        <div class="titulo">
+            <h3>Pizza <span>Pasadas</span></h3>
+        </div>
         {% if order_past_pizzas %}
             {% for order_past_pizza in order_past_pizzas %}
                 <div class="card mt-2">
@@ -27,9 +44,11 @@
         {% endif %}
     </div>
 
+    <!-- Lista de pizzas de tu orden-->
     <div class="col">
-        <h4>Tu orden</h4>
-
+        <div class="titulo">
+            <h3>Tu <span>Orden</span></h3>
+        </div>
         {% if order_pizzas %}
             {% for order_pizza in order_pizzas %}
                 <div class="card mt-2">
@@ -47,7 +66,6 @@
             <a href="{{ url_for('show_order') }}"class="btn btn-primary">
                 Ir al pago
             </a>
-        </div>
         </div>
     </div>
 {% endblock %}
