@@ -24,8 +24,6 @@ class User:
         self.first_name = data.get("first_name", "")
         self.last_name = data.get("last_name", "")
         self.email = data.get("email", "")
-        self.address = data.get("address", "")
-        self.city = data.get("city", "")
         self.password = data.get("password", "")
         self.created_at = data.get("created_at", "")
         self.updated_at = data.get("updated_at", "")
@@ -50,8 +48,8 @@ class User:
         """
 
         query = """
-        INSERT INTO users (first_name, last_name, email, address, city, password, created_at, updated_at)
-        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(address)s, %(city)s, %(password)s, NOW(), NOW());
+        INSERT INTO users (first_name, last_name, email, password, created_at, updated_at)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW(), NOW());
         """
 
         results = connect_to_mysql().query_db(query, data)
@@ -61,35 +59,37 @@ class User:
                 "id": results,
                 "first_name": data["first_name"],
                 "last_name": data["last_name"],
-                "email": data["email"],
-                "address": data["address"],
-                "city": data["city"]
+                "email": data["email"]
             }
             return cls(user_data)
 
         return None
+    
+    @classmethod 
+    def update(cls, data):
+        """
+        Actualizar un usuario.
+        """
+
+        query = """
+        UPDATE users
+        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
+        WHERE id = %(user_id)s;
+        """
+        return connect_to_mysql().query_db(query, data)
 
     @classmethod 
     def get_one(cls, data):
         """
-        Obtener un usuario con sus pizzas. incluyendo sus toppings.
+        Obtener un usuario.
         """
 
         query = """
-        SELECT users.id, users.first_name, users.last_name, pizzas.id AS pizza_id, pizzas.name AS pizza_name, pizzas.size, pizzas.crust, GROUP_CONCAT(toppings.name) AS toppings
-        FROM users
-        LEFT JOIN orders ON users.id = orders.user_id
-        LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
-        LEFT JOIN toppings_pizzas ON pizzas.id = toppings_pizzas.pizza_id
-        LEFT JOIN toppings ON toppings_pizzas.topping_id = toppings.id
-        WHERE users.id = %(user_id)s
-        GROUP BY users.id, pizzas.id;
+        SELECT * FROM users WHERE id = %(id)s;
         """
-        results = connect_to_mysql().query_db(query, data)
-        user = cls(results[0])
-        for row in results:
-            user.pizzas.append(Pizza(row))
-        return user
+        user = connect_to_mysql().query_db(query, data)
+        return cls(user[0])
+    
     
     @classmethod
     def get_by_id(cls,data):
@@ -122,4 +122,3 @@ class User:
         if user['password'] != user['password_confirm']:
             flash("Las contraseñas no coinciden","danger")
         return is_valid
-    

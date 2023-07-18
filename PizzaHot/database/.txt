@@ -1,4 +1,5 @@
 SELECT * FROM users;
+SELECT * FROM addresses;
 SELECT * FROM pizzas;
 SELECT * FROM orders;
 SELECT * FROM toppings;
@@ -78,3 +79,9 @@ WHERE toppings.id IN (1, 2, 3, 4)
 -- Crear una pizza. con la suma de los toppings seleccionados en el precio de la pizza.
 INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
 VALUES ('peperonni', 'Large', 'thin', 5200, 'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384', NOW(), NOW());
+
+-- Actualizar la direccion de un usuario si tiene una, sino crearla.
+INSERT INTO addresses (district, address, house_number, telephone, user_id, created_at, updated_at)
+VALUES ('Puente alto', 'Pj. el genoves', '4566' , '588565656' , '1', NOW(), NOW())
+ON DUPLICATE KEY UPDATE
+district = 'Puente altos', address = 'Pj. el genovessss', house_number = '4586', telephone = '5658785656';

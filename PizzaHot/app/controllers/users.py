@@ -9,7 +9,7 @@ from app import app
 
 # Models
 from app.models.user import User
-from app.models.pizza import Pizza
+from app.models.address import Address
 
 
 # Bcrypt app
@@ -51,9 +51,7 @@ def login():
                 "id": user.id,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "email": user.email,
-                "address": user.address,
-                "city": user.city
+                "email": user.email
             }
             session["user"] = user
             flash("¡Bienvenido de nuevo!", "success")
@@ -96,8 +94,6 @@ def register():
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
         "email": request.form["email"],
-        "address": request.form["address"],
-        "city": request.form["city"],
         "password": password_hash
     }
 
@@ -113,11 +109,71 @@ def register():
             "id": user.id,
             "first_name": user.first_name,
             "last_name": user.last_name,
-            "email": user.email,
-            "address": user.address,
-            "city": user.city
+            "email": user.email
         }
         flash("¡Registro exitoso!", "success")
         return redirect(url_for("dashboard"))
 
     return redirect(url_for("index_register"))
+
+@app.route("/users/update/", methods=["GET", "POST"])
+def update_user():
+    """
+    Actualizar un usuario.
+    """
+
+    # Proteger la ruta /users/update/
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    # Obtener los datos del usuario
+    user = session["user"]
+    address = Address.get_one({"user_id": user["id"]})
+    
+    if request.method == "POST":
+        # Crear el diccionario con los datos del usuario
+        user_data = {
+            "user_id": user["id"],
+            "first_name": request.form["first_name"],
+            "last_name": request.form["last_name"],
+            "email": request.form["email"]
+        }
+        
+        # Actualizar el usuario
+        User.update(user_data)
+        flash("!Usuario actualizado exitosamente!", "success")
+        return redirect(url_for("dashboard"))
+
+    context = {
+        "user": user,
+        "address": address
+    }
+
+    return render_template("users/user_update.html", **context)
+
+@app.route("/users/update/address", methods=["POST"])
+def update_address():
+    """
+    Actualizar la dirección de un usuario.
+    """
+
+    # Proteger la ruta /users/update/address
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    # Obtener los datos del usuario
+    user = session["user"]
+
+    if request.method == "POST":
+    # Obtener los datos de la dirección del formulario
+        address_data = {
+            "user_id": user["id"],
+            "district": request.form["district"],
+            "address": request.form["address"],
+            "house_number": request.form["house_number"],
+            "telephone": request.form["telephone"]
+        }
+        # Actualizar la dirección del usuario
+        Address.update(address_data)
+        flash("¡Dirección actualizada exitosamente!", "success")
+        return redirect(url_for("dashboard"))

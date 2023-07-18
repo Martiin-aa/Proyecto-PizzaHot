@@ -44,6 +44,10 @@ body{
         padding: 20px;
     }
 }
+.box-area-small {
+    max-width: 575px;
+    margin: 0 auto;
+}
 
 /*------------ Footer ------------*/
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');

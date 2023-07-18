@@ -32,7 +32,7 @@
                         {{session.user.first_name}}
                     </a>
                     <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('update_user') }}">Configuración</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('logout') }}">Salir</a></li>
                     </ul>
                 </li>

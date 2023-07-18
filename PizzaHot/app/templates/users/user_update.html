@@ -1,0 +1,73 @@
+{% set include_line = false %}
+{% extends "base.html" %}
+
+{% block titulo %}User Update{% endblock %}
+
+{% include "includes/navbar_dashboard.html" %}
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-6">
+
+        <!-- Actualizacion de dirreción de usuario -->
+        <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 65px;">
+            <div class="col-12">
+                <div class="text-center">
+                    <div class="titulo">
+                        <h3>Añadir <span>Dirección</span></h3>
+                    </div>
+                </div>
+                <form action="{{ url_for('update_address') }}" method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Comuna</label>
+                        <input type="text" name="district" value="{{ address.district | default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Dirección</label>
+                        <input type="text" name="address" value="{{ address.address| default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">N° de Casa</label>
+                        <input type="text" name="house_number" value="{{ address.house_number| default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <label for="inputAuthor" class="form-label">Telefono</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">+56</span>
+                        <input type="text" name="telephone" value="{{ address.telephone| default('') }}" class="form-control" placeholder="Telefono de usuario" aria-label="Telefono de usuario" aria-describedby="basic-addon2">
+                    </div>
+                    <input type="submit" value="Añadir dirección" class="btn btn-warning mt-3">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <!-- Actualizacion de los datos personales de usuario -->
+        <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 10px;">
+            <div class="col-12">
+                <div class="text-center">
+                    <div class="titulo">
+                        <h3>Editar <span>Usuario</span></h3>
+                    </div>
+                </div>
+                <form action="{{ url_for('update_user') }}" method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Nombre</label>
+                        <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control"
+                            id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Apellido</label>
+                        <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control"
+                            id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Correo</label>
+                        <input type="text" name="email" value="{{ user.email }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <input type="submit" value="Actualizar usuario" class="btn btn-warning mt-3">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
