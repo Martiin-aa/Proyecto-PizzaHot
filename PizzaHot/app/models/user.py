@@ -25,6 +25,7 @@ class User:
         self.last_name = data.get("last_name", "")
         self.email = data.get("email", "")
         self.password = data.get("password", "")
+        self.logo = data.get("logo", "")
         self.created_at = data.get("created_at", "")
         self.updated_at = data.get("updated_at", "")
         self.pizzas = []  # Lista de pizzas del usuario
@@ -73,7 +74,7 @@ class User:
 
         query = """
         UPDATE users
-        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
+        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, logo= %(logo)s,
         WHERE id = %(user_id)s;
         """
         return connect_to_mysql().query_db(query, data)
