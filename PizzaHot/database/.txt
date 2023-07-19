@@ -85,3 +85,9 @@ INSERT INTO addresses (district, address, house_number, telephone, user_id, crea
 VALUES ('Puente alto', 'Pj. el genoves', '4566' , '588565656' , '1', NOW(), NOW())
 ON DUPLICATE KEY UPDATE
 district = 'Puente altos', address = 'Pj. el genovessss', house_number = '4586', telephone = '5658785656';
+
+-- Cuenta todas las pizzas de la orden del usuario. deletable_1
+SELECT COUNT(*) AS total_pizzas
+FROM orders
+WHERE orders.user_id = 1
+AND orders.deletable = 1;
