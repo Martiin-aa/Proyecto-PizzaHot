@@ -27,10 +27,12 @@ def dashboard():
 
     order_past_pizzas = Order.get_past_orders(data)
     order_pizzas = Order.get_orders(data)
+    # count_pizzas = Order.get_count_pizzas(data)
 
     context = {
         "order_past_pizzas": order_past_pizzas,
-        "order_pizzas": order_pizzas
+        "order_pizzas": order_pizzas,
+        "count_pizzas": show_count_pizzas(data)
     }
     return render_template("dashboard.html", **context)
 
@@ -50,7 +52,8 @@ def pizzas():
     pizzas = Pizza.get_all(data)
 
     context = {
-        "pizzas": pizzas
+        "pizzas": pizzas,
+        "count_pizzas": show_count_pizzas(data)
     }
     return render_template("pizzas/pizzas.html", **context)
 
@@ -141,27 +144,20 @@ def update_pizza(pizza_id):
         Order.add_order_1(order_data)
         return redirect(url_for("dashboard", pizza_id=pizza_id))
 
+    data = {"id": session["user"]["id"]}
     context = {
         "pizza": pizza,
-        "toppings": toppings
+        "toppings": toppings,
+        "count_pizzas": show_count_pizzas(data)
     }
 
     return render_template("pizzas/pizza_update.html", **context)
 
-@app.route("/orders/count/")
-def show_count_pizzas():
+def show_count_pizzas(data):
     """
     Muestra la cuenta de pizzas de la orden del usuario. deletable_1
     """
-
-    # Proteger la ruta /pizzas/count/
-    if "user" not in session:
-        return redirect(url_for("index_register"))
     
-    data = {"id": session['user']['id']}
     count_pizzas = Order.get_count_pizzas(data)
 
-    context = {
-        "count_pizzas": count_pizzas
-    }
-    return render_template("includes/navbar.html", **context)
+    return count_pizzas

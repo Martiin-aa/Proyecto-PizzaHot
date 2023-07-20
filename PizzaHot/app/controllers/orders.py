@@ -85,7 +85,17 @@ def show_order():
 
     context = {
         "order_details": order_details,
-        "total_price": total_price
+        "total_price": total_price,
+        "count_pizzas": show_count_pizzas(data)
     }
 
     return render_template("orders/order_detail.html", **context)
+
+def show_count_pizzas(data):
+    """
+    Muestra la cuenta de pizzas de la orden del usuario. deletable_1
+    """
+    
+    count_pizzas = Order.get_count_pizzas(data)
+
+    return count_pizzas

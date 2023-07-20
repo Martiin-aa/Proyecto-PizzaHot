@@ -140,4 +140,4 @@ class Order:
         AND orders.deletable = 1;
         """
         count_pizzas = connect_to_mysql().query_db(query, data)
-        return count_pizzas
+        return count_pizzas[0]

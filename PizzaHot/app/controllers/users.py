@@ -10,6 +10,7 @@ from app import app
 # Models
 from app.models.user import User
 from app.models.address import Address
+from app.models.order import Order
 
 
 # Bcrypt app
@@ -129,6 +130,7 @@ def update_user():
     # Obtener los datos del usuario
     user = User.get_one({"id": session["user"]["id"]})
     address = Address.get_one({"user_id": session["user"]["id"]})
+    data = {"id": session["user"]["id"]}
     
     if request.method == "POST":
         # Crear el diccionario con los datos del usuario
@@ -146,7 +148,8 @@ def update_user():
 
     context = {
         "user": user,
-        "address": address
+        "address": address,
+        "count_pizzas": show_count_pizzas(data)
     }
 
     return render_template("users/user_update.html", **context)
@@ -160,9 +163,6 @@ def update_address():
     # Proteger la ruta /users/update/address
     if "user" not in session:
         return redirect(url_for("index_register"))
-
-    # Obtener los datos del usuario
-    user = session["user"]
 
     if request.method == "POST":
     # Obtener los datos de la dirección del formulario
@@ -184,4 +184,17 @@ def information():
     pagina de información y contacto.
     """
 
-    return render_template("information.html")
+    data = {"id": session["user"]["id"]}
+    context = {
+        "count_pizzas": show_count_pizzas(data)
+    }
+    return render_template("information.html", **context)
+
+def show_count_pizzas(data):
+    """
+    Muestra la cuenta de pizzas de la orden del usuario. deletable_1
+    """
+    
+    count_pizzas = Order.get_count_pizzas(data)
+
+    return count_pizzas
