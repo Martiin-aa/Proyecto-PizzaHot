@@ -139,7 +139,6 @@ def update_pizza(pizza_id):
         }
         
         Order.add_order_1(order_data)
-        Order.add_order_0(order_data)
         return redirect(url_for("dashboard", pizza_id=pizza_id))
 
     context = {

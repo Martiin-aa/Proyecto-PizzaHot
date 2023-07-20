@@ -25,9 +25,11 @@ INSERT INTO `pizzas_schema`.`pizzas` (`name`, `size`, `crust`, `price`,`img`,`de
 INSERT INTO orders (pizza_id, user_id, deletable, created_at, updated_at)
 VALUES (1, 1, 1, NOW(), NOW());
 
--- Agregar una pizza a la orden de un usuario. deletable_0
+-- Agrega todas las pizzas de la orden de un usuario. deletable_0
 INSERT INTO orders (pizza_id, user_id, deletable, created_at, updated_at)
-VALUES (1, 1, 0, NOW(), NOW());
+SELECT pizza_id, 1, 0, NOW(), NOW()
+FROM orders
+WHERE deletable = 1;
 
 -- Obtener todas las pizzas de la orden de un usuario. deletable_1
 SELECT orders.*, pizzas.*
@@ -36,15 +38,12 @@ JOIN pizzas ON orders.pizza_id = pizzas.id
 WHERE orders.user_id = 1
 AND orders.deletable = 1;
 
--- Obtener las últimas 4 órdenes pasadas creadas por el usuario, después de 5 minutos o más. deletable_0
+-- Obtener las últimas órdenes pasadas creadas por el usuario. deletable_0
 SELECT orders.*, pizzas.*
 FROM orders
 JOIN pizzas ON orders.pizza_id = pizzas.id
 WHERE orders.user_id = 1
-AND orders.created_at <= TIMESTAMPADD(MINUTE, -15, NOW())
-AND orders.deletable = 0
-ORDER BY orders.created_at DESC
-LIMIT 4;
+AND orders.deletable = 0;
 
 -- Eliminar una pizza de la orden. deletable_1
 DELETE FROM orders WHERE pizza_id = 1 AND user_id = 1 AND deletable = 1;
@@ -80,11 +79,16 @@ WHERE toppings.id IN (1, 2, 3, 4)
 INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)
 VALUES ('peperonni', 'Large', 'thin', 5200, 'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384', NOW(), NOW());
 
--- Actualizar la direccion de un usuario si tiene una, sino crearla.
+-- Actualizar la direccion de un usuario si tiene una, sino la crea.
 INSERT INTO addresses (district, address, house_number, telephone, user_id, created_at, updated_at)
 VALUES ('Puente alto', 'Pj. el genoves', '4566' , '588565656' , '1', NOW(), NOW())
 ON DUPLICATE KEY UPDATE
 district = 'Puente altos', address = 'Pj. el genovessss', house_number = '4586', telephone = '5658785656';
+
+-- Obtener la dirreción del usuario por su ID.
+SELECT district, address, house_number, telephone
+FROM addresses
+WHERE user_id = 1;
 
 -- Cuenta todas las pizzas de la orden del usuario. deletable_1
 SELECT COUNT(*) AS total_pizzas

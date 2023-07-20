@@ -27,7 +27,6 @@ def add_order_pizza(pizza_id):
     }
 
     Order.add_order_1(data)
-    Order.add_order_0(data)
     return redirect(url_for("dashboard"))
 
 @app.route("/pizzas/<int:pizza_id>/remove_1/")
@@ -67,7 +66,7 @@ def remove_order_pizza_0(pizza_id):
 @app.route("/orders/detail", methods=["GET", "POST"])
 def show_order():
     """
-    Muestra la orden del usuario. deletable_1
+    Muestra la orden del usuario. deletable_1. y agrega a la ordenes pasadas. deletable_0
     """
 
     # Proteger la ruta /orders/
@@ -80,6 +79,8 @@ def show_order():
     total_price = Order.sum_order(data)
 
     if request.method == "POST":
+        data_add = {"user_id": session['user']['id']}
+        Order.add_order_0(data_add)
         return redirect(url_for("dashboard"))
 
     context = {
@@ -88,4 +89,3 @@ def show_order():
     }
 
     return render_template("orders/order_detail.html", **context)
-

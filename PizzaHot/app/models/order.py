@@ -37,17 +37,14 @@ class Order:
     @classmethod
     def get_past_orders(cls, data):
         """
-        Obtener las últimas 4 órdenes pasadas creadas por el usuario. deletable_0
+        Obtener las últimas órdenes pasadas creadas por el usuario. deletable_0
         """
         query = """
         SELECT orders.*, pizzas.*
         FROM orders
         JOIN pizzas ON orders.pizza_id = pizzas.id
         WHERE orders.user_id = %(id)s
-        AND orders.deletable = 0
-        AND orders.created_at <= (NOW() - INTERVAL 5 MINUTE)
-        ORDER BY orders.created_at DESC
-        LIMIT 4;
+        AND orders.deletable = 0;
         """
         order_past_pizzas = connect_to_mysql().query_db(query, data)
         return order_past_pizzas
@@ -64,16 +61,18 @@ class Order:
         """
         order_id = connect_to_mysql().query_db(query, data)
         return order_id
-    
+
     @classmethod
     def add_order_0(cls, data):
         """
-        Agregar una pizza a la orden de un usuario. deletable_0
+        Agrega todas las pizzas de la orden de un usuario. deletable_0
         """
 
         query = """
         INSERT INTO orders (pizza_id, user_id, deletable, created_at, updated_at)
-        VALUES (%(pizza_id)s, %(user_id)s, 0, NOW(), NOW());
+        SELECT pizza_id, %(user_id)s, 0, NOW(), NOW()
+        FROM orders
+        WHERE deletable = 1;
         """
         order_id = connect_to_mysql().query_db(query, data)
         return order_id
@@ -142,5 +141,3 @@ class Order:
         """
         count_pizzas = connect_to_mysql().query_db(query, data)
         return count_pizzas
-
-    

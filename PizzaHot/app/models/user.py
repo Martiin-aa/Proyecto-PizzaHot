@@ -74,7 +74,7 @@ class User:
 
         query = """
         UPDATE users
-        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, logo= %(logo)s,
+        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
         WHERE id = %(user_id)s;
         """
         return connect_to_mysql().query_db(query, data)

@@ -127,13 +127,13 @@ def update_user():
         return redirect(url_for("index_register"))
 
     # Obtener los datos del usuario
-    user = session["user"]
-    address = Address.get_one({"user_id": user["id"]})
+    user = User.get_one({"id": session["user"]["id"]})
+    address = Address.get_one({"user_id": session["user"]["id"]})
     
     if request.method == "POST":
         # Crear el diccionario con los datos del usuario
         user_data = {
-            "user_id": user["id"],
+            "user_id": session["user"]["id"],
             "first_name": request.form["first_name"],
             "last_name": request.form["last_name"],
             "email": request.form["email"]
@@ -167,7 +167,7 @@ def update_address():
     if request.method == "POST":
     # Obtener los datos de la dirección del formulario
         address_data = {
-            "user_id": user["id"],
+            "user_id": session["user"]["id"],
             "district": request.form["district"],
             "address": request.form["address"],
             "house_number": request.form["house_number"],

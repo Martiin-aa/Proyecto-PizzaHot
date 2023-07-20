@@ -26,7 +26,7 @@ class Address:
     @classmethod 
     def update(cls, data):
         """
-        Actualizar la direccion de un usuario si tiene una, sino crearla.
+        Actualizar la direccion de un usuario si tiene una, sino la crea.
         """
 
         query = """
@@ -44,7 +44,10 @@ class Address:
         """
 
         query = """
-        SELECT * FROM users WHERE id = %(user_id)s;
+        SELECT district, address, house_number, telephone
+        FROM addresses
+        WHERE user_id = %(user_id)s;
         """
-        pizza = connect_to_mysql().query_db(query, data)
-        return cls(pizza[0])
+        user = connect_to_mysql().query_db(query, data)
+        return cls(user[0])
+    
