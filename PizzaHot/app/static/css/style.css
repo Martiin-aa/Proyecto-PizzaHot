@@ -7,21 +7,21 @@
     margin-top: 2px;
 }
 
-/*------------ Login, Register t Update pizza ------------*/
+/*------------ Login, Register y Update de la Pizza ------------*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 body{
     font-family: 'Poppins', sans-serif;
     background: #ececec;
 }
-/*------------ Login container ------------*/
+/* Container Login */
 .box-area{
     width: 930px;
 }
-/*------------ Right box ------------*/
+/* Container Derecha */
 .right-box{
     padding: 40px 30px 40px 40px;
 }
-/*------------ Custom Placeholder ------------*/
+/* Custom Placeholder */
 ::placeholder{
     font-size: 16px;
 }
@@ -31,7 +31,7 @@ body{
 .rounded-5{
     border-radius: 30px;
 }
-/*------------ For small screens------------*/
+/* Para pantallas pequeñas */
 @media only screen and (max-width: 768px){
     .box-area{
         margin: 0 10px;
@@ -79,7 +79,7 @@ header span {
     color: #eaa03f;
 }
 
-/* The footer is fixed to the bottom of the page */
+/* The footer esta al final de la pagina */
 
 footer {
     position: fixed;
@@ -110,7 +110,7 @@ footer {
     vertical-align: top;
 }
 
-/* Footer left */
+/* Footer Izquierda */
 
 .footer-distributed .footer-left {
     width: 30%;
@@ -148,7 +148,7 @@ footer {
     margin: 0;
 }
 
-/* Footer Center */
+/* Footer Centro */
 
 .footer-distributed .footer-center {
     width: 35%;
@@ -192,7 +192,7 @@ footer {
     ;
 }
 
-/* Footer Right */
+/* Footer Derecha */
 
 .footer-distributed .footer-right {
     width: 30%;
@@ -254,7 +254,7 @@ footer {
     }
 }       
 
-/* Titulos */
+/*------------- Titulos --------------*/
 .titulo h3 {
     color:darkslategray;
     font: normal 36px 'Cookie', cursive;
@@ -265,3 +265,78 @@ footer {
     color: #e0ac1c;
 }
 
+/*------------- Contacto --------------*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container-form{
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 50px;
+    margin-top: 90px;
+}
+
+.container-form h2 {
+    color:darkslategray;
+    font: normal 36px 'Cookie', cursive;
+    margin-bottom: 15px;
+    font-size: 35px;
+}
+
+.container-form p {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.container-form a {
+    font-size: 17px;
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    margin-bottom: 15px;
+    color: black;
+    font-weight: 700;
+}
+
+.container-form a i {
+    color: orange;
+    margin-right: 10px;
+}
+
+.container-form form .campo, textarea {
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 15px;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    outline: 0px;
+}
+
+.container-form form textarea {
+    max-width: 530px;
+    min-width: 530px;
+    min-height: 140px;
+    max-height: 150px;
+}
+
+.container-form .btn-enviar {
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    outline: 0px;
+    background: orange;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}

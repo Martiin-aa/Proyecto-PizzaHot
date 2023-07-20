@@ -1,0 +1,51 @@
+{% set include_line = false %}
+{% extends "base.html" %}
+
+{% block titulo %}Informacion/Contacto{% endblock %}
+
+{% include "includes/navbar.html" %}
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md">
+
+        <!-- información -->
+        <div class="card text-center mb-4">
+            <div class="card-header">
+                Bienvenido {{session.user.first_name}}, a la pagina informativa
+            </div>
+            <div class="card-body">
+                <div class="titulo mb-2">
+                    <h3>Informacion <span>de</span> la <span>Franquicia</span> </h3>
+                </div>
+                <blockquote class="blockquote mb-0">
+                    <p>
+                        PizzaHot es una franquicia de restaurantes de comida rapida, 
+                        especializada <br> en la elaboración de pizzas al estilo estadounidense.
+                        encontraras una gran variedad <br> de pizzas tales como Margherita, Peperonni, Neapolitan etc.
+                    </p>
+                </blockquote>
+                <a href="{{ url_for('pizzas') }}" class="btn btn-warning mt-3">Nuestras pizzas</a>
+            </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="w-75 row border rounded-5 p-3 bg-white mx-auto">
+            <div class="container-form">
+                <div class="info-form">
+                    <h2> Contactanos </h2>
+                    <p>Escribenos tus consultas, quejas, criticas, etc..</p>
+                    <a href="#"><i class="bi bi-phone"></i>+567 74**9**258</a>
+                    <a href="#"><i class="bi bi-envelope"></i>pizzaHot@gmail.com</a>
+                    <a href="#"><i class="bi bi-map"></i>Santiago, Chile</a>
+                </div>
+                <form action="#" autocomplete="off">
+                    <input type="text" name="nombre" placeholder="Ingresa tu nombre" class="campo">
+                    <input type="email" name="email" placeholder="Ingresa tu correo" class="campo">
+                    <textarea name="mensaje" placeholder="Ingresa tu mensaje"></textarea>
+                    <input type="submit" name="enviar" value="Enviar mensaje" class="btn btn-warning mt-3" style="float: right;">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

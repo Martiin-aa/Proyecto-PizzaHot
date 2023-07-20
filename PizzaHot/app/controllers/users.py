@@ -177,3 +177,11 @@ def update_address():
         Address.update(address_data)
         flash("¡Dirección actualizada exitosamente!", "success")
         return redirect(url_for("dashboard"))
+
+@app.route("/information/contact/")
+def information():
+    """
+    pagina de información y contacto.
+    """
+
+    return render_template("information.html")
