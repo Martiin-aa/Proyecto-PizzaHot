@@ -2,16 +2,25 @@
 
 # Flask
 from flask import render_template, request, redirect, url_for, flash, session
-from flask_bcrypt import Bcrypt  
+from flask_bcrypt import Bcrypt
+from flask_mail import Mail, Message
 
 # Config app
 from app import app
+
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = 'e51bdda7a1c9c4'
+app.config['MAIL_PASSWORD'] = '0b40666a5edd9f'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
 
 # Models
 from app.models.user import User
 from app.models.address import Address
 from app.models.order import Order
-
 
 # Bcrypt app
 bcrypt = Bcrypt(app)
@@ -178,16 +187,41 @@ def update_address():
         flash("¡Dirección actualizada exitosamente!", "success")
         return redirect(url_for("dashboard"))
 
-@app.route("/information/contact/")
+@app.route("/information/contact/", methods=["GET", "POST"])
 def information():
     """
     pagina de información y contacto.
     """
 
+    # Proteger la ruta /information/contact/
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+    
     data = {"id": session["user"]["id"]}
+
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        email = request.form["email"]
+        mensaje = request.form["mensaje"]
+
+        # instancia de email
+        msg = Message("Mensaje de contacto, Cliente PizzaHot",
+                    sender=email,
+                    recipients=["martin.arayaantezana@gmail.com"])
+        
+        # Contenido del email
+        msg.body = f"Nombre: {nombre}\nMensaje: {mensaje}"
+        msg.html = f"<p><strong>Nombre del Cliente:</strong> {nombre}</p><p><strong>Mensaje:</strong> {mensaje}</p>"
+        
+        # Enviar email
+        mail.send(msg)
+        flash("!Correo enviado exitosamente!", "success")
+        return redirect(url_for("dashboard"))
+    
     context = {
         "count_pizzas": show_count_pizzas(data)
     }
+
     return render_template("information.html", **context)
 
 def show_count_pizzas(data):
@@ -198,3 +232,4 @@ def show_count_pizzas(data):
     count_pizzas = Order.get_count_pizzas(data)
 
     return count_pizzas
+

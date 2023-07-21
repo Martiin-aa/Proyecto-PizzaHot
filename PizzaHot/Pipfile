@@ -8,6 +8,9 @@ pymysql = "*"
 flask = "*"
 python-dotenv = "*"
 flask-bcrypt = "*"
+mercado = "*"
+mercadopago = "*"
+flask-mail = "*"
 
 [dev-packages]
 

@@ -36,9 +36,9 @@
                     <p>Escribenos tus consultas, quejas, criticas, etc..</p>
                     <a href="#"><i class="bi bi-phone"></i>+567 74**9**258</a>
                     <a href="#"><i class="bi bi-envelope"></i>pizzaHot@gmail.com</a>
-                    <a href="#"><i class="bi bi-map"></i>Santiago, Chile</a>
+                    <a href="https://www.google.com/maps/place/Don+Carlos+3035,+7550156+Las+Condes,+Regi%C3%B3n+Metropolitana/@-33.4152668,-70.5987086,21z/data=!4m6!3m5!1s0x9662cf4004d6eab9:0x8089a21954d74fda!8m2!3d-33.4154288!4d-70.5985817!16s%2Fg%2F11hjgdlwmk?hl=es&entry=ttu"><i class="bi bi-map"></i>Santiago, Chile</a>
                 </div>
-                <form action="#" autocomplete="off">
+                <form action="{{url_for('information')}}" method="post" autocomplete="off">
                     <input type="text" name="nombre" placeholder="Ingresa tu nombre" class="campo">
                     <input type="email" name="email" placeholder="Ingresa tu correo" class="campo">
                     <textarea name="mensaje" placeholder="Ingresa tu mensaje"></textarea>

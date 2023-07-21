@@ -7,7 +7,6 @@ from flask import render_template, redirect, request, url_for, session
 from app import app
 
 # Models
-from app.models.user import User
 from app.models.pizza import Pizza
 from app.models.order import Order
 from app.models.topping import Topping
