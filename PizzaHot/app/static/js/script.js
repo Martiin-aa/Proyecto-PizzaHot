@@ -22,6 +22,3 @@ mp.bricks().create("wallet", "wallet_container", {
         preferenceId: preferenceId,
     },
 });
-
-
-

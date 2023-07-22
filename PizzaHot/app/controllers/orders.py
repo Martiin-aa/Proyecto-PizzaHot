@@ -6,6 +6,10 @@ from flask import render_template, redirect, request, url_for, session, flash
 # Config app
 from app import app
 
+# SDK de Mercado Pago
+import mercadopago
+sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
+
 # Models
 from app.models.order import Order
 
@@ -99,13 +103,27 @@ def payment():
         return redirect(url_for("index_register"))
     
     data = {"id": session['user']['id']}
+    preference = None
 
     if request.method == "POST":
+        # Crea un ítem en la preferencia
+        preference_data = {
+            "items": [
+                {
+                    "title": "Mi producto",
+                    "quantity": 1,
+                    "unit_price": 75
+                }
+            ]
+        }
+        preference_response = sdk.preference().create(preference_data)
+        preference = preference_response["response"]
         flash("!Pago realizado!", "success")
         return redirect(url_for("dashboard"))
     
     context = {
-        "count_pizzas": show_count_pizzas(data)
+        "count_pizzas": show_count_pizzas(data),
+        "preference": preference
     }
 
     return render_template("payment.html", **context)
