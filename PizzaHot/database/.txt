@@ -48,6 +48,9 @@ AND orders.deletable = 0;
 -- Eliminar una pizza de la orden. deletable_1
 DELETE FROM orders WHERE pizza_id = 1 AND user_id = 1 AND deletable = 1;
 
+-- Eliminar todas las pizzas de la orden. deletable_1
+DELETE FROM orders WHERE deletable = 1 AND user_id = 1;
+
 -- Obtener todas las pizzas sin estar en la orden de un usuario, y tengan un id igual o menor a 9. deletable_1
 SELECT *
 FROM pizzas

@@ -8,7 +8,6 @@ from app import app
 
 # SDK de Mercado Pago
 import mercadopago
-sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
 
 # Models
 from app.models.order import Order
@@ -83,6 +82,7 @@ def show_order():
     if request.method == "POST":
         data_add = {"user_id": session['user']['id']}
         Order.add_order_0(data_add)
+        Order.delete_orders(data_add)
         return redirect(url_for("payment"))
 
     context = {
@@ -93,37 +93,44 @@ def show_order():
 
     return render_template("orders/order_detail.html", **context)
 
-@app.route("/orders/payment", methods=["GET", "POST"])
+@app.route("/orders/payment/", methods=["GET", "POST"])
 def payment():
     """
-    Añade el metodo de pago (mercado pago).
+    Añade el método de pago (Mercado Pago).
     """
     # Proteger la ruta /orders/payment
     if "user" not in session:
         return redirect(url_for("index_register"))
-    
+
     data = {"id": session['user']['id']}
+
+    order_details = Order.get_orders_details(data)
+    total_price = sum(order_detail["unit_price"] for order_detail in order_details)
+
     preference = None
 
     if request.method == "POST":
-        # Crea un ítem en la preferencia
+        sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
+
         preference_data = {
             "items": [
                 {
-                    "title": "Mi producto",
+                    "title": "Total del pedido",
                     "quantity": 1,
-                    "unit_price": 75
+                    "unit_price": total_price
                 }
             ]
         }
+
         preference_response = sdk.preference().create(preference_data)
         preference = preference_response["response"]
         flash("!Pago realizado!", "success")
         return redirect(url_for("dashboard"))
-    
+
     context = {
-        "count_pizzas": show_count_pizzas(data),
-        "preference": preference
+        "preference": preference,
+        "order_details": order_details,
+        "total_price": total_price
     }
 
     return render_template("payment.html", **context)

@@ -97,6 +97,16 @@ class Order:
         """
         return connect_to_mysql().query_db(query, data)
     
+    @classmethod
+    def delete_orders(cls, data):
+        """
+        Eliminar todas las pizzas de la orden. deletable_1
+        """
+        query = """ 
+        DELETE FROM orders WHERE deletable = 1 AND user_id = %(user_id)s;
+        """
+        return connect_to_mysql().query_db(query, data)
+        
     @classmethod 
     def get_orders_details(cls, data):
         """
