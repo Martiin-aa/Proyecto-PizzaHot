@@ -102,6 +102,19 @@ class User:
         if results:
             return cls(results[0])
         return None
+    
+    @classmethod 
+    def update_photo(cls, data):
+        """
+        Actualizar la foto de perfil de un usuario.
+        """
+
+        query = """
+        UPDATE users
+        SET logo = %(logo)s
+        WHERE id = %(user_id)s;
+        """
+        return connect_to_mysql().query_db(query, data)
 
     @staticmethod
     def validate_register(user):

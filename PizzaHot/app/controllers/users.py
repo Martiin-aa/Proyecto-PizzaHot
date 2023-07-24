@@ -1,9 +1,13 @@
 """User controllers."""
 
+# Python
+import os
+
 # Flask
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
+from werkzeug.utils import secure_filename
 
 # Config app
 from app import app
@@ -186,6 +190,66 @@ def update_address():
         Address.update(address_data)
         flash("¡Dirección actualizada exitosamente!", "success")
         return redirect(url_for("dashboard"))
+
+@app.route("/users/update/logo/", methods=["POST"])
+def update_user_logo():
+    """
+    Actualizar la foto de perfil.
+    """
+
+    # Proteger la ruta /users/update/logo/
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    if request.method == "POST":        
+        # Validación
+        if "file" not in request.files:
+            flash("No file part")
+            return redirect(url_for("dashboard"))
+
+        # La variable "file" contiene el archivo (foto de perfil)
+        file = request.files["file"]
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)  
+
+            print(f"filename: {filename}")
+
+            # Guardar el archivo en la carpeta "uploads"
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+            data = {
+                "user_id": session["user"]["id"],
+                "logo": filename, # La foto de perfil
+            }
+
+            print(f"data: {data}")
+            
+            # Actualizar foto del usuario
+            User.update_photo(data)
+            flash("¡Foto de usuario actualizada exitosamente!", "success")
+            return redirect(url_for("dashboard"))
+
+@app.route("/display/<filename>/")
+def display_image(filename):
+    """Permite mostrar la imagen subida."""
+
+    return redirect(url_for("static", filename="uploads/" + filename), code=301)
+
+
+def allowed_file(filename) -> bool:
+    """
+    Comprueba si la extensión del archivo es válida.
+
+    Parámetros:
+        - filename: nombre del archivo
+    Retorno:
+        - True si la extensión es válida
+    """
+
+    return "." in filename and \
+        filename.rsplit(".", 1)[1].lower() in app.config["ALLOWED_EXTENSIONS"]
+
 
 @app.route("/information/contact/", methods=["GET", "POST"])
 def information():

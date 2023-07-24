@@ -11,6 +11,7 @@ flask-bcrypt = "*"
 mercado = "*"
 mercadopago = "*"
 flask-mail = "*"
+werkzeug = "*"
 
 [dev-packages]
 

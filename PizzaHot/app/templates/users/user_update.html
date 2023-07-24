@@ -5,67 +5,97 @@
 
 {% include "includes/navbar.html" %}
 {% block content %}
-<div class="row align-items-center">
-    <div class="col-md-6">
-
-        <!-- Actualizacion de dirreción de usuario -->
-        <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 65px;">
-            <div class="col-12">
-                <div class="text-center">
-                    <div class="titulo">
-                        <h3>Añadir <span>Dirección</span></h3>
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Actualizacion de dirreción de usuario -->
+            <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 65px;">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div class="titulo">
+                            <h3>Añadir <span>Dirección</span></h3>
+                        </div>
                     </div>
+                    <form action="{{ url_for('update_address') }}" method="post" class="mt-4">
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">Comuna</label>
+                            <input type="text" name="district" value="{{ address.district | default('') }}" class="form-control" id="inputAuthor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">Dirección</label>
+                            <input type="text" name="address" value="{{ address.address| default('') }}" class="form-control" id="inputAuthor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">N° de Casa</label>
+                            <input type="text" name="house_number" value="{{ address.house_number| default('') }}" class="form-control" id="inputAuthor">
+                        </div>
+                        <label for="inputAuthor" class="form-label">Telefono</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2">+56</span>
+                            <input type="text" name="telephone" value="{{ address.telephone| default('') }}" class="form-control" placeholder="Telefono de usuario" aria-label="Telefono de usuario" aria-describedby="basic-addon2">
+                        </div>
+                        <input type="submit" value="Añadir dirección" class="btn btn-warning mt-3">
+                    </form>
                 </div>
-                <form action="{{ url_for('update_address') }}" method="post" class="mt-4">
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Comuna</label>
-                        <input type="text" name="district" value="{{ address.district | default('') }}" class="form-control" id="inputAuthor">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Actualizacion de la foto del usuario -->
+            <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 10px;">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <div class="titulo">
+                            <h3>Agregar <span>foto</span> Usuario</h3>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Dirección</label>
-                        <input type="text" name="address" value="{{ address.address| default('') }}" class="form-control" id="inputAuthor">
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">N° de Casa</label>
-                        <input type="text" name="house_number" value="{{ address.house_number| default('') }}" class="form-control" id="inputAuthor">
-                    </div>
-                    <label for="inputAuthor" class="form-label">Telefono</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon2">+56</span>
-                        <input type="text" name="telephone" value="{{ address.telephone| default('') }}" class="form-control" placeholder="Telefono de usuario" aria-label="Telefono de usuario" aria-describedby="basic-addon2">
-                    </div>
-                    <input type="submit" value="Añadir dirección" class="btn btn-warning mt-3">
-                </form>
+                    <!-- Mostrar foto -->
+                    {% if user.logo %}
+                    <img src="{{ url_for('display_image', filename=user.logo) }}" class="foto-redonda" alt="">
+                    {% else %}
+                    <!-- Si no hay foto, muestra una imagen predeterminada o un mensaje -->
+                    <img src="{{ url_for('static', filename='default_image.png') }}" class="foto-redonda" alt="Foto predeterminada">
+                    {% endif %}
+                    <form action="{{ url_for('update_user_logo') }}" method="post" enctype="multipart/form-data" class="mt-4">
+                        <div class="">
+                            <label for="inputLogo" class="form-label">Selecciona tu foto de perfil:</label>
+                            <input type="file" name="file" class="form-control" id="inputLogo">
+                        </div>
+                        <div class="">
+                            <input type="submit" value="Guardar" class="btn btn btn-success mt-3">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-
-        <!-- Actualizacion de los datos personales de usuario -->
-        <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 10px;">
-            <div class="col-12">
-                <div class="text-center">
-                    <div class="titulo">
-                        <h3>Editar <span>Usuario</span></h3>
+    <div class="row" style="margin-top: -128px;margin-left: 28px;">
+        <div class="col-md-6 offset-md-6">
+            <!-- Actualizacion de los datos personales de usuario -->
+            <div class="row border rounded-5 p-3 bg-white shadow box-area-small">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div class="titulo">
+                            <h3>Editar <span>Usuario</span></h3>
+                        </div>
                     </div>
+                    <form action="{{ url_for('update_user') }}" method="post" class="mt-4">
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">Nombre</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control"
+                                id="inputAuthor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">Apellido</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control"
+                                id="inputAuthor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAuthor" class="form-label">Correo</label>
+                            <input type="text" name="email" value="{{ user.email }}" class="form-control" id="inputAuthor">
+                        </div>
+                        <input type="submit" value="Actualizar usuario" class="btn btn-warning mt-3">
+                    </form>
                 </div>
-                <form action="{{ url_for('update_user') }}" method="post" class="mt-4">
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Nombre</label>
-                        <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control"
-                            id="inputAuthor">
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Apellido</label>
-                        <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control"
-                            id="inputAuthor">
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputAuthor" class="form-label">Correo</label>
-                        <input type="text" name="email" value="{{ user.email }}" class="form-control" id="inputAuthor">
-                    </div>
-                    <input type="submit" value="Actualizar usuario" class="btn btn-warning mt-3">
-                </form>
             </div>
         </div>
     </div>
