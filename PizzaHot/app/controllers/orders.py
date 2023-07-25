@@ -6,7 +6,7 @@ from flask import render_template, redirect, request, url_for, session, flash
 # Config app
 from app import app
 
-# mercadopag
+# mercadopago
 import mercadopago
 
 # Models
@@ -118,7 +118,9 @@ def payment():
             ]
         }
         preference_response = sdk.preference().create(preference_data)
-        preference = preference_response["response"]
+        print(preference_response)
+        preference = preference_response["response"]["id"]
+        print("Preference ID:", preference)
         flash("!Pago realizado!", "success")
         return redirect(url_for("dashboard"))
 
@@ -126,7 +128,7 @@ def payment():
         "preference": preference,
         "total_price": total_price
     }
-
+    print("Context:", context)
     return render_template("payment.html", **context)
 
 def show_count_pizzas(data):

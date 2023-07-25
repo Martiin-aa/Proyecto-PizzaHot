@@ -1,10 +1,10 @@
 // Mercado pago
-const mp = new MercadoPago('TEST-b61b00ab-80b9-4ab9-8381-d19839e3b8d5');
+const mp = new MercadoPago("TEST-b61b00ab-80b9-4ab9-8381-d19839e3b8d5");
 const bricksBuilder = mp.bricks();
 
 mp.bricks().create("wallet", "wallet_container", {
     initialization: {
-        preferenceId: "{{ preference['response'] }}"
+        preferenceId: "{{ preference }}"
     }
 });
 
