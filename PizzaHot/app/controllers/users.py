@@ -1,6 +1,5 @@
 """User controllers."""
 
-# Python
 import os
 
 # Flask
@@ -81,7 +80,6 @@ def logout():
     Cerrar sesión.
     """
 
-    # Proteger la ruta /logout/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -96,14 +94,11 @@ def register():
     Registrar usuario.
     """
 
-    # Validacion del correo electronico
     if not User.validate_register(request.form):
         return redirect(url_for("index_register"))
 
-    # Encriptar contraseña
     password_hash = bcrypt.generate_password_hash(request.form["password"])
 
-    # Diccionario de datos para el modelo
     data = {
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
@@ -111,12 +106,10 @@ def register():
         "password": password_hash
     }
 
-    # Validar que el correo electrónico no esté registrado
     if User.get_by_email(data):
         flash("¡El correo electrónico ya está registrado!", "danger")
         return redirect(url_for("index_register"))
     
-    # Registrar usuario
     user = User.register(data)
     if user:
         session["user"] = {
@@ -136,17 +129,14 @@ def update_user():
     Actualizar un usuario.
     """
 
-    # Proteger la ruta /users/update/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    # Obtener los datos del usuario
     user = User.get_one({"id": session["user"]["id"]})
     address = Address.get_one({"user_id": session["user"]["id"]})
     data = {"id": session["user"]["id"]}
     
     if request.method == "POST":
-        # Crear el diccionario con los datos del usuario
         user_data = {
             "user_id": session["user"]["id"],
             "first_name": request.form["first_name"],
@@ -154,7 +144,6 @@ def update_user():
             "email": request.form["email"]
         }
         
-        # Actualizar el usuario
         User.update(user_data)
         flash("!Usuario actualizado exitosamente!", "success")
         return redirect(url_for("dashboard"))
@@ -173,12 +162,11 @@ def update_address():
     Actualizar la dirección de un usuario.
     """
 
-    # Proteger la ruta /users/update/address
     if "user" not in session:
         return redirect(url_for("index_register"))
 
     if request.method == "POST":
-    # Obtener los datos de la dirección del formulario
+
         address_data = {
             "user_id": session["user"]["id"],
             "district": request.form["district"],
@@ -186,7 +174,7 @@ def update_address():
             "house_number": request.form["house_number"],
             "telephone": request.form["telephone"]
         }
-        # Actualizar la dirección del usuario
+
         Address.update(address_data)
         flash("¡Dirección actualizada exitosamente!", "success")
         return redirect(url_for("dashboard"))
@@ -197,17 +185,14 @@ def update_user_logo():
     Actualizar la foto de perfil.
     """
 
-    # Proteger la ruta /users/update/logo/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
     if request.method == "POST":        
-        # Validación
         if "file" not in request.files:
             flash("No file part")
             return redirect(url_for("dashboard"))
 
-        # La variable "file" contiene el archivo (foto de perfil)
         file = request.files["file"]
 
         if file and allowed_file(file.filename):
@@ -215,17 +200,15 @@ def update_user_logo():
 
             print(f"filename: {filename}")
 
-            # Guardar el archivo en la carpeta "uploads"
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
             data = {
                 "user_id": session["user"]["id"],
-                "logo": filename, # La foto de perfil
+                "logo": filename,
             }
 
             print(f"data: {data}")
             
-            # Actualizar foto del usuario
             User.update_photo(data)
             flash("¡Foto de usuario actualizada exitosamente!", "success")
             return redirect(url_for("dashboard"))
@@ -257,7 +240,6 @@ def information():
     pagina de información y contacto.
     """
 
-    # Proteger la ruta /information/contact/
     if "user" not in session:
         return redirect(url_for("index_register"))
     
@@ -268,16 +250,13 @@ def information():
         email = request.form["email"]
         mensaje = request.form["mensaje"]
 
-        # instancia de email
         msg = Message("Mensaje de contacto, Cliente PizzaHot",
                     sender=email,
                     recipients=["martin.arayaantezana@gmail.com"])
         
-        # Contenido del email
         msg.body = f"Nombre: {nombre}\nMensaje: {mensaje}"
         msg.html = f"<p><strong>Nombre del Cliente:</strong> {nombre}</p><p><strong>Mensaje:</strong> {mensaje}</p>"
         
-        # Enviar email
         mail.send(msg)
         flash("!Correo enviado exitosamente!", "success")
         return redirect(url_for("dashboard"))

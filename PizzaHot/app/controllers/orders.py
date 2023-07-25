@@ -6,7 +6,7 @@ from flask import render_template, redirect, request, url_for, session, flash
 # Config app
 from app import app
 
-# SDK de Mercado Pago
+# mercadopag
 import mercadopago
 
 # Models
@@ -18,7 +18,6 @@ def add_order_pizza(pizza_id):
     Agregar una pizza a las ordenes.
     """
 
-    # Proteger la ruta /pizzas/<int:pizza_id>/order/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -36,7 +35,6 @@ def remove_order_pizza_1(pizza_id):
     Eliminar una pizza de la orden. deletable_1
     """
 
-    # Proteger la ruta /pizzas/<int:pizza_id>/remove/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -53,7 +51,6 @@ def remove_order_pizza_0(pizza_id):
     Eliminar una pizza de la orden. deletable_0
     """
 
-    # Proteger la ruta /pizzas/<int:pizza_id>/remove/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -70,7 +67,6 @@ def show_order():
     Muestra la orden del usuario. deletable_1. y agrega a la ordenes pasadas. deletable_0
     """
 
-    # Proteger la ruta /orders/detail
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -98,14 +94,14 @@ def payment():
     """
     Añade el método de pago (Mercado Pago).
     """
-    # Proteger la ruta /orders/payment
+    
     if "user" not in session:
         return redirect(url_for("index_register"))
 
     data = {"id": session['user']['id']}
 
-    order_details = Order.get_orders_details(data)
-    total_price = sum(order_detail["unit_price"] for order_detail in order_details)
+    total_price = Order.sum_order(data)
+    total_price = total_price[0]["total_price"] if total_price and total_price[0]["total_price"] else 0
 
     preference = None
 
@@ -121,7 +117,6 @@ def payment():
                 }
             ]
         }
-
         preference_response = sdk.preference().create(preference_data)
         preference = preference_response["response"]
         flash("!Pago realizado!", "success")
@@ -129,7 +124,6 @@ def payment():
 
     context = {
         "preference": preference,
-        "order_details": order_details,
         "total_price": total_price
     }
 

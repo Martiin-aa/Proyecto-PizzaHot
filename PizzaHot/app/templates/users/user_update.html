@@ -40,6 +40,7 @@
             </div>
         </div>
         <div class="col-md-6">
+
             <!-- Actualizacion de la foto del usuario -->
             <div class="row border rounded-5 p-3 bg-white shadow box-area-small" style="margin-left: 10px;">
                 <div class="col-12">
@@ -48,11 +49,10 @@
                             <h3>Agregar <span>foto</span> Usuario</h3>
                         </div>
                     </div>
-                    <!-- Mostrar foto -->
+
                     {% if user.logo %}
                     <img src="{{ url_for('display_image', filename=user.logo) }}" class="foto-redonda" alt="">
                     {% else %}
-                    <!-- Si no hay foto, muestra una imagen predeterminada o un mensaje -->
                     <img src="{{ url_for('static', filename='default_image.png') }}" class="foto-redonda" alt="Foto predeterminada">
                     {% endif %}
                     <form action="{{ url_for('update_user_logo') }}" method="post" enctype="multipart/form-data" class="mt-4">

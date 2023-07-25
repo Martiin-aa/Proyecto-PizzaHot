@@ -21,12 +21,10 @@ def dashboard():
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    # Obtener el ID del usuario de la sesión.
     data = {"id": session["user"]["id"]}
 
     order_past_pizzas = Order.get_past_orders(data)
     order_pizzas = Order.get_orders(data)
-    # count_pizzas = Order.get_count_pizzas(data)
 
     context = {
         "order_past_pizzas": order_past_pizzas,
@@ -45,7 +43,6 @@ def pizzas():
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    # Obtener el ID del usuario de la sesión.
     data = {"id": session["user"]["id"]}
 
     pizzas = Pizza.get_all(data)
@@ -78,7 +75,6 @@ def create_pizza():
     Crear una pizza.
     """
 
-    # Proteger la ruta /pizzas/create/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
@@ -101,11 +97,9 @@ def update_pizza(pizza_id):
     Actualizar una pizza.
     """
 
-    # Proteger la ruta /pizzas/<int:pizza_id>/
     if "user" not in session:
         return redirect(url_for("index_register"))
 
-    # Obtener la pizza y los toppings
     data = {
         "pizza_id": pizza_id,
         "user_id": session['user']['id']
@@ -120,7 +114,6 @@ def update_pizza(pizza_id):
             if str(topping['id']) in selected_topping_ids:
                 selected_toppings_price += topping['price']
 
-        # Crear el diccionario con los datos de la pizza
         pizza_data = {
             "name": pizza.name,
             "size": pizza.size,
@@ -130,11 +123,9 @@ def update_pizza(pizza_id):
             "topping_ids": selected_topping_ids
         }
 
-        # Crear la pizza
         pizza_id = Pizza.create(pizza_data)
         print(pizza_id)
 
-        # Añadir la pizza a la orden
         order_data = {
             "pizza_id": pizza_id,
             "user_id": session['user']['id']
