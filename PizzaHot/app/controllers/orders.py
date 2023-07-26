@@ -11,6 +11,7 @@ import mercadopago
 
 # Models
 from app.models.order import Order
+from app.models.address import Address
 
 @app.route("/pizzas/<int:pizza_id>/order/")
 def add_order_pizza(pizza_id):
@@ -72,8 +73,9 @@ def show_order():
 
     data = {"id": session['user']['id']}
 
+    address = Address.get_one({"user_id": session["user"]["id"]})
     order_details = Order.get_orders_details(data)
-    total_price = Order.sum_order(data)
+    total_price = Order.sum_order_1(data)
 
     if request.method == "POST":
         data_add = {"user_id": session['user']['id']}
@@ -84,10 +86,36 @@ def show_order():
     context = {
         "order_details": order_details,
         "total_price": total_price,
+        "address": address,
         "count_pizzas": show_count_pizzas(data)
     }
 
     return render_template("orders/order_detail.html", **context)
+
+
+@app.route("/orders/address", methods=["POST"])
+def update_order_address():
+    """
+    Muestra la orden del usuario. deletable_1. y agrega a la ordenes pasadas. deletable_0
+    """
+
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+
+    if request.method == "POST":
+
+        address_data = {
+            "user_id": session["user"]["id"],
+            "district": request.form["district"],
+            "address": request.form["address"],
+            "house_number": request.form["house_number"],
+            "telephone": request.form["telephone"]
+        }
+
+        Address.update(address_data)
+        flash("¡Dirección actualizada exitosamente!", "success")
+        return redirect(url_for("show_order"))
 
 @app.route("/orders/payment/")
 def payment():
@@ -100,8 +128,8 @@ def payment():
 
     data = {"id": session['user']['id']}
 
-    total_price_data = Order.sum_order(data)
-    total_price = total_price_data[0]["total_price"] if total_price_data and total_price_data[0]["total_price"] else 0
+    total_price_data = Order.sum_order_0(data)
+    total_price = int(total_price_data[0]["total_price"]) if total_price_data and total_price_data[0]["total_price"] else 0
 
     sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
     preference_data = {
@@ -109,13 +137,12 @@ def payment():
             {
                 "title": "Total del pedido",
                 "quantity": 1,
-                "unit_price": 10000
+                "unit_price": total_price
             }
         ]
     }
     preference_response = sdk.preference().create(preference_data)
     preference = preference_response["response"]
-    print("Preference ID:", preference["id"])
 
     context = {
         "preference": preference,

@@ -123,7 +123,7 @@ class Order:
         return order_details
 
     @classmethod
-    def sum_order(cls, data): 
+    def sum_order_1(cls, data):
         """
         Sumar todas las pizzas de la orden. deletable_1
         """
@@ -134,6 +134,22 @@ class Order:
         LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
         WHERE users.id = %(id)s
         AND orders.deletable = 1;
+        """
+        total_price = connect_to_mysql().query_db(query, data)
+        return total_price
+    
+    @classmethod
+    def sum_order_0(cls, data): 
+        """
+        Sumar todas las pizzas de la orden. deletable_0
+        """
+        query = """
+        SELECT SUM(pizzas.price) AS total_price
+        FROM users
+        LEFT JOIN orders ON users.id = orders.user_id
+        LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
+        WHERE users.id = %(id)s
+        AND orders.deletable = 0;
         """
         total_price = connect_to_mysql().query_db(query, data)
         return total_price

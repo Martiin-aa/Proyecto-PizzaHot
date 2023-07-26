@@ -26,24 +26,23 @@
 
         <!-- Mercado Pago -->
         <div id="wallet_container"></div>
-    </div>
-
-    <div class="card text-center mb-4">
-        <div class="card-header">
-            Gracias {{session.user.first_name}} por preferirnos
-        </div>
-        <div class="card-body">
-            <div class="titulo mb-2">
-                <h3>Informacion <span>de</span> la <span>Franquicia</span> </h3>
+    
+        <div class="card text-center mt-4">
+            <div class="card-header">
+                Gracias {{session.user.first_name}} por preferirnos
             </div>
-            <blockquote class="blockquote mb-0">
-                <p>
-                    PizzaHot es una franquicia de restaurantes de comida rapida, 
-                    especializada <br> en la elaboración de pizzas al estilo estadounidense.
-                    encontraras una gran variedad <br> de pizzas tales como Margherita, Peperonni, Neapolitan etc.
-                </p>
-            </blockquote>
-            <a href="{{ url_for('dashboard') }}" class="btn btn-warning mt-3">Vuelve a tu orden</a>
+            <div class="card-body">
+                <div class="titulo mb-2">
+                    <h3> Gracias <span>por</span> su <span>Compra</span> </h3>
+                </div>
+                <blockquote class="blockquote">
+                    <p>
+                        Estamos felices de que formes parte de <br> PizzaHot. Gracias por permanecer y crecer juntos
+                    </p>
+                </blockquote>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-warning">Vuelve a tu orden</a>
+                <a href="{{ url_for('information') }}" class="btn btn-warning">Contactanos</a>
+            </div>
         </div>
     </div>
 </div>

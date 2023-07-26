@@ -110,12 +110,17 @@ def update_pizza(pizza_id):
     if request.method == "POST":
         selected_topping_ids = request.form.getlist("topping_ids")
         selected_toppings_price = 0
+        selected_toppings_names = []
         for topping in toppings:
             if str(topping['id']) in selected_topping_ids:
                 selected_toppings_price += topping['price']
+                selected_toppings_names.append(topping['name'])
+
+        toppings_str = ", ".join(selected_toppings_names)
+        pizza_name_aderezos = f"{pizza.name} ({toppings_str})"
 
         pizza_data = {
-            "name": pizza.name,
+            "name": pizza_name_aderezos,
             "size": pizza.size,
             "crust": pizza.crust,
             "price": pizza.price + selected_toppings_price,
@@ -124,8 +129,6 @@ def update_pizza(pizza_id):
         }
 
         pizza_id = Pizza.create(pizza_data)
-        print(pizza_id)
-
         order_data = {
             "pizza_id": pizza_id,
             "user_id": session['user']['id']

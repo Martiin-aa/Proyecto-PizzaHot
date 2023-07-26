@@ -48,6 +48,6 @@ class Address:
         FROM addresses
         WHERE user_id = %(user_id)s;
         """
-        user = connect_to_mysql().query_db(query, data)
-        return cls(user[0])
+        results = connect_to_mysql().query_db(query, data)
+        return cls(results[0]) if results else None
     

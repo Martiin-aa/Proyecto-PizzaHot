@@ -28,7 +28,7 @@ class User:
         self.logo = data.get("logo", "")
         self.created_at = data.get("created_at", "")
         self.updated_at = data.get("updated_at", "")
-        self.pizzas = []  # Lista de pizzas del usuario
+        self.pizzas = [] 
 
     @classmethod
     def get_by_email(cls, data):

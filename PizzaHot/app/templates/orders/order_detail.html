@@ -5,47 +5,83 @@
 {% block titulo %}Pagar Orden{% endblock %}
 
 {% block content %}
-<!-- Titulo -->
-<div class="col" style="margin-right: 250px;margin-left: 250px">
-    <div class="text-center">
-        <div class="titulo" style="margin-bottom: 25;">
-            <h3>Pagar <span>Orden</span></h3>
+<div class="container">
+    <div class="row">
+
+        <!-- Bloque izquierdo -->
+        <div class="col-md-6">
+            <div class="text-center">
+                <div class="titulo" style="margin-bottom: 25;">
+                    <h3>Pagar <span>Orden</span></h3>
+                </div>
+            </div>
+
+            <!-- Lista de pizzas -->
+            {% if order_details %}
+                {% for order_detail in order_details %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Pizza de {{ order_detail.name }}</h5>
+                        <p class="card-text" style="margin-bottom: 2px;">Tamaño: {{ order_detail.size }}</p>
+                        <p class="card-text" style="margin-bottom: 4px;">Corteza: {{ order_detail.crust}}</p>
+                        <a href="{{ url_for('remove_order_pizza_1', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger mt-2">Eliminar</a>
+                    </div>
+                    <div class="card-footer">
+                        Precio: ${{ order_detail.price }} CLP
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p class="text-center my-4">No hay pizzas en tu orden.</p>
+            {% endif %}
+
+            <!-- Cuadro de Pago -->
+            <form action="{{ url_for('show_order') }}" method="post">
+                <div class="row d-flex justify-content-end mt-3">
+                    <div class="col-auto">
+                        <label for="total_price" class="col-form-label fs-5">Precio Total</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control fs-5" id="total_price" name="total_price" value="${{ total_price[0]['total_price']|string }} CLP" readonly>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary ms-auto fs-5" onclick="mostrarAlerta()">Pagar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bloque de la derecha -->
+        <div class="col-md-6">
+            <div class="border rounded-5 p-3 bg-white box-area-small">
+                <div class="text-center">
+                    <div class="titulo">
+                        <h3>Dirección <span>del</span> Delivery</h3>
+                    </div>
+                </div>
+                <form action="{{ url_for('update_order_address') }}" method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Comuna</label>
+                        <input type="text" name="district" value="{{ address.district | default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">Dirección</label>
+                        <input type="text" name="address" value="{{ address.address| default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAuthor" class="form-label">N° de Casa</label>
+                        <input type="text" name="house_number" value="{{ address.house_number| default('') }}" class="form-control" id="inputAuthor">
+                    </div>
+                    <label for="inputAuthor" class="form-label">Telefono</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">+56</span>
+                        <input type="text" name="telephone" value="{{ address.telephone| default('') }}" class="form-control" placeholder="Telefono de usuario" aria-label="Telefono de usuario" aria-describedby="basic-addon2">
+                    </div>
+                    <input type="submit" value="Añadir dirección" class="btn btn-warning mt-1">
+                </form>
+            </div>
         </div>
     </div>
-
-    <!-- Lista de pizzas -->
-    {% if order_details %}
-        {% for order_detail in order_details %}
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title">Pizza de {{ order_detail.name }}</h5>
-                <p class="card-text" style="margin-bottom: 2px;">Tamaño: {{ order_detail.size }}</p>
-                <p class="card-text" style="margin-bottom: 4px;">Corteza: {{ order_detail.crust}}</p>
-                <a href="{{ url_for('remove_order_pizza_1', pizza_id=order_detail.pizza_id) }}" class="btn btn-danger mt-2">Eliminar</a>
-            </div>
-            <div class="card-footer">
-                Precio: ${{ order_detail.price }} CLP
-            </div>
-        </div>
-        {% endfor %}
-    {% else %}
-    <p class="text-center my-4">No hay pizzas en tu orden.</p>
-    {% endif %}
-    
-    <!-- Pago -->
-    <form action="{{ url_for('show_order') }}" method="post">
-        <div class="row d-flex justify-content-end mt-3">
-            <div class="col-auto">
-                <label for="total_price" class="col-form-label fs-5">Precio Total</label>
-            </div>
-            <div class="col-6">
-                <input type="text" class="form-control fs-5" id="total_price" name="total_price" value="${{ total_price[0]['total_price']|string }} CLP" readonly>
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary ms-auto fs-5" onclick="mostrarAlerta()">Pagar</button>
-            </div>
-        </div>
-    </form>
 </div>
 
 {% endblock %}

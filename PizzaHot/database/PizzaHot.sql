@@ -107,7 +107,7 @@ CREATE TABLE `pizzas` (
 
 LOCK TABLES `pizzas` WRITE;
 /*!40000 ALTER TABLE `pizzas` DISABLE KEYS */;
-INSERT INTO `pizzas` VALUES (1,'Peperonni','Large','Thin',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-19 19:28:06','2023-07-19 19:28:06'),(2,'Peperonni','Medium','Stuffed',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-19 19:28:06','2023-07-19 19:28:06'),(3,'Peperonni','Small','Cracker',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(4,'Neapolitan','Large','Stuffed',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(5,'Neapolitan','Medium','Thin',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(6,'Neapolitan','Small','Cracker',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(7,'Margherita','Large','Cracker',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(8,'Margherita','Medium','Thin',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-19 19:28:07','2023-07-19 19:28:07'),(9,'Margherita','Small','Stuffed',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-19 19:28:07','2023-07-19 19:28:07');
+INSERT INTO `pizzas` VALUES (1,'Peperonni','Familiar','Delgada',12200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(2,'Peperonni','Mediana','Rellena',8200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(3,'Peperonni','Individual','Galleta',4200,'https://wepik.com/api/image/ai/6c8964bf-42d0-4d94-b788-6708585d384d',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(4,'Napolitana','Familiar','Rellena',12800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(5,'Napolitana','Mediana','Delgada',8800,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(6,'Napolitana','Individual','Galleta',5000,'https://wepik.com/api/image/ai/e33cd5e4-5c03-465d-a6ad-1d293ef108c6',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(7,'Margarita','Familiar','Galleta',14200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(8,'Margarita','Mediana','Delgada',9200,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-26 14:39:05','2023-07-26 14:39:05'),(9,'Margarita','Individual','Rellena',5800,'https://wepik.com/api/image/ai/ab9bb8b1-5b8e-48eb-ba68-bafee7e4d351',1,'2023-07-26 14:39:05','2023-07-26 14:39:05');
 /*!40000 ALTER TABLE `pizzas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `toppings` (
 
 LOCK TABLES `toppings` WRITE;
 /*!40000 ALTER TABLE `toppings` DISABLE KEYS */;
-INSERT INTO `toppings` VALUES (1,'olive',200,'2023-07-19 19:28:03','2023-07-19 19:28:03'),(2,'onion',150,'2023-07-19 19:28:03','2023-07-19 19:28:03'),(3,'mushroom',300,'2023-07-19 19:28:03','2023-07-19 19:28:03'),(4,'basil',350,'2023-07-19 19:28:03','2023-07-19 19:28:03');
+INSERT INTO `toppings` VALUES (1,'Aceituna',200,'2023-07-26 14:38:52','2023-07-26 14:38:52'),(2,'Cebolla',150,'2023-07-26 14:38:52','2023-07-26 14:38:52'),(3,'Champiñón',300,'2023-07-26 14:38:52','2023-07-26 14:38:52'),(4,'Albahaca',350,'2023-07-26 14:38:52','2023-07-26 14:38:52');
 /*!40000 ALTER TABLE `toppings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +185,7 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Martin','Araya','martin.arayaantezana@gmail.com','$2b$12$UJqaGm2x7exki0S8EMOg1Ow/53NJdMMZN8Oq4mE2HvB4vVaQLsSxy',NULL,'2023-07-19 19:29:29','2023-07-19 19:29:29');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -207,61 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-19 19:31:35
-CREATE DATABASE  IF NOT EXISTS `login_schema` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `login_schema`;
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: login_schema
--- ------------------------------------------------------
--- Server version	8.0.30
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `usuarios`
---
-
-DROP TABLE IF EXISTS `usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(200) DEFAULT NULL,
-  `password` varchar(250) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuarios`
---
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (5,'martin.arayaantezana@gmail.jhhhjhj','$2b$12$LZq.xEH9wobfoan6inYVHOz8s5xN7BuBExRk4iQOH2/diGjRevcJ2','2023-06-15 20:19:29','2023-06-15 20:19:29'),(6,'Martin.arayaantezana@gmail.com','$2b$12$LHTB9Sw/lQTw4RjzR1K.ZObgEtiYYab7FKJOEXVTdoznR1L4uk9yq','2023-06-15 20:25:22','2023-06-15 20:25:22'),(7,'iMarkii.aa@gmail.com','$2b$12$JcT1aWI5KdrkAMFPurh5P.rAvuIuOUODMpA4iYm3kCrk91dWHn692','2023-06-16 11:23:22','2023-06-16 11:23:22');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2023-07-19 19:31:35
+-- Dump completed on 2023-07-26 14:40:17

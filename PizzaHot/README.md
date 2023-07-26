@@ -14,8 +14,14 @@ Requerimientos: (individual)
 6.	Una pagina que muestre las pizzas a comprar y que muestre el total a pagar (botón de compra).
 
 Nuevos Requerimientos: (grupo)
-1. agregar una pagina que deje crear y actualizar la direccion del delivery. y que permita actulizar la información del usuario(nombre, apellido, correo).
+1. Una pagina que deje crear y actualizar la direccion del delivery. y que permita actulizar la información del usuario(nombre, apellido, correo).
+
+2. Una pagina de contacto que permita enviar un correo a la franquicia (mailtrap)
+
 2. hacer funcionar la barra de busqueda. *
-3. agregar una imagen al usuario. *
-4. agregar un pop (javascript) en la pagina del pago que permita confirmar el pago y dirección.
-5. más mejoras???
+
+3. Agregar y editar una imagen al usuario.
+
+4. Agregar un pop (javascript) en la pagina del pago que permita confirmar el pago.
+
+5. Pagar mediante una pasarela de pago. que permita el pago del total de la orden (mercado pago).
