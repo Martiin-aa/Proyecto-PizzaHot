@@ -89,7 +89,7 @@ def show_order():
 
     return render_template("orders/order_detail.html", **context)
 
-@app.route("/orders/payment/", methods=["GET", "POST"])
+@app.route("/orders/payment/")
 def payment():
     """
     Añade el método de pago (Mercado Pago).
@@ -100,33 +100,28 @@ def payment():
 
     data = {"id": session['user']['id']}
 
-    total_price = Order.sum_order(data)
-    total_price = total_price[0]["total_price"] if total_price and total_price[0]["total_price"] else 0
+    total_price_data = Order.sum_order(data)
+    total_price = total_price_data[0]["total_price"] if total_price_data and total_price_data[0]["total_price"] else 0
 
-    preference = None
-
-    if request.method == "POST":
-        sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
-
-        preference_data = {
-            "items": [
-                {
-                    "title": "Total del pedido",
-                    "quantity": 1,
-                    "unit_price": total_price
-                }
-            ]
-        }
-        preference_response = sdk.preference().create(preference_data)
-        print(preference_response)
-        preference = preference_response["response"]["id"]
-        print("Preference ID:", preference)
-        flash("!Pago realizado!", "success")
-        return redirect(url_for("dashboard"))
+    sdk = mercadopago.SDK("TEST-8024136192483870-072112-4fe0806e3c8a8b87ae5381289b424d5b-1429999768")
+    preference_data = {
+        "items": [
+            {
+                "title": "Total del pedido",
+                "quantity": 1,
+                "unit_price": 10000
+            }
+        ]
+    }
+    preference_response = sdk.preference().create(preference_data)
+    preference = preference_response["response"]
+    print("Preference ID:", preference["id"])
 
     context = {
         "preference": preference,
-        "total_price": total_price
+        "total_price":total_price,
+        "count_pizzas": show_count_pizzas(data)
+        
     }
     print("Context:", context)
     return render_template("payment.html", **context)
