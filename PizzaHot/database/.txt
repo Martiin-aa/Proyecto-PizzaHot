@@ -70,13 +70,14 @@ LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
 WHERE users.id = 1
 AND orders.deletable = 1;
 
--- Sumar todas las pizzas de la orden. deletable_0
+-- Sumar todas las pizzas de la orden, antes de dos minutos. deletable_0
 SELECT SUM(pizzas.price) AS total_price
 FROM users
 LEFT JOIN orders ON users.id = orders.user_id
 LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
 WHERE users.id = 1
-AND orders.deletable = 0;
+AND orders.deletable = 0
+AND orders.created_at >= DATE_SUB(NOW(), INTERVAL 2 MINUTE);
 
 -- Crear una pizza. con la suma de los toppings seleccionados en el precio de la pizza.
 INSERT INTO pizzas (name, size, crust, price, img, created_at, updated_at)

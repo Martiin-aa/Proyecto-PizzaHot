@@ -141,7 +141,7 @@ class Order:
     @classmethod
     def sum_order_0(cls, data): 
         """
-        Sumar todas las pizzas de la orden. deletable_0
+        Sumar todas las pizzas de la orden, antes de dos minutos. deletable_0
         """
         query = """
         SELECT SUM(pizzas.price) AS total_price
@@ -149,7 +149,8 @@ class Order:
         LEFT JOIN orders ON users.id = orders.user_id
         LEFT JOIN pizzas ON orders.pizza_id = pizzas.id
         WHERE users.id = %(id)s
-        AND orders.deletable = 0;
+        AND orders.deletable = 0
+        AND orders.created_at >= DATE_SUB(NOW(), INTERVAL 2 MINUTE);
         """
         total_price = connect_to_mysql().query_db(query, data)
         return total_price
