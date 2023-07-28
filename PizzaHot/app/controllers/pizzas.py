@@ -146,6 +146,24 @@ def update_pizza(pizza_id):
 
     return render_template("pizzas/pizza_update.html", **context)
 
+@app.route('/search_pizza/', methods=['POST'])
+def search_pizza():
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    search = request.form['search']
+    data = {
+        'id': session['user']['id'],
+        'name': f"%%{search}%%"
+    }
+
+    context = {
+        'pizzas': Pizza.get_one_by_name(data),
+        'count_pizzas': show_count_pizzas(data)
+    }
+
+    return render_template('pizzas/pizza_search.html', **context)
+
 def show_count_pizzas(data):
     """
     Muestra la cuenta de pizzas de la orden del usuario. deletable_1

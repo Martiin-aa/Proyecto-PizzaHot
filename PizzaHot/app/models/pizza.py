@@ -91,3 +91,18 @@ class Pizza:
         """
         return connect_to_mysql().query_db(query, data)
 
+    @classmethod 
+    def get_one_by_name(cls, data):
+        """
+        Obtener una pizza por nombre.
+        """
+
+        query = """
+        SELECT * FROM pizzas WHERE name LIKE %(name)s;
+        """
+
+        results = connect_to_mysql().query_db(query, data)
+        pizzas = []
+        for pizza in results:
+            pizzas.append(cls(pizza))
+        return pizzas

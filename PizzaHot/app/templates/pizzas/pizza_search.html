@@ -1,0 +1,32 @@
+{% set include_line = False %}
+{% extends "base.html" %}
+
+{% include "includes/navbar.html" %}
+{% block titulo %}Catalogo de Pizzas{% endblock %}
+
+{% block content %}
+<!-- Titulo -->
+<div class="text-center">
+    <div class="titulo" style="margin-bottom: 25;">
+        <h3>Catalogo <span>Pizzas</span></h3>
+    </div>
+</div>
+
+<!-- Pizzas -->
+<div class="row">
+        {% for pizza in pizzas %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ pizza.img }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{pizza.name}}</h5>
+                    <p class="card-text">Tamaño: {{pizza.size}} - Masa: {{pizza.crust}}</p>
+                    <p class="card-text">${{pizza.price}} CLP</p>
+                    <a href="{{ url_for('add_order_pizza', pizza_id=pizza.id) }}" class="btn btn-success">Añadir a Orden</a>
+                    <a href="{{ url_for('update_pizza', pizza_id=pizza.id) }}" class="btn btn-warning" style="float: right;">Editar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}

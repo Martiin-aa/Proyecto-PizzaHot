@@ -56,15 +56,23 @@
             </ul>
 
             <!--boton de busqueda -->
-            <form class="d-flex" role="search" style="margin-right: 8px;">
-                <input class="form-control me-2" type="search" placeholder="Busqueda" aria-label="Search">
+            <form class="d-flex" role="search" action="/search_pizza/" method="post" style="margin-right: 8px;">
+                <input class="form-control me-2" type="search" name="search" placeholder="Busca una pizza..." aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Busqueda</button>
             </form>
             
             <!--boton Informacion y Contacto -->
             <form class="d-flex">
-                <a href="{{ url_for('information') }}" class="btn btn-outline-warning d-none d-md-inline-block" >Contacto</a>
+                <a href="{{ url_for('information') }}" class="btn btn-outline-warning d-none d-md-inline-block me-2" >Contacto</a>
             </form>
+
+            <!-- Logo usuario -->
+            {% if session.user.logo %}
+            <img src="{{ url_for('display_image', filename=session.user.logo) }}" class="foto-redonda-nv" alt="">
+            {% else %}
+            <!-- Si no hay foto, muestra una imagen predeterminada -->
+            <img src="{{ url_for('static', filename='default_image.png') }}" class="foto-redonda-nv" alt="Foto predeterminada">
+            {% endif %}
         </div>
     </div>
 </nav>

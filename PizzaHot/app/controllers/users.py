@@ -198,8 +198,6 @@ def update_user_logo():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)  
 
-            print(f"filename: {filename}")
-
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
             data = {
@@ -207,9 +205,8 @@ def update_user_logo():
                 "logo": filename,
             }
 
-            print(f"data: {data}")
-            
             User.update_photo(data)
+            session["user"]["logo"] = filename
             flash("¡Foto de usuario actualizada exitosamente!", "success")
             return redirect(url_for("dashboard"))
 
@@ -223,11 +220,6 @@ def display_image(filename):
 def allowed_file(filename) -> bool:
     """
     Comprueba si la extensión del archivo es válida.
-
-    Parámetros:
-        - filename: nombre del archivo
-    Retorno:
-        - True si la extensión es válida
     """
 
     return "." in filename and \

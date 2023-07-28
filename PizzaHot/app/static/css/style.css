@@ -349,3 +349,12 @@ footer {
     width: 100px; 
     height: 100px; 
 }
+
+/*------------- Foto usuario navbar --------------*/
+
+.foto-redonda-nv {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 35px; 
+    height: 35px; 
+}
