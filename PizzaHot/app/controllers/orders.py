@@ -139,16 +139,21 @@ def payment():
                 "quantity": 1,
                 "unit_price": total_price
             }
-        ]
+        ],
+        "back_urls": {
+            "success": "http://127.0.0.1:5000/orders/payment/",
+            "failure": "http://127.0.0.1:5000/",
+            "pending": "http://127.0.0.1:5000/"
+        },
+        "auto_return": "approved"
     }
     preference_response = sdk.preference().create(preference_data)
     preference = preference_response["response"]
 
     context = {
         "preference": preference,
-        "total_price":total_price,
-        "count_pizzas": show_count_pizzas(data)
-        
+        "total_price": total_price,
+        "count_pizzas": show_count_pizzas(data),
     }
     print("Context:", context)
     return render_template("payment.html", **context)
