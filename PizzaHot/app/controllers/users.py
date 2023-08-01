@@ -32,7 +32,7 @@ bcrypt = Bcrypt(app)
 @app.route("/")
 def index_register():
     """
-    Index register page.
+    Index, Pagina de registro.
     """
 
     return render_template("users/auth/index_register.html")
@@ -40,7 +40,7 @@ def index_register():
 @app.route("/login/")
 def index_login():
     """
-    Index login page.
+    Index, Pagina de inicio session.
     """
 
     return render_template("users/auth/index_login.html")
@@ -156,7 +156,7 @@ def update_user():
 
     return render_template("users/user_update.html", **context)
 
-@app.route("/users/update/address", methods=["POST"])
+@app.route("/users/update/address/", methods=["POST"])
 def update_address():
     """
     Actualizar la dirección de un usuario.
@@ -212,7 +212,9 @@ def update_user_logo():
 
 @app.route("/display/<filename>/")
 def display_image(filename):
-    """Permite mostrar la imagen subida."""
+    """
+    Permite mostrar la imagen subida.
+    """
 
     return redirect(url_for("static", filename="uploads/" + filename), code=301)
 

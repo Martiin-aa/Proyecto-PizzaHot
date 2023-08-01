@@ -1,0 +1,32 @@
+{% set include_line = false %}
+{% extends "base.html" %}
+
+{% block titulo %}Pago Realizado{% endblock %}
+
+{% include "includes/navbar.html" %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="col" style="margin-right: 250px;margin-left: 250px">
+
+        <!-- Tarjeta/banner -->
+        <div class="card text-center">
+            <div class="card-header">
+                Gracias {{session.user.first_name}} por preferirnos
+            </div>
+            <div class="card-body">
+                <div class="titulo mb-2">
+                    <h3> Gracias <span>por</span> su <span>Compra</span> </h3>
+                </div>
+                <blockquote class="blockquote">
+                    <p>
+                        Estamos felices de que formes parte de <br> PizzaHot. Gracias por permanecer y crecer juntos
+                    </p>
+                </blockquote>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-warning">Vuelve a tu orden</a>
+                <a href="{{ url_for('information') }}" class="btn btn-warning">Contactanos</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

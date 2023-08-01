@@ -26,25 +26,6 @@
 
         <!-- Mercado Pago -->
         <div id="wallet_container"></div>
-        
-        <!-- Tarjeta/banner -->
-        <div class="card text-center mt-4">
-            <div class="card-header">
-                Gracias {{session.user.first_name}} por preferirnos
-            </div>
-            <div class="card-body">
-                <div class="titulo mb-2">
-                    <h3> Gracias <span>por</span> su <span>Compra</span> </h3>
-                </div>
-                <blockquote class="blockquote">
-                    <p>
-                        Estamos felices de que formes parte de <br> PizzaHot. Gracias por permanecer y crecer juntos
-                    </p>
-                </blockquote>
-                <a href="{{ url_for('dashboard') }}" class="btn btn-warning">Vuelve a tu orden</a>
-                <a href="{{ url_for('information') }}" class="btn btn-warning">Contactanos</a>
-            </div>
-        </div>
     </div>
 </div>
 {% include 'includes/footer.html' %}

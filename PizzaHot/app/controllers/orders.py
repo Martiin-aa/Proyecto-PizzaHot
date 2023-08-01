@@ -62,7 +62,7 @@ def remove_order_pizza_0(pizza_id):
     Order.delete_order_0(data)
     return redirect(url_for("dashboard"))
 
-@app.route("/orders/detail", methods=["GET", "POST"])
+@app.route("/orders/detail/", methods=["GET", "POST"])
 def show_order():
     """
     Muestra la orden del usuario. deletable_1. y agrega a la ordenes pasadas. deletable_0
@@ -93,10 +93,10 @@ def show_order():
     return render_template("orders/order_detail.html", **context)
 
 
-@app.route("/orders/address", methods=["POST"])
+@app.route("/orders/address/", methods=["POST"])
 def update_order_address():
     """
-    Muestra la orden del usuario. deletable_1. y agrega a la ordenes pasadas. deletable_0
+    Actualiza la direccion del usuario.
     """
 
     if "user" not in session:
@@ -141,7 +141,7 @@ def payment():
             }
         ],
         "back_urls": {
-            "success": "http://127.0.0.1:5000/orders/payment/",
+            "success": "http://127.0.0.1:5000/orders/payment/success/",
             "failure": "http://127.0.0.1:5000/",
             "pending": "http://127.0.0.1:5000/"
         },
@@ -155,8 +155,24 @@ def payment():
         "total_price": total_price,
         "count_pizzas": show_count_pizzas(data),
     }
-    print("Context:", context)
-    return render_template("payment.html", **context)
+    return render_template("payments/payment.html", **context)
+
+@app.route("/orders/payment/success/")
+def payment_success():
+    """
+    Exito del pago.
+    """
+
+    if "user" not in session:
+        return redirect(url_for("index_register"))
+
+    data = {"id": session['user']['id']}
+
+    context = {
+        "count_pizzas": show_count_pizzas(data)
+    }
+
+    return render_template("payments/payment_success.html", **context)
 
 def show_count_pizzas(data):
     """
